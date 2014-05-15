@@ -1,0 +1,9 @@
+'.workspace':
+  'ctrl-A': 'asciidoc-preview:toggle'
+
+'.asciidoc-preview':
+  'cmd-+': 'asciidoc-preview:zoom-in'
+  'cmd-=': 'asciidoc-preview:zoom-in'
+  'cmd--': 'asciidoc-preview:zoom-out'
+  'cmd-_': 'asciidoc-preview:zoom-out'
+  'cmd-0': 'asciidoc-preview:reset-zoom'

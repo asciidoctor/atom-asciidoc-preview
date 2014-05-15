@@ -1,0 +1,20 @@
+{
+  "name": "asciidoc-preview",
+  "main": "./lib/asciidoc-preview",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "repository": "https://github.com/anthonny/asciidoc-preview",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "asciidoctorjs-npm-wrapper": "0.1.x",
+    "cheerio": "0.15.0",
+    "fs-plus": "2.x",
+    "pathwatcher": "^1.0",
+    "temp": "0.6.x",
+    "underscore-plus": "1.x",
+    "wrench": "1.5.x"
+  }
+}

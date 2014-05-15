@@ -1,0 +1,15 @@
+'menu': [
+  'label': 'Packages'
+  'submenu': [
+    'label': 'Asciidoc'
+    'submenu': [
+      'label': 'Toggle Preview'
+      'command': 'asciidoc-preview:toggle'
+    ]
+  ]
+]
+
+'context-menu':
+  '.asciidoc-preview':
+    'Copy': 'core:copy'
+    'Save As HTML\u2026': 'core:save-as'
