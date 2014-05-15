@@ -1,7 +1,7 @@
 {
   "name": "asciidoc-preview",
   "main": "./lib/asciidoc-preview",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A short description of your package",
   "repository": "https://github.com/anthonny/asciidoc-preview",
   "license": "MIT",
