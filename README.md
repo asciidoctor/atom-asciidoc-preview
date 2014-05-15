@@ -1,5 +1,6 @@
-# asciidoc-preview package
+# Asciidoc Preview package
 
-A short description of your package.
+Show the rendered HTML Asciidoc to the right of the current editor using
+`ctrl-shift-a`
 
-![A screenshot of your spankin' package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+Thanks to @kevinsawicki, i just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [asciidoctorjs-npm-wrapper](https://github.com/anthonny/asciidoctorjs-npm-wrapper)
