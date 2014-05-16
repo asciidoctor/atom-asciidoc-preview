@@ -1,7 +1,7 @@
 'menu': [
   'label': 'Packages'
   'submenu': [
-    'label': 'Asciidoc'
+    'label': 'AsciiDoc'
     'submenu': [
       'label': 'Toggle Preview'
       'command': 'asciidoc-preview:toggle'
