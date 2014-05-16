@@ -8,6 +8,7 @@ exports.toHtml = (text, filePath, callback) ->
   html = asciidoc.$render(text, null)
   html = sanitize(html)
   html = resolveImagePaths(html, filePath)
+
   callback(html)
 
 exports.toText = (text, filePath, callback) ->

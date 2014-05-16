@@ -74,6 +74,7 @@ class AsciidocPreviewView extends ScrollView
     @subscribe this, 'core:save-as', =>
       @saveAs()
       false
+
     @subscribe this, 'core:copy', =>
       return false if @copyToClipboard()
 
@@ -111,7 +112,24 @@ class AsciidocPreviewView extends ScrollView
     renderer.toHtml text, @getPath, (html) =>
       @loading = false
       @html(html)
+      @enableAnchorScroll html, (top) =>
+        @scrollTop top
       @trigger('asciidoc-preview:asciidoc-changed')
+
+  enableAnchorScroll: (html, callback) ->
+    html = $(html)
+    for linkElement in html.find("a")
+      link = $(linkElement)
+      if hrefLink = link.attr('href')
+        continue if not hrefLink.match(/^#/)
+        if target = $(hrefLink)
+          continue if not target.offset()
+          # TODO Use tab height variable instead of 43
+          top = target.offset().top - 43
+          do (top) ->
+            link.on 'click', (e) ->
+              top = top
+              callback top
 
   getTitle: ->
     if @file?
