@@ -2,7 +2,7 @@
   "name": "asciidoc-preview",
   "main": "./lib/asciidoc-preview",
   "version": "0.1.0",
-  "description": "A short description of your package",
+  "description": "Show an HTML preview of the AsciiDoc content in the current editor",
   "repository": "https://github.com/anthonny/asciidoc-preview",
   "license": "MIT",
   "engines": {
