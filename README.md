@@ -1,10 +1,10 @@
-# Asciidoc Preview package
+# AsciiDoc Preview package
 
-Show the rendered HTML Asciidoc to the right of the current editor using
-`ctrl-shift-a`
+Shows the rendered HTML of the AsciiDoc content in the current editor.
 
-You can install this module from the command-line by typing `apm install asciidco-preview`
+You can install this module from the command-line by typing `apm install asciidco-preview`.
+You can toggle the preview pane, which appears to the right of the editor, using the key combination `ctrl-shift-a`.
 
-Thanks to @kevinsawicki, i just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [asciidoctorjs-npm-wrapper](https://github.com/anthonny/asciidoctorjs-npm-wrapper)
+Thanks to @kevinsawicki! I just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [asciidoctorjs-npm-wrapper](https://github.com/anthonny/asciidoctorjs-npm-wrapper).
 
 ![](https://raw.githubusercontent.com/anthonny/asciidoc-preview/master/screenshot.jpg)
