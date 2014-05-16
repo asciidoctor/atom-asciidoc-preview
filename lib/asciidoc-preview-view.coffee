@@ -8,11 +8,11 @@ fs = require 'fs-plus'
 renderer = require './renderer'
 
 module.exports =
-class AsciidocPreviewView extends ScrollView
+class AsciiDocPreviewView extends ScrollView
   atom.deserializers.add(this)
 
   @deserialize: (state) ->
-    new AsciidocPreviewView(state)
+    new AsciiDocPreviewView(state)
 
   @content: ->
     @div class: 'asciidoc-preview native-key-bindings', tabindex: -1
@@ -30,7 +30,7 @@ class AsciidocPreviewView extends ScrollView
           @subscribeToFilePath(filePath)
 
   serialize: ->
-    deserializer: 'AsciidocPreviewView'
+    deserializer: 'AsciiDocPreviewView'
     filePath: @getPath()
     editorId: @editorId
 
@@ -41,7 +41,7 @@ class AsciidocPreviewView extends ScrollView
     @file = new File(filePath)
     @trigger 'title-changed'
     @handleEvents()
-    @renderAsciidoc()
+    @renderAsciiDoc()
 
   resolveEditor: (editorId) ->
     resolve = =>
@@ -60,7 +60,7 @@ class AsciidocPreviewView extends ScrollView
     else
       @subscribe atom.packages.once 'activated', =>
         resolve()
-        @renderAsciidoc()
+        @renderAsciiDoc()
 
   editorForId: (editorId) ->
     for editor in atom.workspace.getEditors()
@@ -68,7 +68,7 @@ class AsciidocPreviewView extends ScrollView
     null
 
   handleEvents: ->
-    @subscribe atom.syntax, 'grammar-added grammar-updated', _.debounce((=> @renderAsciidoc()), 250)
+    @subscribe atom.syntax, 'grammar-added grammar-updated', _.debounce((=> @renderAsciiDoc()), 250)
     @subscribe this, 'core:move-up', => @scrollUp()
     @subscribe this, 'core:move-down', => @scrollDown()
     @subscribe this, 'core:save-as', =>
@@ -89,7 +89,7 @@ class AsciidocPreviewView extends ScrollView
       @css('zoom', 1)
 
     changeHandler = =>
-      @renderAsciidoc()
+      @renderAsciiDoc()
       pane = atom.workspace.paneForUri(@getUri())
       if pane? and pane isnt atom.workspace.getActivePane()
         pane.activateItem(this)
@@ -100,14 +100,14 @@ class AsciidocPreviewView extends ScrollView
       @subscribe(@editor.getBuffer(), 'contents-modified', changeHandler)
       @subscribe @editor, 'path-changed', => @trigger 'title-changed'
 
-  renderAsciidoc: ->
+  renderAsciiDoc: ->
     @showLoading()
     if @file?
-      @file.read().then (contents) => @renderAsciidocText(contents)
+      @file.read().then (contents) => @renderAsciiDocText(contents)
     else if @editor?
-      @renderAsciidocText(@editor.getText())
+      @renderAsciiDocText(@editor.getText())
 
-  renderAsciidocText: (text) ->
+  renderAsciiDocText: (text) ->
     renderer.toHtml text, @getPath, (html) =>
       @loading = false
       @html(html)
@@ -119,7 +119,7 @@ class AsciidocPreviewView extends ScrollView
     else if @editor?
       "#{@editor.getTitle()} Preview"
     else
-      "Asciidoc Preview"
+      "AsciiDoc Preview"
 
   getIconName: ->
     "eye"
@@ -140,13 +140,13 @@ class AsciidocPreviewView extends ScrollView
     failureMessage = result?.message
 
     @html $$$ ->
-      @h2 'Previewing Asciidoc Failed'
+      @h2 'Previewing AsciiDoc Failed'
       @h3 failureMessage if failureMessage?
 
   showLoading: ->
     @loading = true
     @html $$$ ->
-      @div class: 'asciidoc-spinner', 'Loading Asciidoc\u2026'
+      @div class: 'asciidoc-spinner', 'Loading AsciiDoc\u2026'
 
   copyToClipboard: ->
     return false if @loading

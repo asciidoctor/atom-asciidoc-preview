@@ -1,6 +1,6 @@
 url = require 'url'
 
-AsciidocPreviewView = require './asciidoc-preview-view'
+AsciiDocPreviewView = require './asciidoc-preview-view'
 renderer = null # Defer until used
 
 module.exports =
@@ -32,9 +32,9 @@ module.exports =
         return
 
       if host is 'editor'
-        new AsciidocPreviewView(editorId: pathname.substring(1))
+        new AsciiDocPreviewView(editorId: pathname.substring(1))
       else
-        new AsciidocPreviewView(filePath: pathname)
+        new AsciiDocPreviewView(filePath: pathname)
 
   toggle: ->
     editor = atom.workspace.getActiveEditor()
@@ -52,8 +52,8 @@ module.exports =
 
     previousActivePane = atom.workspace.getActivePane()
     atom.workspace.open(uri, split: 'right', searchAllPanes: true).done (asciidocPreview) ->
-      if asciidocPreview instanceof AsciidocPreviewView
-        asciidocPreview.renderAsciidoc()
+      if asciidocPreview instanceof AsciiDocPreviewView
+        asciidocPreview.renderAsciiDoc()
         previousActivePane.activate()
 
   copyHtml: ->
@@ -64,6 +64,6 @@ module.exports =
     text = editor.getSelectedText() or editor.getText()
     renderer.toText text, editor.getPath(), (error, html) =>
       if error
-        console.warn('Copying Asciidoc as HTML failed', error)
+        console.warn('Copying AsciiDoc as HTML failed', error)
       else
         atom.clipboard.write(html)
