@@ -6,6 +6,10 @@ renderer = null # Defer until used
 module.exports =
   configDefaults:
     showTitle: true
+    safeMode: true
+    showTableOfContent: true
+    showNumberedHeadings: true
+    defaultAttributes: 'platform=opal platform-opal env=browser env-browser'
     grammars: [
       'source.asciidoc'
       'text.plain'
@@ -18,6 +22,18 @@ module.exports =
 
     atom.workspaceView.command 'asciidoc-preview:copy-html', =>
       @copyHtml()
+
+    atom.workspaceView.command 'asciidoc-preview:toggle-show-title', ->
+      atom.config.toggle('asciidoc-preview.showTitle')
+
+    atom.workspaceView.command 'asciidoc-preview:toggle-safe-mode', ->
+      atom.config.toggle('asciidoc-preview.safeMode')
+
+    atom.workspaceView.command 'asciidoc-preview:toggle-show-toc', ->
+      atom.config.toggle('asciidoc-preview.showToc')
+
+    atom.workspaceView.command 'asciidoc-preview:toggle-show-numbered-headings', ->
+      atom.config.toggle('asciidoc-preview.showNumberedHeadings')
 
     atom.workspace.registerOpener (uriToOpen) ->
       try

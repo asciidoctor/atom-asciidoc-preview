@@ -2,10 +2,30 @@ path = require 'path'
 _ = require 'underscore-plus'
 cheerio = require 'cheerio'
 {$, EditorView} = require 'atom'
-asciidoc = require 'asciidoctorjs-npm-wrapper'
+Asciidoctor = require('asciidoctorjs-npm-wrapper').Asciidoctor
+Opal = require('asciidoctorjs-npm-wrapper').Opal
 
 exports.toHtml = (text, filePath, callback) ->
-  html = asciidoc.$render(text, null)
+
+  defaultAttributes = atom.config.get('asciidoc-preview.defaultAttributes')
+
+  numbered = if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!'
+  showtitle = if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
+  showtoc = if atom.config.get('asciidoc-preview.showToc')  then 'toc toc2' else 'toc! toc2!'
+  safemode = atom.config.get('asciidoc-preview.safeMode') or "safe"
+  doctype = atom.config.get('asciidoc-preview.docType') or "article"
+
+
+  attributes = defaultAttributes.concat(' ').concat(numbered).concat(' ').concat(showtitle).concat(' ').concat(showtoc)
+  console.log(attributes)
+  opts = Opal.hash2(['base_dir', 'safe', 'doctype', 'attributes'], {
+      'base_dir': path.dirname(filePath),
+      'safe': safemode,
+      'doctype': doctype,
+      'attributes': attributes
+  });
+
+  html = Asciidoctor.$render(text, opts)
   html = sanitize(html)
   html = resolveImagePaths(html, filePath)
 

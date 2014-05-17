@@ -5,11 +5,13 @@
   "description": "Show an HTML preview of the AsciiDoc content in the current editor",
   "repository": "https://github.com/anthonny/asciidoc-preview",
   "license": "MIT",
+  "stylesheets": ["asciidoc-preview"],
   "engines": {
     "atom": ">0.50.0"
   },
   "dependencies": {
-    "asciidoctorjs-npm-wrapper": "0.1.x",
+    "asciidoctorjs-npm-wrapper": "0.1.1",
+    "opal-npm-wrapper": "0.1.x",
     "cheerio": "0.15.0",
     "fs-plus": "2.x",
     "pathwatcher": "^1.0",

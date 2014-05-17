@@ -13,3 +13,7 @@
   '.asciidoc-preview':
     'Copy': 'core:copy'
     'Save As HTML\u2026': 'core:save-as'
+    'Show title': 'asciidoc-preview:toggle-show-title'
+    'Safe mode': 'asciidoc-preview:toggle-safe-mode'
+    'Show TOC': 'asciidoc-preview:toggle-show-toc'
+    'Show numbered headings': 'asciidoc-preview:toggle-show-numbered-headings'
