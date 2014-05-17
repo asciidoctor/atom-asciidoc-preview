@@ -115,7 +115,7 @@ class AsciiDocPreviewView extends ScrollView
       @renderAsciiDocText(@editor.getText())
 
   renderAsciiDocText: (text) ->
-    renderer.toHtml text, @getPath, (html) =>
+    renderer.toHtml text, @getPath(), (html) =>
       @loading = false
       @html(html)
       @enableAnchorScroll html, (top) =>
