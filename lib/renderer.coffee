@@ -11,21 +11,22 @@ exports.toHtml = (text, filePath, callback) ->
 
   numbered = if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!'
   showtitle = if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
-  showtoc = if atom.config.get('asciidoc-preview.showToc')  then 'toc toc2' else 'toc! toc2!'
+  showtoc = if atom.config.get('asciidoc-preview.showToc')  then 'toc=preamble toc2!' else 'toc! toc2!'
   safemode = atom.config.get('asciidoc-preview.safeMode') or "safe"
   doctype = atom.config.get('asciidoc-preview.docType') or "article"
 
 
   attributes = defaultAttributes.concat(' ').concat(numbered).concat(' ').concat(showtitle).concat(' ').concat(showtoc)
-  console.log(attributes)
+  console.log('AsciiDoc attributes: '.concat(attributes))
+  Opal.ENV['$[]=']("PWD", path.dirname(window.location.href))
   opts = Opal.hash2(['base_dir', 'safe', 'doctype', 'attributes'], {
-      'base_dir': path.dirname(filePath),
+      'base_dir': 'file://'.concat(path.dirname(filePath)),
       'safe': safemode,
       'doctype': doctype,
       'attributes': attributes
   });
 
-  html = Asciidoctor.$render(text, opts)
+  html = Asciidoctor.$convert(text, opts)
   html = sanitize(html)
   html = resolveImagePaths(html, filePath)
 
