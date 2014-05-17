@@ -1,11 +1,13 @@
 {
   "name": "asciidoc-preview",
   "main": "./lib/asciidoc-preview",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Show an HTML preview of the AsciiDoc content in the current editor",
   "repository": "https://github.com/anthonny/asciidoc-preview",
   "license": "MIT",
-  "stylesheets": ["asciidoc-preview"],
+  "stylesheets": [
+    "asciidoc-preview"
+  ],
   "engines": {
     "atom": ">0.50.0"
   },
