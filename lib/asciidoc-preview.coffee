@@ -5,6 +5,7 @@ renderer = null # Defer until used
 
 module.exports =
   configDefaults:
+    showTitle: true
     grammars: [
       'source.asciidoc'
       'text.plain'
