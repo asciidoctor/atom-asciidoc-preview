@@ -1,8 +1,8 @@
-/* Font Awesome 3.2.1 stylesheet customized for Atom */
+/* Font Awesome 3.2.1 stylesheet customized for Atom (CHANGES: atom:// resource url for font file, font-family added to :before psuedoclass */
 @font-face{font-family:'FontAwesome';src:url('atom://asciidoc-preview/fonts/font-awesome-3_2_1.woff') format('woff');font-weight:normal;font-style:normal;}
 .asciidoc-preview {
 [class^="icon-"],[class*=" icon-"]{font-family:FontAwesome;font-weight:normal;font-style:normal;text-decoration:inherit;-webkit-font-smoothing:antialiased;*margin-right:.3em;}
-[class^="icon-"]:before,[class*=" icon-"]:before{text-decoration:inherit;display:inline-block;speak:none;}
+[class^="icon-"]:before,[class*=" icon-"]:before{font-family:FontAwesome;text-decoration:inherit;display:inline-block;speak:none;}
 .icon-large:before{vertical-align:-10%;font-size:1.3333333333333333em;}
 a [class^="icon-"],a [class*=" icon-"]{display:inline;}
 [class^="icon-"].icon-fixed-width,[class*=" icon-"].icon-fixed-width{display:inline-block;width:1.1428571428571428em;text-align:right;padding-right:0.2857142857142857em;}[class^="icon-"].icon-fixed-width.icon-large,[class*=" icon-"].icon-fixed-width.icon-large{width:1.4285714285714286em;}
