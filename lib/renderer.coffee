@@ -16,7 +16,7 @@ exports.toHtml = (text, filePath, callback) ->
   doctype = atom.config.get('asciidoc-preview.docType') or "article"
 
 
-  attributes = defaultAttributes.concat(' ').concat(numbered).concat(' ').concat(showtitle).concat(' ').concat(showtoc)
+  attributes = defaultAttributes.concat(' icons=font@ ').concat(numbered).concat(' ').concat(showtitle).concat(' ').concat(showtoc)
   console.log('AsciiDoc attributes: '.concat(attributes))
   Opal.ENV['$[]=']("PWD", path.dirname(window.location.href))
   opts = Opal.hash2(['base_dir', 'safe', 'doctype', 'attributes'], {
