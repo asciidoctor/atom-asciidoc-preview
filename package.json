@@ -6,7 +6,8 @@
   "repository": "https://github.com/asciidoctor/atom-asciidoc-preview",
   "license": "MIT",
   "stylesheets": [
-    "asciidoc-preview"
+    "asciidoc-preview",
+    "font-awesome-3_2_1"
   ],
   "engines": {
     "atom": ">0.50.0"
