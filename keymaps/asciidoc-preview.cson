@@ -1,5 +1,6 @@
 '.workspace':
   'ctrl-A': 'asciidoc-preview:toggle'
+  'ctrl-alt-a': 'asciidoc-preview:toggle-render-on-save-only'
 
 '.asciidoc-preview':
   'cmd-+': 'asciidoc-preview:zoom-in'

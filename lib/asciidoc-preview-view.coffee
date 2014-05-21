@@ -95,12 +95,16 @@ class AsciiDocPreviewView extends ScrollView
       if pane? and pane isnt atom.workspace.getActivePane()
         pane.activateItem(this)
 
+    renderOnChange = =>
+      saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
+      changeHandler() if !saveOnly
+
     if @file?
       @subscribe(@file, 'contents-changed', changeHandler)
     else if @editor?
-      @subscribe(@editor.getBuffer(), 'contents-modified', changeHandler)
+      @subscribe(@editor.getBuffer(), 'contents-modified', renderOnChange)
+      @subscribe(@editor.getBuffer(), 'saved', changeHandler)
       @subscribe @editor, 'path-changed', => @trigger 'title-changed'
-
 
     @subscribe atom.config.observe 'asciidoc-preview.showTitle', callNow: false, changeHandler
     @subscribe atom.config.observe 'asciidoc-preview.safeMode', callNow: false, changeHandler

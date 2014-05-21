@@ -45,7 +45,7 @@ NOTE: Items marked with TODO are either not yet supported or a work in progress.
 
 .Inline markup
 * single quotes around a phrase place 'emphasis'
-* astericks around a phrase make the text de de je pense que ca marche *bold*
+* a fsdf sdd sdf s sd round a phrase make the text de de je pense que ca marche *bold*
 * double astericks around one or more **l**etters in a word make those letters bold
 * double underscore arounfgdgdfgfdgddfgdgdfgdgdfgdfgddfgdfgfdgd a __sub__string in a word emphasizes that substring
 * use carrots around characters to make them ^super^script

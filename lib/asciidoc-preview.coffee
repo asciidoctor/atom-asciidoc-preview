@@ -9,6 +9,7 @@ module.exports =
     safeMode: true
     showTableOfContent: true
     showNumberedHeadings: true
+    renderOnSaveOnly: false
     defaultAttributes: 'platform=opal platform-opal env=browser env-browser'
     grammars: [
       'source.asciidoc'
@@ -35,6 +36,17 @@ module.exports =
     atom.workspaceView.command 'asciidoc-preview:toggle-show-numbered-headings', ->
       atom.config.toggle('asciidoc-preview.showNumberedHeadings')
 
+    atom.workspaceView.command 'asciidoc-preview:toggle-render-on-save-only', ->
+      atom.config.toggle('asciidoc-preview.renderOnSaveOnly')
+
+    atom.workspaceView.command 'asciidoc-preview:toggle-render-on-save-only', =>
+      @changeRenderMode()
+
+    atom.workspaceView.on 'pane-container:active-pane-item-changed', =>
+      @changeRenderMode()
+
+
+
     atom.workspace.registerOpener (uriToOpen) ->
       try
         {protocol, host, pathname} = url.parse(uriToOpen)
@@ -53,13 +65,17 @@ module.exports =
       else
         new AsciiDocPreviewView(filePath: pathname)
 
-  toggle: ->
+  checkFile: ->
     editor = atom.workspace.getActiveEditor()
     return unless editor?
 
     grammars = atom.config.get('asciidoc-preview.grammars') ? []
     return unless editor.getGrammar().scopeName in grammars
+    editor
 
+  toggle: ->
+    editor = @checkFile()
+    return unless editor?
     uri = "asciidoc-preview://editor/#{editor.id}"
 
     previewPane = atom.workspace.paneForUri(uri)
@@ -72,6 +88,16 @@ module.exports =
       if asciidocPreview instanceof AsciiDocPreviewView
         asciidocPreview.renderAsciiDoc()
         previousActivePane.activate()
+
+  changeRenderMode: ->
+    return unless @checkFile()?
+
+    saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
+    atom.workspaceView.find('#asciidoc-changemode')?.remove()
+    if saveOnly
+      atom.workspaceView.statusBar?.appendLeft("<span id='asciidoc-changemode'>Render on save<span>")
+    else
+      atom.workspaceView.statusBar?.appendLeft("<span id='asciidoc-changemode'>Render on change<span>")
 
   copyHtml: ->
     editor = atom.workspace.getActiveEditor()
