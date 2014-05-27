@@ -1,36 +1,26 @@
 path = require 'path'
 _ = require 'underscore-plus'
 cheerio = require 'cheerio'
-{$, EditorView} = require 'atom'
-Asciidoctor = require('asciidoctorjs-npm-wrapper').Asciidoctor
-Opal = require('asciidoctorjs-npm-wrapper').Opal
+{$, EditorView, Task} = require 'atom'
 
 exports.toHtml = (text, filePath, callback) ->
 
-  defaultAttributes = atom.config.get('asciidoc-preview.defaultAttributes')
+  attributes= {
+    defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes'),
+    numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!',
+    showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!',
+    showtoc: if atom.config.get('asciidoc-preview.showToc')  then 'toc=preamble toc2!' else 'toc! toc2!',
+    safemode: atom.config.get('asciidoc-preview.safeMode') or "safe",
+    doctype: atom.config.get('asciidoc-preview.docType') or "article",
+    opalPwd: window.location.href
+  }
 
-  numbered = if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!'
-  showtitle = if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
-  showtoc = if atom.config.get('asciidoc-preview.showToc')  then 'toc=preamble toc2!' else 'toc! toc2!'
-  safemode = atom.config.get('asciidoc-preview.safeMode') or "safe"
-  doctype = atom.config.get('asciidoc-preview.docType') or "article"
+  taskPath = require.resolve('./worker')
 
-
-  attributes = defaultAttributes.concat(' icons=font@ ').concat(numbered).concat(' ').concat(showtitle).concat(' ').concat(showtoc)
-  console.log('AsciiDoc attributes: '.concat(attributes))
-  Opal.ENV['$[]=']("PWD", path.dirname(window.location.href))
-  opts = Opal.hash2(['base_dir', 'safe', 'doctype', 'attributes'], {
-      'base_dir': 'file://'.concat(path.dirname(filePath)),
-      'safe': safemode,
-      'doctype': doctype,
-      'attributes': attributes
-  });
-
-  html = Asciidoctor.$convert(text, opts)
-  html = sanitize(html)
-  html = resolveImagePaths(html, filePath)
-
-  callback(html)
+  Task.once taskPath, text, attributes, filePath, (html) ->
+    html = sanitize(html)
+    html = resolveImagePaths(html, filePath)
+    callback(html)
 
 exports.toText = (text, filePath, callback) ->
   exports.toHtml text, filePath, (error, html) ->
