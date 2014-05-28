@@ -133,7 +133,9 @@ class AsciiDocPreviewView extends ScrollView
       if hrefLink = link.attr('href')
         do(hrefLink) ->
           link.on 'mouseover', (e) ->
-            atom.workspaceView.statusBar?.prependRight("<span id='linkUrl'>#{hrefLink}<span>")
+            # TODO Use constant
+            cropUrl = if (hrefLink.length > 100) then hrefLink.substr(0, 97).concat('...')  else hrefLink
+            atom.workspaceView.statusBar?.prependRight("<span id='linkUrl'>#{cropUrl}<span>")
           link.on 'mouseleave', (e) ->
             $('#linkUrl').remove()
         continue if not hrefLink.match(/^#/)
