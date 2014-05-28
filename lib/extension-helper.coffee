@@ -1,0 +1,33 @@
+extensionsByFenceName =
+  'bash': 'sh'
+  'coffee': 'coffee'
+  'coffeescript': 'coffee'
+  'coffee-script': 'coffee'
+  'cs': 'cs'
+  'csharp': 'cs'
+  'css': 'css'
+  'erlang': 'erl'
+  'go': 'go'
+  'html': 'html'
+  'java': 'java'
+  'javascript': 'js'
+  'js': 'js'
+  'json': 'json'
+  'less': 'less'
+  'mustache': 'mustache'
+  'objc': 'm'
+  'objective-c': 'm'
+  'php': 'php'
+  'py': 'py'
+  'python': 'py'
+  'rb': 'rb'
+  'ruby': 'rb'
+  'sh': 'sh'
+  'toml': 'toml'
+  'xml': 'xml'
+  'yaml': 'yaml'
+  'yml': 'yaml'
+
+module.exports =
+  extensionForFenceName: (fenceName) ->
+    extensionsByFenceName[fenceName]

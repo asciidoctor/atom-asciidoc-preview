@@ -2,6 +2,7 @@ path = require 'path'
 _ = require 'underscore-plus'
 cheerio = require 'cheerio'
 {$, EditorView, Task} = require 'atom'
+{extensionForFenceName} = require './extension-helper'
 
 exports.toHtml = (text, filePath, callback) ->
 
@@ -20,6 +21,7 @@ exports.toHtml = (text, filePath, callback) ->
   Task.once taskPath, text, attributes, filePath, (html) ->
     html = sanitize(html)
     html = resolveImagePaths(html, filePath)
+    html = tokenizeCodeBlocks(html)
     callback(html)
 
 exports.toText = (text, filePath, callback) ->
@@ -67,5 +69,36 @@ resolveImagePaths = (html, filePath) ->
     if src = img.attr('src')
       continue if src.match /^(https?:\/\/)/
       img.attr('src', path.resolve(path.dirname(filePath), src))
+
+  html
+
+tokenizeCodeBlocks = (html) ->
+  html = $(html)
+
+  if fontFamily = atom.config.get('editor.fontFamily')
+    $(html).find('code').css('font-family', fontFamily)
+
+  for preElement in $.merge(html.filter("pre"), html.find("pre"))
+    codeBlock = $(preElement.firstChild)
+
+    # go to next block unless this one has a class
+    continue unless classNames = codeBlock.attr('class')?.split(' ')
+    classNames = classNames.filter (className) ->
+      className.match(/^language-/)
+    fenceName = classNames[0]?.replace(/^language-/, '')
+    # go to next block unless the class name matches `lang`
+    continue unless extension = extensionForFenceName(fenceName)
+    # apply class only if lang match
+    $(preElement).addClass("editor-colors")
+    text = codeBlock.text()
+
+    grammar = atom.syntax.selectGrammar("foo.#{extension}", text)
+
+    codeBlock.empty()
+
+    for tokens in grammar.tokenizeLines(text).slice(0, -1)
+      lineText = _.pluck(tokens, 'value').join('')
+      htmlEolInvisibles = ''
+      codeBlock.append(EditorView.buildLineHtml({tokens, text: lineText, htmlEolInvisibles}))
 
   html
