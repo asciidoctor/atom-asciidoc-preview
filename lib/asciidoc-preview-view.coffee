@@ -131,6 +131,11 @@ class AsciiDocPreviewView extends ScrollView
     for linkElement in html.find("a")
       link = $(linkElement)
       if hrefLink = link.attr('href')
+        do(hrefLink) ->
+          link.on 'mouseover', (e) ->
+            atom.workspaceView.statusBar?.prependRight("<span id='linkUrl'>#{hrefLink}<span>")
+          link.on 'mouseleave', (e) ->
+            $('#linkUrl').remove()
         continue if not hrefLink.match(/^#/)
         if target = $(hrefLink)
           continue if not target.offset()
