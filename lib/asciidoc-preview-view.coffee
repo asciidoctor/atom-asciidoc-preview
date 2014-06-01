@@ -108,6 +108,7 @@ class AsciiDocPreviewView extends ScrollView
 
     @subscribe atom.config.observe 'asciidoc-preview.showTitle', callNow: false, changeHandler
     @subscribe atom.config.observe 'asciidoc-preview.safeMode', callNow: false, changeHandler
+    @subscribe atom.config.observe 'asciidoc-preview.defaultAttributes', callNow: false, changeHandler
     @subscribe atom.config.observe 'asciidoc-preview.showToc', callNow: false, changeHandler
     @subscribe atom.config.observe 'asciidoc-preview.showNumberedHeadings', callNow: false, changeHandler
 
@@ -180,8 +181,10 @@ class AsciiDocPreviewView extends ScrollView
 
   showLoading: ->
     @loading = true
-    @html $$$ ->
-      @div class: 'asciidoc-spinner', 'Loading AsciiDoc\u2026'
+    if !@firstloadingdone?
+      @firstloadingdone = true
+      @html $$$ ->
+        @div class: 'asciidoc-spinner', 'Loading AsciiDoc\u2026'
 
   copyToClipboard: ->
     return false if @loading

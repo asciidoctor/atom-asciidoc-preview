@@ -11,7 +11,7 @@ exports.toHtml = (text, filePath, callback) ->
     numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!',
     showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!',
     showtoc: if atom.config.get('asciidoc-preview.showToc')  then 'toc=preamble toc2!' else 'toc! toc2!',
-    safemode: atom.config.get('asciidoc-preview.safeMode') or "safe",
+    safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe',
     doctype: atom.config.get('asciidoc-preview.docType') or "article",
     opalPwd: window.location.href
   }

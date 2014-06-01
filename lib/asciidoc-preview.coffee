@@ -6,7 +6,7 @@ renderer = null # Defer until used
 module.exports =
   configDefaults:
     showTitle: true
-    safeMode: true
+    safeMode: 'secure'
     showTableOfContent: true
     showNumberedHeadings: true
     renderOnSaveOnly: false
@@ -26,9 +26,6 @@ module.exports =
 
     atom.workspaceView.command 'asciidoc-preview:toggle-show-title', ->
       atom.config.toggle('asciidoc-preview.showTitle')
-
-    atom.workspaceView.command 'asciidoc-preview:toggle-safe-mode', ->
-      atom.config.toggle('asciidoc-preview.safeMode')
 
     atom.workspaceView.command 'asciidoc-preview:toggle-show-toc', ->
       atom.config.toggle('asciidoc-preview.showToc')

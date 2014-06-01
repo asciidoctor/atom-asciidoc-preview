@@ -14,6 +14,5 @@
     'Copy': 'core:copy'
     'Save As HTML\u2026': 'core:save-as'
     'Toggle Document Title': 'asciidoc-preview:toggle-show-title'
-    'Toggle Safe Mode': 'asciidoc-preview:toggle-safe-mode'
     'Toggle Table of Contents': 'asciidoc-preview:toggle-show-toc'
     'Toggle Heading Numbers': 'asciidoc-preview:toggle-show-numbered-headings'
