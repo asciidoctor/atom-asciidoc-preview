@@ -96,7 +96,7 @@ tokenizeCodeBlocks = (html) ->
 
     codeBlock.empty()
 
-    for tokens in grammar.tokenizeLines(text).slice(0, -1)
+    for tokens in grammar.tokenizeLines(text)
       lineText = _.pluck(tokens, 'value').join('')
       htmlEolInvisibles = ''
       codeBlock.append(EditorView.buildLineHtml({tokens, text: lineText, htmlEolInvisibles}))
