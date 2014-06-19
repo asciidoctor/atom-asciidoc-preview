@@ -4,6 +4,7 @@ path = require 'path'
 _ = require 'underscore-plus'
 fs = require 'fs-plus'
 {File} = require 'pathwatcher'
+mustache = require 'mustache'
 
 renderer = require './renderer'
 
@@ -206,10 +207,17 @@ class AsciiDocPreviewView extends ScrollView
     if filePath
       filePath += '.html'
     else
-      filePath = 'untitled.md.html'
+      filePath = 'untitled.adoc.html'
       if projectPath = atom.project.getPath()
         filePath = path.join(projectPath, filePath)
 
     if htmlFilePath = atom.showSaveDialogSync(filePath)
-      fs.writeFileSync(htmlFilePath, @[0].innerHTML)
+      mustacheObject =
+        title: 'test'
+        content: @[0].innerHTML
+
+      templatePath = path.join atom.packages.resolvePackagePath('asciidoc-preview'), 'templates', 'default.html'
+      page = fs.readFileSync(templatePath, 'utf8')
+      htmlContent = mustache.to_html page, mustacheObject
+      fs.writeFileSync(htmlFilePath, htmlContent)
       atom.workspace.open(htmlFilePath)

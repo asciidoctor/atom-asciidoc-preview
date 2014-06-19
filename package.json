@@ -20,6 +20,7 @@
     "pathwatcher": "^1.0",
     "temp": "^0.6.0",
     "underscore-plus": "1.x",
-    "wrench": "1.5.x"
+    "wrench": "1.5.x",
+    "mustache": "0.8.2"
   }
 }

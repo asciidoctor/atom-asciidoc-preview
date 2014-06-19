@@ -1,3 +1,6 @@
+## 0.2.3
+* Fix #28 : Save as html now export a full html content with css & fontawesome
+
 ## 0.2.2
 * Fix #27 : Dropped last line in ruby code
 
