@@ -1,9 +1,15 @@
 url = require 'url'
 
 AsciiDocPreviewView = require './asciidoc-preview-view'
+AttributesProvider = require "./attributes-provider"
 renderer = null # Defer until used
 
 module.exports =
+
+  editorSubscription: null
+  providers: []
+  autocomplete: null
+
   configDefaults:
     showTitle: true
     safeMode: 'secure'
@@ -62,6 +68,20 @@ module.exports =
       else
         new AsciiDocPreviewView(filePath: pathname)
 
+    atom.packages.activatePackage("autocomplete-plus")
+      .then (pkg) =>
+        @autocomplete = pkg.mainModule
+        @registerProviders()
+
+  registerProviders: ->
+    @editorSubscription = atom.workspaceView.eachEditorView (editorView) =>
+      if editorView.attached and not editorView.mini
+        provider = new AttributesProvider editorView
+
+        @autocomplete.registerProviderForEditorView provider, editorView
+
+        @providers.push provider
+
   checkFile: ->
     editor = atom.workspace.getActiveEditor()
     return unless editor?
@@ -107,3 +127,12 @@ module.exports =
         console.warn('Copying AsciiDoc as HTML failed', error)
       else
         atom.clipboard.write(html)
+
+  deactivate: ->
+    @editorSubscription?.off()
+    @editorSubscription = null
+
+    @providers.forEach (provider) =>
+      @autocomplete.unregisterProvider provider
+
+    @providers = []

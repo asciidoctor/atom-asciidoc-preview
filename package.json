@@ -17,10 +17,11 @@
     "cheerio": "^0.15.0",
     "fs-plus": "2.x",
     "opal-npm-wrapper": "0.1.x",
-    "pathwatcher": "^1.0",
     "temp": "^0.6.0",
     "underscore-plus": "1.x",
     "wrench": "1.5.x",
-    "mustache": "0.8.2"
+    "mustache": "0.8.2",
+    "autocomplete-plus": "git://github.com/saschagehlich/autocomplete-plus.git",
+    "fuzzaldrin": "~1.0.0"
   }
 }
