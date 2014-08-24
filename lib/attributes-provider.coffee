@@ -11,7 +11,6 @@ class AttributesProvider extends Provider
   buildSuggestions: ->
     selection = @editor.getSelection()
     prefix = @prefixOfSelection selection
-    console.log prefix
     return unless prefix.length
 
     suggestions = @findSuggestionsForPrefix prefix
@@ -53,7 +52,6 @@ class AttributesProvider extends Provider
     suggestions = for word in words when word isnt prefix
       new Suggestion this, word: word, prefix: prefix, label: "{#{word}} - Asciidoc"
 
-    console.log suggestions
     return suggestions
 
    confirm: (suggestion) ->

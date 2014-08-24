@@ -1,3 +1,13 @@
+## 0.4.0
+* Upgrade to asciidoctor.js 1.5.0
+* Add Font-awesome 4
+* Use HightLight for code block
+
+## 0.3.0
+* Add the first implementation of completion #34
+**  Require package autocomplete-plus in atom
+* Remove dependencie on pathwatcher and use the atom module (there will not be compilation anymore)
+
 ## 0.2.3
 * Fix #28 : Save as html now export a full html content with css & fontawesome
 

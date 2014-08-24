@@ -5,8 +5,8 @@ _ = require 'underscore-plus'
 fs = require 'fs-plus'
 mustache = require 'mustache'
 renderer = require './renderer'
-pathWatcherDirectory = atom.packages.resolvePackagePath('markdown-preview')
-{File} = require path.join(pathWatcherDirectory, '..', 'pathwatcher')
+markdownDirectory = atom.packages.resolvePackagePath('markdown-preview')
+{File} = require path.join(markdownDirectory, '..', 'pathwatcher')
 
 module.exports =
 class AsciiDocPreviewView extends ScrollView

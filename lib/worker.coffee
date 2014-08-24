@@ -1,5 +1,6 @@
-Asciidoctor = require('asciidoctorjs-npm-wrapper').Asciidoctor
-Opal = require('asciidoctorjs-npm-wrapper').Opal
+ajs = require('asciidoctor.js')()
+Asciidoctor = ajs.Asciidoctor()
+Opal = ajs.Opal
 path = require 'path'
 
 module.exports = (text, attributes, filePath) ->
