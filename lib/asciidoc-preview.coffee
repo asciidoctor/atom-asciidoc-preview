@@ -107,10 +107,10 @@ module.exports =
         previousActivePane.activate()
 
   changeRenderMode: ->
+    atom.workspaceView.find('#asciidoc-changemode')?.remove()
     return unless @checkFile()?
 
     saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
-    atom.workspaceView.find('#asciidoc-changemode')?.remove()
     if saveOnly
       atom.workspaceView.statusBar?.appendLeft("<span id='asciidoc-changemode'>Render on save<span>")
     else
