@@ -5,7 +5,11 @@ path = require 'path'
 
 module.exports = (text, attributes, filePath) ->
 
-  concatAttributes = attributes.defaultAttributes.concat(' icons=font@ ').concat(attributes.numbered).concat(' ').concat(attributes.showtitle).concat(' ').concat(attributes.showtoc)
+  concatAttributes = attributes.defaultAttributes.concat(' icons=font@ ')
+                    .concat(attributes.numbered).concat(' ')
+                    .concat(attributes.showtitle).concat(' ')
+                    .concat(attributes.compatmode).concat(' ')
+                    .concat(attributes.showtoc)
   folder = path.dirname(filePath)
   Opal.ENV['$[]=']("PWD", path.dirname(attributes.opalPwd))
   opts = Opal.hash2(['base_dir', 'safe', 'doctype', 'attributes'], {

@@ -11,6 +11,7 @@ module.exports =
   autocomplete: null
 
   configDefaults:
+    compatMode: true
     showTitle: true
     safeMode: 'secure'
     showTableOfContent: true
@@ -32,6 +33,9 @@ module.exports =
 
     atom.workspaceView.command 'asciidoc-preview:toggle-show-title', ->
       atom.config.toggle('asciidoc-preview.showTitle')
+
+    atom.workspaceView.command 'asciidoc-preview:toggle-compat-mode', ->
+      atom.config.toggle('asciidoc-preview.compatMode')
 
     atom.workspaceView.command 'asciidoc-preview:toggle-show-toc', ->
       atom.config.toggle('asciidoc-preview.showToc')

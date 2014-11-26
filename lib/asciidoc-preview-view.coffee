@@ -108,6 +108,7 @@ class AsciiDocPreviewView extends ScrollView
       @subscribe @editor, 'path-changed', => @trigger 'title-changed'
 
     @subscribe atom.config.observe 'asciidoc-preview.showTitle', callNow: false, changeHandler
+    @subscribe atom.config.observe 'asciidoc-preview.compatMode', callNow: false, changeHandler
     @subscribe atom.config.observe 'asciidoc-preview.safeMode', callNow: false, changeHandler
     @subscribe atom.config.observe 'asciidoc-preview.defaultAttributes', callNow: false, changeHandler
     @subscribe atom.config.observe 'asciidoc-preview.showToc', callNow: false, changeHandler
