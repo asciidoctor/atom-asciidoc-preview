@@ -13,7 +13,7 @@
     "atom": ">0.121.0"
   },
   "dependencies": {
-    "asciidoctor.js": "1.5.0",
+    "asciidoctor.js": "1.5.2",
     "cheerio": "^0.15.0",
     "fs-plus": "2.x",
     "opal-npm-wrapper": "0.1.x",
