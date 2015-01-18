@@ -21,7 +21,6 @@
     "underscore-plus": "1.x",
     "wrench": "1.5.x",
     "mustache": "0.8.2",
-    "autocomplete-plus": "git://github.com/saschagehlich/autocomplete-plus.git",
     "fuzzaldrin": "~1.0.0"
   }
 }
