@@ -75,16 +75,20 @@ module.exports =
     atom.packages.activatePackage("autocomplete-plus")
       .then (pkg) =>
         @autocomplete = pkg.mainModule
-        @registerProviders()
+        return unless @autocomplete?
+        Provider = (require './attributes-provider').ProviderClass(@autocomplete.Provider, @autocomplete.Suggestion)
+        return unless Provider?
+        @editorSubscription = atom.workspace.observeTextEditors((editor) => @registerProvider(Provider, editor))
 
-  registerProviders: ->
-    @editorSubscription = atom.workspaceView.eachEditorView (editorView) =>
-      if editorView.attached and not editorView.mini
-        provider = new AttributesProvider editorView
-
-        @autocomplete.registerProviderForEditorView provider, editorView
-
-        @providers.push provider
+  registerProvider: (Provider, editor) ->
+    return unless Provider?
+    return unless editor?
+    editorView = atom.views.getView(editor)
+    return unless editorView?
+    if not editorView.mini
+      provider = new Provider(editor)
+      @autocomplete.registerProviderForEditor(provider, editor)
+      @providers.push(provider)
 
   checkFile: ->
     editor = atom.workspace.getActiveEditor()
@@ -133,10 +137,8 @@ module.exports =
         atom.clipboard.write(html)
 
   deactivate: ->
-    @editorSubscription?.off()
+    @editorSubscription?.dispose()
     @editorSubscription = null
 
-    @providers.forEach (provider) =>
-      @autocomplete.unregisterProvider provider
-
+    @providers.forEach (provider) => @autocomplete.unregisterProvider(provider)
     @providers = []
