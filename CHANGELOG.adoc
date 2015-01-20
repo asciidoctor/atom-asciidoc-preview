@@ -1,6 +1,10 @@
+## 0.4.2
+* Fix #45: Update Package To Use New autocomplete-plus API (thanks to @joefitzgerald)
+* Fix #48: fix include:: (thanks to @cobomi)
+
 ## 0.4.1
 * Upgrade to asciidoctor.js 1.5.2
-* Fix #43 : Upgrade Font-awesome to 4.2.0 
+* Fix #43 : Upgrade Font-awesome to 4.2.0
 
 ## 0.4.0
 * Upgrade to asciidoctor.js 1.5.0
