@@ -1,4 +1,4 @@
-'.workspace':
+'.atom-workspace':
   'ctrl-A': 'asciidoc-preview:toggle'
   'ctrl-alt-a': 'asciidoc-preview:toggle-render-on-save-only'
 
