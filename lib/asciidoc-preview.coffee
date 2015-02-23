@@ -25,36 +25,27 @@ module.exports =
     ]
 
   activate: ->
-    atom.workspaceView.command 'asciidoc-preview:toggle', =>
-      @toggle()
+    atom.commands.add 'atom-workspace',
+      'asciidoc-preview:toggle': =>
+        @toggle()
+      'asciidoc-preview:copy-html': =>
+        @copyHtml()
+      'asciidoc-preview:toggle-render-on-save-only': =>
+        @changeRenderMode()
+      'pane-container:active-pane-item-changed': =>
+        @changeRenderMode()
+      'asciidoc-preview:toggle-show-title': ->
+        atom.config.toggle('asciidoc-preview.showTitle')
+      'asciidoc-preview:toggle-compat-mode': ->
+        atom.config.toggle('asciidoc-preview.compatMode')
+      'asciidoc-preview:toggle-show-toc': ->
+        atom.config.toggle('asciidoc-preview.showToc')
+      'asciidoc-preview:toggle-show-numbered-headings': ->
+        atom.config.toggle('asciidoc-preview.showNumberedHeadings')
+      'asciidoc-preview:toggle-render-on-save-only': ->
+        atom.config.toggle('asciidoc-preview.renderOnSaveOnly')
 
-    atom.workspaceView.command 'asciidoc-preview:copy-html', =>
-      @copyHtml()
-
-    atom.workspaceView.command 'asciidoc-preview:toggle-show-title', ->
-      atom.config.toggle('asciidoc-preview.showTitle')
-
-    atom.workspaceView.command 'asciidoc-preview:toggle-compat-mode', ->
-      atom.config.toggle('asciidoc-preview.compatMode')
-
-    atom.workspaceView.command 'asciidoc-preview:toggle-show-toc', ->
-      atom.config.toggle('asciidoc-preview.showToc')
-
-    atom.workspaceView.command 'asciidoc-preview:toggle-show-numbered-headings', ->
-      atom.config.toggle('asciidoc-preview.showNumberedHeadings')
-
-    atom.workspaceView.command 'asciidoc-preview:toggle-render-on-save-only', ->
-      atom.config.toggle('asciidoc-preview.renderOnSaveOnly')
-
-    atom.workspaceView.command 'asciidoc-preview:toggle-render-on-save-only', =>
-      @changeRenderMode()
-
-    atom.workspaceView.on 'pane-container:active-pane-item-changed', =>
-      @changeRenderMode()
-
-
-
-    atom.workspace.registerOpener (uriToOpen) ->
+    atom.workspace.addOpener (uriToOpen) ->
       try
         {protocol, host, pathname} = url.parse(uriToOpen)
       catch error
@@ -91,7 +82,7 @@ module.exports =
       @providers.push(provider)
 
   checkFile: ->
-    editor = atom.workspace.getActiveEditor()
+    editor = atom.workspace.getActiveTextEditor()
     return unless editor?
 
     grammars = atom.config.get('asciidoc-preview.grammars') ? []
@@ -115,14 +106,20 @@ module.exports =
         previousActivePane.activate()
 
   changeRenderMode: ->
-    atom.workspaceView.find('#asciidoc-changemode')?.remove()
+    document.querySelector('#asciidoc-changemode')?.remove()
     return unless @checkFile()?
 
+    statusBar = document.querySelector('status-bar')
+
+    span = document.createElement("span")
+    span.setAttribute 'id', 'asciidoc-changemode'
     saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
     if saveOnly
-      atom.workspaceView.statusBar?.appendLeft("<span id='asciidoc-changemode'>Render on save<span>")
+      span.appendChild document.createTextNode("Render on save")
     else
-      atom.workspaceView.statusBar?.appendLeft("<span id='asciidoc-changemode'>Render on change<span>")
+      span.appendChild document.createTextNode("Render on change")
+
+    statusBar?.addLeftTile(item: span, priority: 100)
 
   copyHtml: ->
     editor = atom.workspace.getActiveEditor()

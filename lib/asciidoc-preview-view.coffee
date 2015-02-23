@@ -1,6 +1,6 @@
 path = require 'path'
-
-{$, $$$, ScrollView} = require 'atom'
+{Emitter, Disposable, CompositeDisposable} = require 'atom'
+{$, $$$, ScrollView} = require 'atom-space-pen-views'
 _ = require 'underscore-plus'
 fs = require 'fs-plus'
 mustache = require 'mustache'
@@ -20,15 +20,18 @@ class AsciiDocPreviewView extends ScrollView
 
   constructor: ({@editorId, filePath}) ->
     super
+    @emitter = new Emitter
+    @disposables = new CompositeDisposable
 
+  attached: ->
     if @editorId?
       @resolveEditor(@editorId)
     else
       if atom.workspace?
-        @subscribeToFilePath(filePath)
+        @subscribeToFilePath(@filePath)
       else
-        @subscribe atom.packages.once 'activated', =>
-          @subscribeToFilePath(filePath)
+        @disposables.add atom.packages.onDidActivateInitialPackages =>
+          @subscribeToFilePath(@filePath)
 
   serialize: ->
     deserializer: 'AsciiDocPreviewView'
@@ -36,11 +39,17 @@ class AsciiDocPreviewView extends ScrollView
     editorId: @editorId
 
   destroy: ->
-    @unsubscribe()
+    @disposables.dispose()
+
+  onDidChangeTitle: (callback) ->
+    @emitter.on 'did-change-title', callback
+
+  onDidChangeAsciidoc: (callback) ->
+    @emitter.on 'did-change-asciidoc', callback
 
   subscribeToFilePath: (filePath) ->
     @file = new File(filePath)
-    @trigger 'title-changed'
+    @emitter.emit 'did-change-title'
     @handleEvents()
     @renderAsciiDoc()
 
@@ -49,8 +58,9 @@ class AsciiDocPreviewView extends ScrollView
       @editor = @editorForId(editorId)
 
       if @editor?
-        @trigger 'title-changed' if @editor?
+        @emitter.emit 'did-change-title' if @editor?
         @handleEvents()
+        @renderAsciiDoc()
       else
         # The editor this preview was created for has been closed so close
         # this preview since a preview cannot be rendered without an editor
@@ -59,9 +69,7 @@ class AsciiDocPreviewView extends ScrollView
     if atom.workspace?
       resolve()
     else
-      @subscribe atom.packages.once 'activated', =>
-        resolve()
-        @renderAsciiDoc()
+      @disposables.add atom.packages.onDidActivateInitialPackages(resolve)
 
   editorForId: (editorId) ->
     for editor in atom.workspace.getEditors()
@@ -69,30 +77,33 @@ class AsciiDocPreviewView extends ScrollView
     null
 
   handleEvents: ->
-    @subscribe atom.syntax, 'grammar-added grammar-updated', _.debounce((=> @renderAsciiDoc()), 250)
-    @subscribe this, 'core:move-up', => @scrollUp()
-    @subscribe this, 'core:move-down', => @scrollDown()
-    @subscribe this, 'core:save-as', =>
-      @saveAs()
-      false
+    @disposables.add atom.grammars.onDidAddGrammar => _.debounce((=> @renderAsciiDoc()), 250)
+    @disposables.add atom.grammars.onDidUpdateGrammar _.debounce((=> @renderAsciiDoc()), 250)
 
-    @subscribe this, 'core:copy', =>
-      return false if @copyToClipboard()
-
-    @subscribeToCommand atom.workspaceView, 'asciidoc-preview:zoom-in', =>
-      zoomLevel = parseFloat(@css('zoom')) or 1
-      @css('zoom', zoomLevel + .1)
-
-    @subscribeToCommand atom.workspaceView, 'asciidoc-preview:zoom-out', =>
-      zoomLevel = parseFloat(@css('zoom')) or 1
-      @css('zoom', zoomLevel - .1)
-
-    @subscribeToCommand atom.workspaceView, 'asciidoc-preview:reset-zoom', =>
-      @css('zoom', 1)
+    atom.commands.add @element,
+      'core:move-up': =>
+        @scrollUp()
+      'core:move-down': =>
+        @scrollDown()
+      'core:save-as': (event) =>
+        event.stopPropagation()
+        @saveAs()
+      'core:copy': (event) =>
+        event.stopPropagation() if @copyToClipboard()
+      'asciidoc-preview:zoom-in': =>
+        zoomLevel = parseFloat(@css('zoom')) or 1
+        @css('zoom', zoomLevel + .1)
+      'asciidoc-preview:zoom-out': =>
+        zoomLevel = parseFloat(@css('zoom')) or 1
+        @css('zoom', zoomLevel - .1)
+      'asciidoc-preview:reset-zoom': =>
+        @css('zoom', 1)
 
     changeHandler = =>
       @renderAsciiDoc()
-      pane = atom.workspace.paneForUri(@getUri())
+
+      # TODO: Remove paneForURI call when ::paneForItem is released
+      pane = atom.workspace.paneForItem?(this) ? atom.workspace.paneForURI(@getURI())
       if pane? and pane isnt atom.workspace.getActivePane()
         pane.activateItem(this)
 
@@ -101,18 +112,22 @@ class AsciiDocPreviewView extends ScrollView
       changeHandler() if !saveOnly
 
     if @file?
-      @subscribe(@file, 'contents-changed', changeHandler)
+      @disposables.add @file.onDidChange(changeHandler)
     else if @editor?
-      @subscribe(@editor.getBuffer(), 'contents-modified', renderOnChange)
-      @subscribe(@editor.getBuffer(), 'saved', changeHandler)
-      @subscribe @editor, 'path-changed', => @trigger 'title-changed'
+      @disposables.add @editor.getBuffer().onDidStopChanging =>
+        renderOnChange()
+      @disposables.add @editor.onDidChangePath => @emitter.emit 'did-change-title'
+      @disposables.add @editor.getBuffer().onDidSave =>
+        renderOnChange()
+      @disposables.add @editor.getBuffer().onDidReload =>
+        renderOnChange()
 
-    @subscribe atom.config.observe 'asciidoc-preview.showTitle', callNow: false, changeHandler
-    @subscribe atom.config.observe 'asciidoc-preview.compatMode', callNow: false, changeHandler
-    @subscribe atom.config.observe 'asciidoc-preview.safeMode', callNow: false, changeHandler
-    @subscribe atom.config.observe 'asciidoc-preview.defaultAttributes', callNow: false, changeHandler
-    @subscribe atom.config.observe 'asciidoc-preview.showToc', callNow: false, changeHandler
-    @subscribe atom.config.observe 'asciidoc-preview.showNumberedHeadings', callNow: false, changeHandler
+    @disposables.add atom.config.onDidChange 'asciidoc-preview.showTitle', changeHandler
+    @disposables.add atom.config.onDidChange 'asciidoc-preview.compatMode', changeHandler
+    @disposables.add atom.config.onDidChange 'asciidoc-preview.safeMode', changeHandler
+    @disposables.add atom.config.onDidChange 'asciidoc-preview.defaultAttributes', changeHandler
+    @disposables.add atom.config.onDidChange 'asciidoc-preview.showToc', changeHandler
+    @disposables.add atom.config.onDidChange 'asciidoc-preview.showNumberedHeadings', changeHandler
 
   renderAsciiDoc: ->
     @showLoading()
@@ -127,7 +142,9 @@ class AsciiDocPreviewView extends ScrollView
       @html(html)
       @enableAnchorScroll html, (top) =>
         @scrollTop top
-      @trigger('asciidoc-preview:asciidoc-changed')
+
+      @emitter.emit 'did-change-asciidoc'
+      @originalTrigger('asciidoc-preview:asciidoc-changed')
 
   enableAnchorScroll: (html, callback) ->
     html = $(html)

@@ -1,9 +1,11 @@
 path = require 'path'
 _ = require 'underscore-plus'
 cheerio = require 'cheerio'
-{$, EditorView, Task} = require 'atom'
+{$} = require 'atom-space-pen-views'
+{Task} = require 'atom'
+# use the native highlights
 pathWatcherDirectory = atom.packages.resolvePackagePath('markdown-preview')
-Highlights = require path.join(pathWatcherDirectory, 'node_modules', 'highlights')
+Highlights = require path.join(pathWatcherDirectory, '..', 'highlights')
 {scopeForFenceName} = require './extension-helper'
 
 highlighter = null

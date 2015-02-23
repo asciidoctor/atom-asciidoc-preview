@@ -5,7 +5,7 @@
   "description": "Show an HTML preview for the AsciiDoc content in the current editor",
   "repository": "https://github.com/asciidoctor/atom-asciidoc-preview",
   "license": "MIT",
-  "stylesheets": [
+  "styles": [
     "fontawesome",
     "asciidoc-preview"
   ],
@@ -13,6 +13,7 @@
     "atom": ">0.121.0"
   },
   "dependencies": {
+    "atom-space-pen-views": "^2.0.0",
     "asciidoctor.js": "1.5.2",
     "cheerio": "^0.15.0",
     "fs-plus": "2.x",
