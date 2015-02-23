@@ -1,3 +1,10 @@
+## 0.4.3
+* Fix #52: Atom.Object.defineProperty.get is deprecated.
+* Fix #55: Style elements
+* Fix #56, Fix #62: Use the `atom-text-editor` tag instead of the `editor-colors` class.
+* Fix #57: Use the `atom-workspace` tag instead of the `workspace` class.
+* Fix #63: Fails to load in Atom 0.182.0
+
 ## 0.4.2
 * Fix #45: Update Package To Use New autocomplete-plus API (thanks to @joefitzgerald)
 * Fix #48: fix include:: (thanks to @cobomi)
