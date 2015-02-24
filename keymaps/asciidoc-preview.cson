@@ -1,5 +1,5 @@
-'.atom-workspace':
-  'ctrl-A': 'asciidoc-preview:toggle'
+'atom-workspace, atom-workspace atom-text-editor':
+  'ctrl-shift-a': 'asciidoc-preview:toggle'
   'ctrl-alt-a': 'asciidoc-preview:toggle-render-on-save-only'
 
 '.asciidoc-preview':
