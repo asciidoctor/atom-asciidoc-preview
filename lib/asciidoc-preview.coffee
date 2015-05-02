@@ -14,7 +14,7 @@ module.exports =
     compatMode: true
     showTitle: true
     safeMode: 'secure'
-    showTableOfContent: true
+    showToc: true
     showNumberedHeadings: true
     renderOnSaveOnly: false
     defaultAttributes: 'platform=opal platform-opal env=browser env-browser'
