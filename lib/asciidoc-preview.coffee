@@ -13,7 +13,7 @@ module.exports =
   configDefaults:
     compatMode: true
     showTitle: true
-    safeMode: 'secure'
+    safeMode: 'safe'
     showTableOfContent: true
     showNumberedHeadings: true
     renderOnSaveOnly: false
