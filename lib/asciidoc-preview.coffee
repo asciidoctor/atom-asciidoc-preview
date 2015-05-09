@@ -128,7 +128,14 @@ module.exports =
 
   changeRenderMode: ->
     document.querySelector('#asciidoc-changemode')?.remove()
-    return unless @checkFile()?
+    editor = @checkFile()
+    return unless editor?
+
+    uri = "asciidoc-preview://editor/#{editor.id}"
+
+    previewPane = atom.workspace.paneForURI(uri)
+    return unless previewPane?
+
 
     statusBar = document.querySelector('status-bar')
 
