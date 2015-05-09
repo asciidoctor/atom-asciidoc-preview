@@ -13,15 +13,15 @@
     "atom": ">0.121.0"
   },
   "dependencies": {
-    "atom-space-pen-views": "^2.0.0",
     "asciidoctor.js": "1.5.2",
+    "atom-space-pen-views": "^2.0.0",
     "cheerio": "^0.15.0",
     "fs-plus": "2.x",
+    "fuzzaldrin": "~1.0.0",
+    "mustache": "0.8.2",
     "opal-npm-wrapper": "0.1.x",
     "temp": "^0.6.0",
     "underscore-plus": "1.x",
-    "wrench": "1.5.x",
-    "mustache": "0.8.2",
-    "fuzzaldrin": "~1.0.0"
+    "wrench": "1.5.x"
   }
 }

@@ -11,7 +11,7 @@ Highlights = require path.join(pathWatcherDirectory, '..', 'highlights')
 highlighter = null
 
 exports.toHtml = (text, filePath, callback) ->
-
+  return unless atom.config.get('asciidoc-preview.defaultAttributes')?
   attributes= {
     defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes'),
     numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!',
@@ -89,7 +89,7 @@ tokenizeCodeBlocks = (html) ->
     codeBlock = $(preElement.firstChild)
     fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? 'text'
 
-    highlighter ?= new Highlights(registry: atom.syntax)
+    highlighter ?= new Highlights(registry: atom.grammars)
     highlightedHtml = highlighter.highlightSync
       fileContents: codeBlock.text()
       scopeName: scopeForFenceName(fenceName)

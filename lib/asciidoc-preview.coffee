@@ -10,19 +10,35 @@ module.exports =
   providers: []
   autocomplete: null
 
-  configDefaults:
-    compatMode: true
-    showTitle: true
-    safeMode: 'safe'
-    showToc: true
-    showNumberedHeadings: true
-    renderOnSaveOnly: false
-    defaultAttributes: 'platform=opal platform-opal env=browser env-browser'
-    grammars: [
-      'source.asciidoc'
-      'text.plain'
-      'text.plain.null-grammar'
-    ]
+  config:
+    compatMode:
+      type: 'boolean'
+      default: true
+    showTitle:
+      type: 'boolean'
+      default: true
+    safeMode:
+      type: 'string'
+      default: 'safe'
+    showToc:
+      type: 'boolean'
+      default: true
+    showNumberedHeadings:
+      type: 'boolean'
+      default: true
+    renderOnSaveOnly:
+      type: 'boolean'
+      default: false
+    defaultAttributes:
+      type: 'string'
+      default: 'platform=opal platform-opal env=browser env-browser'
+    grammars:
+      type: 'array'
+      default: [
+        'source.asciidoc'
+        'text.plain'
+        'text.plain.null-grammar'
+      ]
 
   activate: ->
     atom.commands.add 'atom-workspace',
@@ -30,20 +46,24 @@ module.exports =
         @toggle()
       'asciidoc-preview:copy-html': =>
         @copyHtml()
-      'asciidoc-preview:toggle-render-on-save-only': =>
-        @changeRenderMode()
       'pane-container:active-pane-item-changed': =>
         @changeRenderMode()
       'asciidoc-preview:toggle-show-title': ->
-        atom.config.toggle('asciidoc-preview.showTitle')
+        keyPath = 'asciidoc-preview.showTitle'
+        atom.config.set(keyPath, !atom.config.get(keyPath))
       'asciidoc-preview:toggle-compat-mode': ->
-        atom.config.toggle('asciidoc-preview.compatMode')
+        keyPath = 'asciidoc-preview.compatMode'
+        atom.config.set(keyPath, !atom.config.get(keyPath))
       'asciidoc-preview:toggle-show-toc': ->
-        atom.config.toggle('asciidoc-preview.showToc')
+        keyPath = 'asciidoc-preview.showToc'
+        atom.config.set(keyPath, !atom.config.get(keyPath))
       'asciidoc-preview:toggle-show-numbered-headings': ->
-        atom.config.toggle('asciidoc-preview.showNumberedHeadings')
-      'asciidoc-preview:toggle-render-on-save-only': ->
-        atom.config.toggle('asciidoc-preview.renderOnSaveOnly')
+        keyPath = 'asciidoc-preview.showNumberedHeadings'
+        atom.config.set(keyPath, !atom.config.get(keyPath))
+      'asciidoc-preview:toggle-render-on-save-only': =>
+        keyPath = 'asciidoc-preview.renderOnSaveOnly'
+        atom.config.set(keyPath, !atom.config.get(keyPath))
+        @changeRenderMode()
 
     atom.workspace.addOpener (uriToOpen) ->
       try
@@ -94,9 +114,10 @@ module.exports =
     return unless editor?
     uri = "asciidoc-preview://editor/#{editor.id}"
 
-    previewPane = atom.workspace.paneForUri(uri)
+    previewPane = atom.workspace.paneForURI(uri)
     if previewPane
-      previewPane.destroyItem(previewPane.itemForUri(uri))
+      previewPane.destroyItem(previewPane.itemForURI(uri))
+      @changeRenderMode()
       return
 
     previousActivePane = atom.workspace.getActivePane()
@@ -111,18 +132,19 @@ module.exports =
 
     statusBar = document.querySelector('status-bar')
 
-    span = document.createElement("span")
-    span.setAttribute 'id', 'asciidoc-changemode'
+    divChangeMode = document.createElement("div")
+    divChangeMode.setAttribute 'id', 'asciidoc-changemode'
+    divChangeMode.classList.add 'inline-block'
     saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
     if saveOnly
-      span.appendChild document.createTextNode("Render on save")
+      divChangeMode.appendChild document.createTextNode("Render on save")
     else
-      span.appendChild document.createTextNode("Render on change")
+      divChangeMode.appendChild document.createTextNode("Render on change")
 
-    statusBar?.addLeftTile(item: span, priority: 100)
+    statusBar?.addLeftTile(item: divChangeMode, priority: 100)
 
   copyHtml: ->
-    editor = atom.workspace.getActiveEditor()
+    editor = atom.workspace.getActiveTextEditor()
     return unless editor?
 
     renderer ?= require './renderer'

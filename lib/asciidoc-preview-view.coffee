@@ -44,6 +44,10 @@ class AsciiDocPreviewView extends ScrollView
   onDidChangeTitle: (callback) ->
     @emitter.on 'did-change-title', callback
 
+  onDidChangeModified: (callback) ->
+    # No op to suppress deprecation warning
+    new Disposable
+
   onDidChangeAsciidoc: (callback) ->
     @emitter.on 'did-change-asciidoc', callback
 
@@ -72,7 +76,7 @@ class AsciiDocPreviewView extends ScrollView
       @disposables.add atom.packages.onDidActivateInitialPackages(resolve)
 
   editorForId: (editorId) ->
-    for editor in atom.workspace.getEditors()
+    for editor in atom.workspace.getTextEditors()
       return editor if editor.id?.toString() is editorId.toString()
     null
 
@@ -147,6 +151,15 @@ class AsciiDocPreviewView extends ScrollView
       @originalTrigger('asciidoc-preview:asciidoc-changed')
 
   enableAnchorScroll: (html, callback) ->
+    document.querySelector('#asciidoc-linkUrl')?.remove()
+    statusBar = document.querySelector('status-bar')
+    divLink = document.createElement("div")
+    divLink.setAttribute 'id', 'asciidoc-linkUrl'
+    divLink.classList.add 'inline-block'
+
+    statusBar?.addRightTile(item: divLink, priority: 300)
+
+
     html = $(html)
     for linkElement in html.find("a")
       link = $(linkElement)
@@ -155,9 +168,9 @@ class AsciiDocPreviewView extends ScrollView
           link.on 'mouseover', (e) ->
             # TODO Use constant
             cropUrl = if (hrefLink.length > 100) then hrefLink.substr(0, 97).concat('...')  else hrefLink
-            atom.workspaceView.statusBar?.prependRight("<span id='linkUrl'>#{cropUrl}<span>")
+            divLink.appendChild document.createTextNode(cropUrl)
           link.on 'mouseleave', (e) ->
-            $('#linkUrl').remove()
+            $(divLink).empty()
         continue if not hrefLink.match(/^#/)
         if target = $(hrefLink)
           continue if not target.offset()
@@ -179,7 +192,7 @@ class AsciiDocPreviewView extends ScrollView
   getIconName: ->
     "eye"
 
-  getUri: ->
+  getURI: ->
     if @file?
       "asciidoc-preview://#{@getPath()}"
     else
