@@ -1,0 +1,69 @@
+{
+  "attributes": {
+    "amp":{},
+    "apos":{},
+    "apostrophe":{},
+    "asciidoctor-version":{
+      "description":"Version of the processor"
+    },
+    "asterisk":{},
+    "backend":{
+      "description": "Backend used to render document"
+    },
+    "backslash":{},
+    "backtick":{},
+    "brvbar":{},
+    "caret":{},
+    "deg":{},
+    "docdate":{
+      "description": "Last modified date"
+    },
+    "docdatetime":{
+      "description": "Last modified date and time"
+    },
+    "docdir":{
+      "description": "Name of document directory"
+    },
+    "docfile":{
+      "description": "Name of document file"
+    },
+    "doctime":{
+      "description": "Last modified time"
+    },
+    "doctitle":{
+      "description": "The title of the document"
+    },
+    "doctype":{
+      "description": "Document’s doctype (e.g., article)"
+    },
+    "empty":{},
+    "endsb":{},
+    "gt":{},
+    "ldquo":{},
+    "localdate":{
+      "description": "Local date when rendered"
+    },
+    "localdatetime":{
+      "description": "Local date and time when rendered"
+    },
+    "localtime":{
+      "description": "Local time when rendered"
+    },
+    "lsquo":{},
+    "lt":{},
+    "nbsp":{},
+    "plus":{},
+    "quot":{},
+    "rdquo":{},
+    "rsquo":{},
+    "sp":{},
+    "space":{},
+    "startsb":{},
+    "tilde":{},
+    "two-colons":{},
+    "two-semicolons":{},
+    "vbar":{},
+    "wj":{},
+    "zwsp":{}
+  }
+}

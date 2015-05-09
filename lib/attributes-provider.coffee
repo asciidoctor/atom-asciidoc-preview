@@ -1,71 +1,71 @@
-{Range}  = require "atom"
-fuzzaldrin = require "fuzzaldrin"
 _ = require "underscore-plus"
+path = require "path"
+fs = require 'fs-plus'
 
 module.exports =
-ProviderClass: (Provider, Suggestion) ->
-  class AttributesProvider extends Provider
-    wordRegex: /\{(\b\w*[a-zA-Z_\-!]\w*\b)?/g
-    exclusive: true
+  selector: ".source.asciidoc"
+  disableForSelector: ".source.asciidoc .comment.block.asciidoc"
+  inclusionPriority: 1
+  excludeLowerPriority: true
+  filterSuggestions: true
 
-    buildSuggestions: ->
-      selection = @editor.getSelection()
-      prefix = @prefixOfSelection selection
-      return unless prefix.length
+  getSuggestions: ({editor, bufferPosition}) ->
+    prefix = @getPrefix(editor, bufferPosition)
+    return unless prefix != ""
 
-      suggestions = @findSuggestionsForPrefix prefix
-      return unless suggestions.length
-      return suggestions
+    pattern = /^:([a-zA-Z_\-!]+):/
+    textLines = editor.getText().split(/\n/)
+    currentRow = editor.getCursorScreenPosition().row
+    counter = 0
 
-    findSuggestionsForPrefix: (prefix) ->
-      prefix = prefix.replace /^\{/, ''
+    potentialAttributes = _.chain(textLines)
+      .filter((line) ->
+          counter++
+          pattern.test(line) && counter<=currentRow)
+      .map((rawAttribute) ->
+          pattern.exec(rawAttribute)[1]
+        )
+      .uniq()
+      .value()
 
-      pattern = /^:([a-zA-Z_\-!]+):/
-      textLines = @editor.getText().split(/\n/)
-      currentRow = @editor.getCursorScreenRow()
-      counter = 0
+    potentialAttributes = _.map(potentialAttributes, (attribute)->
+      value =
+        type: "variable"
+        text: attribute
+        displayText: attribute
+        rightLabel: "local"
+    )
 
-      potentialAttributes = _.chain(textLines)
-        .filter((line) ->
-            counter++
-            pattern.test(line) && counter<=currentRow)
-        .map((rawAttribute) ->
-            pattern.exec(rawAttribute)[1]
-          )
-        .uniq()
-        .value()
+    asciidocAttr = _.map(@attributes, (attribute, key)->
+      value =
+          type: "variable"
+          text: key
+          displayText: key
+          rightLabel: "asciidoc"
+          description: attribute.description
+    )
 
-      potentialAttributes= potentialAttributes
-        .concat ['lt', 'gt', 'amp', 'startsb', 'endsb', 'vbar', 'caret', 'asterisk']
-        .concat ['tilde', 'apostrophe', 'backslash', 'backtick', 'two-colons', 'two-semicolons']
-        .concat ['empty', 'sp', 'space', 'nbsp', 'zwsp', 'wj', 'apos', 'quot', 'lsquo', 'rsquo']
-        .concat ['ldquo', 'rdquo', 'deg', 'plus', 'brvbar']
-        .concat ['asciidoctor-version', 'backend', 'docdate', 'docdatetime', 'docdir', 'docfile', 'doctime']
-        .concat ['doctitle', 'doctype', 'localdate', 'localdatetime', 'localtime']
+    potentialAttributes= potentialAttributes.concat asciidocAttr
 
-      potentialAttributes= _.sortBy(potentialAttributes)
+    potentialAttributes= _.sortBy(potentialAttributes, (_attribute)->
+      _attribute.text.toLowerCase()
+    )
 
-      # Filter the words using fuzzaldrin
-      words = fuzzaldrin.filter potentialAttributes, prefix
+    new Promise (resolve) ->
+      resolve(potentialAttributes)
 
-      # Builds suggestions for the words
-      suggestions = for word in words when word isnt prefix
-        new Suggestion this, word: word, prefix: prefix, label: "{#{word}} - Asciidoc"
+  getPrefix: (editor, bufferPosition) ->
+    # Whatever your prefix regex might be
+    regex = /\{(\b\w*[a-zA-Z_\-!]\w*\b)?/g
 
-      return suggestions
+    # Get the text for the line up to the triggered buffer position
+    line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
 
-    confirm: (suggestion) ->
-      selection = @editor.getSelection()
-      startPosition = selection.getBufferRange().start
-      buffer = @editor.getBuffer()
+    # Match the regex to the line, and return the match
+    line.match(regex)?[0] or ""
 
-      # Replace the prefix with the body
-      cursorPosition = @editor.getCursorBufferPosition()
-      buffer.delete Range.fromPointWithDelta(cursorPosition, 0, -suggestion.prefix.length)
-      @editor.insertText "#{suggestion.word}"
-
-      # Move the cursor behind the body
-      suffixLength = suggestion.word.length - suggestion.prefix.length + 1
-      @editor.setSelectedBufferRange [startPosition, [startPosition.row, startPosition.column + suffixLength]]
-
-      return false # Don't fall back to the default behavior
+  loadCompletions: ->
+    @attributes = {}
+    fs.readFile path.resolve(__dirname, "..", "completions.json"), (error, content) =>
+      {@attributes} = JSON.parse(content) unless error?
+      return
