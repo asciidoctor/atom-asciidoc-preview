@@ -5,6 +5,7 @@ Guillaume Grossetie <https://github.com/Mogztter[@Mogztter]>; Anthonny QuÃ©rou
 // Settings:
 :page-tags: [release, asciidoctor.js]
 :compat-mode!:
+:source-highlighter: pygments
 ifndef::imagesdir[:imagesdir: ../images]
 // URIs:
 :uri-bower: http://bower.io
@@ -95,15 +96,9 @@ The `asciidoctor-all.min.js` is a `minified` version and includes Asciidoctor co
 
 Here is a simple example that converts AsciiDoc to HTML5 using the `doctype: 'inline'` option and `showtitle` attribute:
 
-[source,javascript]
-----
-var content = "http://asciidoctor.org[*Asciidoctor*] " +
-    "running on http://opalrb.org[_Opal_] " +
-    "brings AsciiDoc to the browser!";
-var options = Opal.hash2(['doctype', 'attributes'], {doctype: 'inline', attributes: ['showtitle']});
-var html = Opal.Asciidoctor.$convert(asciidoc, options);
-console.log(html);
-----
+TEST
+
+include::include.adoc[]
 
 See the {uri-frontend-guide}[Front-end development guide] to learn more about the Bower package.
 

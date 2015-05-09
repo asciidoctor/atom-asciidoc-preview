@@ -1,2 +1,9 @@
-This is a demonstration of
-And this is the preamble of this document.
+[source,javascript]
+----
+var content = "http://asciidoctor.org[*Asciidoctor*] " +
+    "running on http://opalrb.org[_Opal_] " +
+    "brings AsciiDoc to the browser!";
+var options = Opal.hash2(['doctype', 'attributes'], {doctype: 'inline', attributes: ['showtitle']});
+var html = Opal.Asciidoctor.$convert(asciidoc, options);
+console.log(html);
+----
