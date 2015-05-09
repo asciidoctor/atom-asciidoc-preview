@@ -1,10 +1,21 @@
-'atom-workspace, atom-workspace atom-text-editor':
+'.platform-win32 atom-workspace, .platform-win32 atom-workspace atom-text-editor, .platform-linux atom-workspace, .platform-linux atom-workspace atom-text-editor':
   'ctrl-shift-a': 'asciidoc-preview:toggle'
   'ctrl-alt-a': 'asciidoc-preview:toggle-render-on-save-only'
 
-'.asciidoc-preview':
+'.platform-darwin atom-workspace, .platform-darwin atom-workspace atom-text-editor':
+  'cmd-shift-a': 'asciidoc-preview:toggle'
+  'cmd-ctrl-a': 'asciidoc-preview:toggle-render-on-save-only'
+
+'.platform-darwin .asciidoc-preview':
   'cmd-+': 'asciidoc-preview:zoom-in'
   'cmd-=': 'asciidoc-preview:zoom-in'
   'cmd--': 'asciidoc-preview:zoom-out'
   'cmd-_': 'asciidoc-preview:zoom-out'
   'cmd-0': 'asciidoc-preview:reset-zoom'
+
+'.platform-win32 .asciidoc-preview, .platform-linux .asciidoc-preview':
+  'ctrl-+': 'asciidoc-preview:zoom-in'
+  'ctrl-=': 'asciidoc-preview:zoom-in'
+  'ctrl--': 'asciidoc-preview:zoom-out'
+  'ctrl-_': 'asciidoc-preview:zoom-out'
+  'ctrl-0': 'asciidoc-preview:reset-zoom'
