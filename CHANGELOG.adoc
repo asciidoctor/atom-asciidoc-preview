@@ -1,3 +1,13 @@
+## 0.5.0
+* Fix #70 #71 #74 #75 #76 #77 #78 #79 #80 #81 #90: Atom xxx is deprecated
+* Fix #88: Force highlight.js in default attributes
+* Fix #73: The status "Render on ..." is now visible when the preview is open
+* Fix #67: Use div instead of span in status bar
+* Fix #64: Add specific mapping for darwin, win32 and linux
+* Fix #54: Use New autocomplete-plus API, add some description
+* Fix #86: make "safe" the default safe mode (thanks to @mojavelinux)
+* Fix #85: fix name of default toc config setting (thanks to @mojavelinux)
+
 ## 0.4.3
 * Fix #52: Atom.Object.defineProperty.get is deprecated.
 * Fix #55: Style elements
