@@ -1,3 +1,6 @@
+## 0.5.1
+* Fix #96: [object Object].view is deprecated
+
 ## 0.5.0
 * Fix #70 #71 #74 #75 #76 #77 #78 #79 #80 #81 #90: Atom xxx is deprecated
 * Fix #88: Force highlight.js in default attributes
