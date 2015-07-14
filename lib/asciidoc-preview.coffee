@@ -27,7 +27,7 @@ module.exports =
       default: false
     defaultAttributes:
       type: 'string'
-      default: 'platform=opal platform-opal env=browser env-browser source-highlighter=highlight.js'
+      default: 'platform=opal platform-opal env=browser env-browser source-highlighter=highlight.js data-uri!'
     grammars:
       type: 'array'
       default: [
