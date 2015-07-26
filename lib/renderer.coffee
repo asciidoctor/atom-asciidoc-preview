@@ -12,12 +12,12 @@ highlighter = null
 
 exports.toHtml = (text, filePath, callback) ->
   return unless atom.config.get('asciidoc-preview.defaultAttributes')?
-  attributes= {
+  attributes = {
     defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes'),
     numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!',
     showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!',
     compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else '',
-    showtoc: if atom.config.get('asciidoc-preview.showToc')  then 'toc=preamble toc2!' else 'toc! toc2!',
+    toctype: calculateTocType(),
     safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe',
     doctype: atom.config.get('asciidoc-preview.docType') or "article",
     opalPwd: window.location.href
@@ -38,6 +38,16 @@ exports.toText = (text, filePath, callback) ->
     else
       string = $(document.createElement('div')).append(html)[0].innerHTML
       callback(error, string)
+
+calculateTocType = () ->
+  if (atom.config.get('asciidoc-preview.tocType') == 'none')
+    return ""
+  # NOTE: 'auto' (blank option in asciidoctor) is currently not supported but
+  # this section is left as a reminder of the expected behaviour
+  else if (atom.config.get('asciidoc-preview.tocType') == 'auto')
+    return "toc! toc2!"
+  else
+    return "toc=#{atom.config.get('asciidoc-preview.tocType')} toc2!"
 
 sanitize = (html) ->
   o = cheerio.load(html)

@@ -14,7 +14,14 @@
     {label: 'Copy', command: 'core:copy'}
     {label: 'Save As HTML\u2026', command: 'core:save-as'}
     {label: 'Toggle Document Title', command: 'asciidoc-preview:toggle-show-title'}
-    {label: 'Toggle Table of Contents', command: 'asciidoc-preview:toggle-show-toc'}
+    {
+      label: 'Show Table of Contents'
+      submenu: [
+        {label: 'none', command: 'asciidoc-preview:set-toc-none'}
+        {label: 'preamble', command: 'asciidoc-preview:set-toc-preamble'}
+        {label: 'macro', command: 'asciidoc-preview:set-toc-macro'}
+      ]
+    }
     {label: 'Toggle Heading Numbers', command: 'asciidoc-preview:toggle-show-numbered-headings'}
     {label: 'Toggle Compat Mode', command: 'asciidoc-preview:toggle-compat-mode'}
   ]

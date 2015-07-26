@@ -16,9 +16,11 @@ module.exports =
     safeMode:
       type: 'string'
       default: 'safe'
-    showToc:
-      type: 'boolean'
-      default: true
+    tocType:
+      title: 'Show Table of Contents'
+      type: 'string'
+      default: 'preamble'
+      enum: ['none','preamble','macro']
     showNumberedHeadings:
       type: 'boolean'
       default: true
@@ -52,9 +54,15 @@ module.exports =
       'asciidoc-preview:toggle-compat-mode': ->
         keyPath = 'asciidoc-preview.compatMode'
         atom.config.set(keyPath, !atom.config.get(keyPath))
-      'asciidoc-preview:toggle-show-toc': ->
-        keyPath = 'asciidoc-preview.showToc'
-        atom.config.set(keyPath, !atom.config.get(keyPath))
+      'asciidoc-preview:set-toc-none': ->
+        keyPath = 'asciidoc-preview.tocType'
+        atom.config.set(keyPath, 'none')
+      'asciidoc-preview:set-toc-preamble': ->
+        keyPath = 'asciidoc-preview.tocType'
+        atom.config.set(keyPath, 'preamble')
+      'asciidoc-preview:set-toc-macro': ->
+        keyPath = 'asciidoc-preview.tocType'
+        atom.config.set(keyPath, 'macro')
       'asciidoc-preview:toggle-show-numbered-headings': ->
         keyPath = 'asciidoc-preview.showNumberedHeadings'
         atom.config.set(keyPath, !atom.config.get(keyPath))
