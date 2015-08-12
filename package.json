@@ -1,7 +1,7 @@
 {
   "name": "asciidoc-preview",
   "main": "./lib/asciidoc-preview",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Show an HTML preview for the AsciiDoc content in the current editor",
   "repository": "https://github.com/asciidoctor/atom-asciidoc-preview",
   "license": "MIT",
