@@ -1,3 +1,7 @@
+## 0.5.2
+* Feat #100: improved toc configuration using a select option instead of a toogle (thanks to @abelsromero)
+* Fix #97: Attribute :data-uri: causes asciidoc-preview to hang (thanks to @akhayyat #98)
+
 ## 0.5.1
 * Fix #96: [object Object].view is deprecated
 
