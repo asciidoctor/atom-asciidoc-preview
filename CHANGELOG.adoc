@@ -1,4 +1,4 @@
-## 0.5.2
+## 0.6.0
 * Feat #100: improved toc configuration using a select option instead of a toogle (thanks to @abelsromero)
 * Fix #97: Attribute :data-uri: causes asciidoc-preview to hang (thanks to @akhayyat #98)
 
