@@ -7,6 +7,7 @@ module.exports = (text, attributes, filePath) ->
 
   concatAttributes = attributes.defaultAttributes.concat(' icons=font@ ')
                     .concat(attributes.numbered).concat(' ')
+                    .concat(attributes.skipfrontmatter).concat(' ')
                     .concat(attributes.showtitle).concat(' ')
                     .concat(attributes.compatmode).concat(' ')
                     .concat(attributes.toctype)
