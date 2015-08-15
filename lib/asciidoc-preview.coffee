@@ -21,6 +21,9 @@ module.exports =
       type: 'string'
       default: 'preamble'
       enum: ['none','preamble','macro']
+    skipFrontMatter:
+      type: 'boolean'
+      default: true
     showNumberedHeadings:
       type: 'boolean'
       default: true
@@ -63,6 +66,9 @@ module.exports =
       'asciidoc-preview:set-toc-macro': ->
         keyPath = 'asciidoc-preview.tocType'
         atom.config.set(keyPath, 'macro')
+      'asciidoc-preview:toggle-skip-front-matter': ->
+        keyPath = 'asciidoc-preview.skipFrontMatter'
+        atom.config.set(keyPath, !atom.config.get(keyPath))
       'asciidoc-preview:toggle-show-numbered-headings': ->
         keyPath = 'asciidoc-preview.showNumberedHeadings'
         atom.config.set(keyPath, !atom.config.get(keyPath))

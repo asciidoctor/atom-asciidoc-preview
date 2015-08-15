@@ -22,6 +22,7 @@
         {label: 'macro', command: 'asciidoc-preview:set-toc-macro'}
       ]
     }
+    {label: 'Toggle Front Matter', command: 'asciidoc-preview:toggle-skip-front-matter'}
     {label: 'Toggle Heading Numbers', command: 'asciidoc-preview:toggle-show-numbered-headings'}
     {label: 'Toggle Compat Mode', command: 'asciidoc-preview:toggle-compat-mode'}
   ]
