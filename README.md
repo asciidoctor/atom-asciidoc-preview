@@ -8,4 +8,4 @@ More options are accessible by right-clicking on the preview.
 
 Thanks to @kevinsawicki! I just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [asciidoctorjs-npm-wrapper](https://github.com/anthonny/asciidoctorjs-npm-wrapper).
 
-![AsciiDoc Preview demo](https://raw.githubusercontent.com/Xcodo/atom-asciidoc-preview/master/atom-asciidoc-preview-demo.gif)
+![AsciiDoc Preview demo](https://raw.githubusercontent.com/asciidoctor/atom-asciidoc-preview/master/atom-asciidoc-preview-demo.gif)
