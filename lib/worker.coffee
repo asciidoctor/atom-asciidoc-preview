@@ -14,7 +14,7 @@ module.exports = (text, attributes, filePath) ->
 
   folder = path.dirname(filePath)
   Opal.ENV['$[]=']("PWD", path.dirname(attributes.opalPwd))
-  opts = Opal.hash2 ['base_dir', 'safe', 'doctype', 'attributes'],
+  opts = Opal.hash
     'base_dir': folder,
     'safe': attributes.safemode,
     'doctype': attributes.doctype,
