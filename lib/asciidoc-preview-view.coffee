@@ -173,7 +173,7 @@ class AsciiDocPreviewView extends ScrollView
           link.on 'mouseleave', (e) ->
             $(divLink).empty()
         continue if not hrefLink.match(/^#/)
-        if target = $(hrefLink)
+        if target = $(hrefLink.replace(/(\/|:|\.|\[|\]|,|\)|\()/g, '\\$1'))
           continue if not target.offset()
           # TODO Use tab height variable instead of 43
           top = target.offset().top - 43
