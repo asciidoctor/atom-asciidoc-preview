@@ -6,6 +6,6 @@ You can install this module from the command-line by typing `apm install asciido
 You can toggle the preview pane, which appears to the right of the editor, using the key combination `ctrl-shift-a`.
 More options are accessible by right-clicking on the preview.
 
-Thanks to @kevinsawicki! I just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [asciidoctorjs-npm-wrapper](https://github.com/anthonny/asciidoctorjs-npm-wrapper).
+Thanks to @kevinsawicki! I just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js).
 
 ![AsciiDoc Preview demo](https://raw.githubusercontent.com/asciidoctor/atom-asciidoc-preview/master/atom-asciidoc-preview-demo.gif)
