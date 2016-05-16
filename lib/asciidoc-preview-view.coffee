@@ -173,7 +173,9 @@ class AsciiDocPreviewView extends ScrollView
           link.on 'mouseleave', (e) ->
             $(divLink).empty()
         continue if not hrefLink.match(/^#/)
-        if target = $(hrefLink)
+        # Because jQuery uses CSS syntax for selecting elements, some characters are interpreted as CSS notation.
+        # In order to tell jQuery to treat these characters literally rather than as CSS notation, they must be "escaped" by placing two backslashes in front of them.
+        if target = $(hrefLink.replace(/(\/|:|\.|\[|\]|,|\)|\()/g, '\\$1'))
           continue if not target.offset()
           # TODO Use tab height variable instead of 43
           top = target.offset().top - 43
