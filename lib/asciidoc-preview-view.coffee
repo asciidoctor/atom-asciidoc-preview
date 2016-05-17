@@ -111,19 +111,19 @@ class AsciiDocPreviewView extends ScrollView
       if pane? and pane isnt atom.workspace.getActivePane()
         pane.activateItem(this)
 
-    renderOnChange = =>
+    renderOnChange = ->
       saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
-      changeHandler() if !saveOnly
+      changeHandler() if not saveOnly
 
     if @file?
       @disposables.add @file.onDidChange(changeHandler)
     else if @editor?
-      @disposables.add @editor.getBuffer().onDidStopChanging =>
+      @disposables.add @editor.getBuffer().onDidStopChanging ->
         renderOnChange()
       @disposables.add @editor.onDidChangePath => @emitter.emit 'did-change-title'
-      @disposables.add @editor.getBuffer().onDidSave =>
+      @disposables.add @editor.getBuffer().onDidSave ->
         renderOnChange()
-      @disposables.add @editor.getBuffer().onDidReload =>
+      @disposables.add @editor.getBuffer().onDidReload ->
         renderOnChange()
 
     @disposables.add atom.config.onDidChange 'asciidoc-preview.showTitle', changeHandler
@@ -216,7 +216,7 @@ class AsciiDocPreviewView extends ScrollView
 
   showLoading: ->
     @loading = true
-    if !@firstloadingdone?
+    if not @firstloadingdone?
       @firstloadingdone = true
       @html $$$ ->
         @div class: 'asciidoc-spinner', 'Loading AsciiDoc\u2026'

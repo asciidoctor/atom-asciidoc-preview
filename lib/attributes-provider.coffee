@@ -1,17 +1,17 @@
-_ = require "underscore-plus"
-path = require "path"
+_ = require 'underscore-plus'
+path = require 'path'
 fs = require 'fs-plus'
 
 module.exports =
-  selector: ".source.asciidoc"
-  disableForSelector: ".source.asciidoc .comment.block.asciidoc"
+  selector: '.source.asciidoc'
+  disableForSelector: '.source.asciidoc .comment.block.asciidoc'
   inclusionPriority: 1
   excludeLowerPriority: true
   filterSuggestions: true
 
   getSuggestions: ({editor, bufferPosition}) ->
     prefix = @getPrefix(editor, bufferPosition)
-    return unless prefix != ""
+    return unless prefix isnt ''
 
     pattern = /^:([a-zA-Z_\-!]+):/
     textLines = editor.getText().split(/\n/)
@@ -20,36 +20,34 @@ module.exports =
 
     potentialAttributes = _.chain(textLines)
       .filter((line) ->
-          counter++
-          pattern.test(line) && counter<=currentRow)
-      .map((rawAttribute) ->
-          pattern.exec(rawAttribute)[1]
-        )
+        counter++
+        pattern.test(line) and counter<=currentRow)
+      .map (rawAttribute) ->
+        pattern.exec(rawAttribute)[1]
       .uniq()
       .value()
 
-    potentialAttributes = _.map(potentialAttributes, (attribute)->
+    potentialAttributes = _.map(potentialAttributes, (attribute) ->
       value =
-        type: "variable"
+        type: 'variable'
         text: attribute
         displayText: attribute
-        rightLabel: "local"
+        rightLabel: 'local'
     )
 
-    asciidocAttr = _.map(@attributes, (attribute, key)->
+    asciidocAttr = _.map(@attributes, (attribute, key) ->
       value =
-          type: "variable"
+          type: 'variable'
           text: key
           displayText: key
-          rightLabel: "asciidoc"
+          rightLabel: 'asciidoc'
           description: attribute.description
     )
 
-    potentialAttributes= potentialAttributes.concat asciidocAttr
+    potentialAttributes = potentialAttributes.concat asciidocAttr
 
-    potentialAttributes= _.sortBy(potentialAttributes, (_attribute)->
+    potentialAttributes = _.sortBy potentialAttributes, (_attribute) ->
       _attribute.text.toLowerCase()
-    )
 
     new Promise (resolve) ->
       resolve(potentialAttributes)
@@ -62,10 +60,10 @@ module.exports =
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
 
     # Match the regex to the line, and return the match
-    line.match(regex)?[0] or ""
+    line.match(regex)?[0] or ''
 
   loadCompletions: ->
     @attributes = {}
-    fs.readFile path.resolve(__dirname, "..", "completions.json"), (error, content) =>
+    fs.readFile path.resolve(__dirname, '..', 'completions.json'), (error, content) =>
       {@attributes} = JSON.parse(content) unless error?
       return
