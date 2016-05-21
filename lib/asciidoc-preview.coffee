@@ -20,7 +20,7 @@ module.exports =
       title: 'Show Table of Contents'
       type: 'string'
       default: 'preamble'
-      enum: ['none','preamble','macro']
+      enum: ['none', 'preamble', 'macro']
     skipFrontMatter:
       type: 'boolean'
       default: true
@@ -53,10 +53,10 @@ module.exports =
         @changeRenderMode()
       'asciidoc-preview:toggle-show-title': ->
         keyPath = 'asciidoc-preview.showTitle'
-        atom.config.set(keyPath, !atom.config.get(keyPath))
+        atom.config.set(keyPath, not atom.config.get(keyPath))
       'asciidoc-preview:toggle-compat-mode': ->
         keyPath = 'asciidoc-preview.compatMode'
-        atom.config.set(keyPath, !atom.config.get(keyPath))
+        atom.config.set(keyPath, not atom.config.get(keyPath))
       'asciidoc-preview:set-toc-none': ->
         keyPath = 'asciidoc-preview.tocType'
         atom.config.set(keyPath, 'none')
@@ -68,13 +68,13 @@ module.exports =
         atom.config.set(keyPath, 'macro')
       'asciidoc-preview:toggle-skip-front-matter': ->
         keyPath = 'asciidoc-preview.skipFrontMatter'
-        atom.config.set(keyPath, !atom.config.get(keyPath))
+        atom.config.set(keyPath, not atom.config.get(keyPath))
       'asciidoc-preview:toggle-show-numbered-headings': ->
         keyPath = 'asciidoc-preview.showNumberedHeadings'
-        atom.config.set(keyPath, !atom.config.get(keyPath))
+        atom.config.set(keyPath, not atom.config.get(keyPath))
       'asciidoc-preview:toggle-render-on-save-only': =>
         keyPath = 'asciidoc-preview.renderOnSaveOnly'
-        atom.config.set(keyPath, !atom.config.get(keyPath))
+        atom.config.set(keyPath, not atom.config.get(keyPath))
         @changeRenderMode()
 
     atom.workspace.addOpener (uriToOpen) ->
@@ -153,7 +153,7 @@ module.exports =
 
     renderer ?= require './renderer'
     text = editor.getSelectedText() or editor.getText()
-    renderer.toText text, editor.getPath(), (error, html) =>
+    renderer.toText text, editor.getPath(), (error, html) ->
       if error
         console.warn('Copying AsciiDoc as HTML failed', error)
       else
