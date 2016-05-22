@@ -12,13 +12,6 @@
   "engines": {
     "atom": ">0.121.0"
   },
-  "providedServices": {
-    "autocomplete.provider": {
-      "versions": {
-        "2.0.0": "provide"
-      }
-    }
-  },
   "dependencies": {
     "asciidoctor.js": "1.5.5-1",
     "atom-space-pen-views": "2.2.0",

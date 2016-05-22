@@ -1,7 +1,6 @@
 url = require 'url'
 
 AsciiDocPreviewView = require './asciidoc-preview-view'
-attributesProvider = require "./attributes-provider"
 renderer = null # Defer until used
 
 module.exports =
@@ -42,8 +41,6 @@ module.exports =
       ]
 
   activate: ->
-    attributesProvider.loadCompletions()
-
     atom.commands.add 'atom-workspace',
       'asciidoc-preview:toggle': =>
         @toggle()
@@ -94,9 +91,6 @@ module.exports =
         new AsciiDocPreviewView(editorId: pathname.substring(1))
       else
         new AsciiDocPreviewView(filePath: pathname)
-
-  provide: ->
-    attributesProvider
 
   checkFile: ->
     editor = atom.workspace.getActiveTextEditor()
