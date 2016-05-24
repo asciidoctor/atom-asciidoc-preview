@@ -20,14 +20,11 @@
     }
   },
   "dependencies": {
-    "asciidoctor.js": "1.5.2",
-    "atom-space-pen-views": "^2.0.0",
-    "cheerio": "^0.15.0",
-    "fs-plus": "2.x",
-    "mustache": "0.8.2",
-    "opal-npm-wrapper": "0.1.x",
-    "temp": "^0.6.0",
-    "underscore-plus": "1.x",
-    "wrench": "1.5.x"
+    "asciidoctor.js": "1.5.5-1",
+    "atom-space-pen-views": "2.2.0",
+    "cheerio": "0.20.0",
+    "fs-plus": "2.8.2",
+    "mustache": "2.2.1",
+    "underscore-plus": "1.6.6"
   }
 }
