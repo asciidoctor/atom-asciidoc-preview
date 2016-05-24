@@ -8,6 +8,8 @@
 
 Shows the rendered HTML of the AsciiDoc content in the current editor.
 
+**Note:** since 1.0.0, the autocompletions have been migrated to a new package: [autocomplete-asciidoc](https://atom.io/packages/autocomplete-asciidoc)
+
 You can install this module from the command-line by typing `apm install asciidoc-preview`.
 
 You can toggle the preview pane, which appears to the right of the editor, using the key combination <kbd>ctrl-shift-a</kbd>.
