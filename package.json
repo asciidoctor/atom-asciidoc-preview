@@ -1,6 +1,6 @@
 {
   "name": "asciidoc-preview",
-  "main": "./lib/asciidoc-preview",
+  "main": "./lib/main",
   "version": "1.0.1",
   "description": "Show an HTML preview for the AsciiDoc content in the current editor",
   "repository": "https://github.com/asciidoctor/atom-asciidoc-preview",

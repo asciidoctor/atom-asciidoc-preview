@@ -52,7 +52,7 @@ class AsciiDocPreviewView extends ScrollView
     @emitter.on 'did-change-asciidoc', callback
 
   subscribeToFilePath: (filePath) ->
-    @file = new File(filePath)
+    @file = new File filePath
     @emitter.emit 'did-change-title'
     @handleEvents()
     @renderAsciiDoc()
@@ -162,7 +162,7 @@ class AsciiDocPreviewView extends ScrollView
 
 
     html = $(html)
-    for linkElement in html.find("a")
+    for linkElement in html.find('a')
       link = $(linkElement)
       if hrefLink = link.attr('href')
         do(hrefLink) ->
@@ -190,10 +190,10 @@ class AsciiDocPreviewView extends ScrollView
     else if @editor?
       "#{@editor.getTitle()} Preview"
     else
-      "AsciiDoc Preview"
+      'AsciiDoc Preview'
 
   getIconName: ->
-    "eye"
+    'eye'
 
   getURI: ->
     if @file?

@@ -79,7 +79,7 @@ sanitize = (html) ->
 
 resolveImagePaths = (html, filePath) ->
   html = $(html)
-  for imgElement in html.find("img")
+  for imgElement in html.find('img')
     img = $(imgElement)
     if src = img.attr('src')
       continue if src.match /^(https?:\/\/)/
@@ -93,7 +93,7 @@ tokenizeCodeBlocks = (html) ->
   if fontFamily = atom.config.get('editor.fontFamily')
     $(html).find('code').css('font-family', fontFamily)
 
-  for preElement in $.merge(html.filter("pre"), html.find("pre"))
+  for preElement in $.merge(html.filter('pre'), html.find('pre'))
     codeBlock = $(preElement.firstChild)
     fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? 'text'
 

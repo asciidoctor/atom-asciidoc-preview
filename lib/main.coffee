@@ -1,6 +1,6 @@
 url = require 'url'
-
 AsciiDocPreviewView = require './asciidoc-preview-view'
+
 renderer = null # Defer until used
 
 module.exports =
