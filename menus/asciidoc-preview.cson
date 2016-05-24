@@ -3,8 +3,7 @@ menu: [
   submenu: [
     label: 'AsciiDoc'
     submenu: [
-      label: 'Toggle Preview'
-    command: 'asciidoc-preview:toggle'
+      label: 'Toggle Preview', command: 'asciidoc-preview:toggle'
     ]
   ]
 ]
