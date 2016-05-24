@@ -16,6 +16,6 @@ You can toggle the preview pane, which appears to the right of the editor, using
 
 More options are accessible by right-clicking on the preview.
 
-![AsciiDoc Preview demo](https://raw.githubusercontent.com/asciidoctor/atom-asciidoc-preview/master/atom-asciidoc-preview-demo.gif)
+![AsciiDoc Preview demo](https://cloud.githubusercontent.com/assets/5674651/15512720/96199b06-21e1-11e6-9eab-56826356a4e9.gif)
 
 Thanks to @kevinsawicki! I just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js).
