@@ -5,6 +5,11 @@
   "description": "Show an HTML preview for the AsciiDoc content in the current editor",
   "repository": "https://github.com/asciidoctor/atom-asciidoc-preview",
   "license": "MIT",
+  "keywords": [
+    "asciidoctor",
+    "asciidoc",
+    "preview"
+  ],
   "styles": [
     "fontawesome",
     "asciidoc-preview"
