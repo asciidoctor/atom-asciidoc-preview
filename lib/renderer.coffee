@@ -1,11 +1,9 @@
+{$} = require 'atom-space-pen-views'
+{Task} = require 'atom'
 path = require 'path'
 _ = require 'underscore-plus'
 cheerio = require 'cheerio'
-{$} = require 'atom-space-pen-views'
-{Task} = require 'atom'
-# use the native highlights
-pathWatcherDirectory = atom.packages.resolvePackagePath('markdown-preview')
-Highlights = require path.join(pathWatcherDirectory, '..', 'highlights')
+Highlights = require 'highlights'
 {scopeForFenceName} = require './extension-helper'
 
 highlighter = null
@@ -13,14 +11,14 @@ highlighter = null
 exports.toHtml = (text, filePath, callback) ->
   return unless atom.config.get('asciidoc-preview.defaultAttributes')?
   attributes =
-    defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes'),
-    numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!',
-    skipfrontmatter: if atom.config.get('asciidoc-preview.skipFrontMatter') then 'skip-front-matter' else '',
-    showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!',
-    compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else '',
-    toctype: calculateTocType(),
-    safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe',
-    doctype: atom.config.get('asciidoc-preview.docType') or "article",
+    defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes')
+    numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!'
+    skipfrontmatter: if atom.config.get('asciidoc-preview.skipFrontMatter') then 'skip-front-matter' else ''
+    showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
+    compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else ''
+    toctype: calculateTocType()
+    safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe'
+    doctype: atom.config.get('asciidoc-preview.docType') or 'article'
     opalPwd: window.location.href
 
   taskPath = require.resolve('./worker')
