@@ -8,12 +8,14 @@
 
 Shows the rendered HTML of the AsciiDoc content in the current editor.
 
+**Note:** since 1.0.0, the autocompletions have been migrated to a new package: [autocomplete-asciidoc](https://atom.io/packages/autocomplete-asciidoc)
+
 You can install this module from the command-line by typing `apm install asciidoc-preview`.
 
 You can toggle the preview pane, which appears to the right of the editor, using the key combination <kbd>ctrl-shift-a</kbd>.
 
 More options are accessible by right-clicking on the preview.
 
-![AsciiDoc Preview demo](https://raw.githubusercontent.com/asciidoctor/atom-asciidoc-preview/master/atom-asciidoc-preview-demo.gif)
+![AsciiDoc Preview demo](https://cloud.githubusercontent.com/assets/5674651/15512720/96199b06-21e1-11e6-9eab-56826356a4e9.gif)
 
 Thanks to @kevinsawicki! I just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js).
