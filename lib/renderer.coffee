@@ -1,11 +1,9 @@
+{$} = require 'atom-space-pen-views'
+{Task} = require 'atom'
 path = require 'path'
 _ = require 'underscore-plus'
 cheerio = require 'cheerio'
-{$} = require 'atom-space-pen-views'
-{Task} = require 'atom'
-# use the native highlights
-pathWatcherDirectory = atom.packages.resolvePackagePath('markdown-preview')
-Highlights = require path.join(pathWatcherDirectory, '..', 'highlights')
+Highlights = require 'highlights'
 {scopeForFenceName} = require './extension-helper'
 
 highlighter = null
@@ -13,14 +11,14 @@ highlighter = null
 exports.toHtml = (text, filePath, callback) ->
   return unless atom.config.get('asciidoc-preview.defaultAttributes')?
   attributes =
-    defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes'),
-    numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!',
-    skipfrontmatter: if atom.config.get('asciidoc-preview.skipFrontMatter') then 'skip-front-matter' else '',
-    showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!',
-    compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else '',
-    toctype: calculateTocType(),
-    safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe',
-    doctype: atom.config.get('asciidoc-preview.docType') or "article",
+    defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes')
+    numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!'
+    skipfrontmatter: if atom.config.get('asciidoc-preview.skipFrontMatter') then 'skip-front-matter' else ''
+    showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
+    compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else ''
+    toctype: calculateTocType()
+    safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe'
+    doctype: atom.config.get('asciidoc-preview.docType') or 'article'
     opalPwd: window.location.href
 
   taskPath = require.resolve('./worker')
@@ -81,7 +79,7 @@ sanitize = (html) ->
 
 resolveImagePaths = (html, filePath) ->
   html = $(html)
-  for imgElement in html.find("img")
+  for imgElement in html.find('img')
     img = $(imgElement)
     if src = img.attr('src')
       continue if src.match /^(https?:\/\/)/
@@ -95,7 +93,7 @@ tokenizeCodeBlocks = (html) ->
   if fontFamily = atom.config.get('editor.fontFamily')
     $(html).find('code').css('font-family', fontFamily)
 
-  for preElement in $.merge(html.filter("pre"), html.find("pre"))
+  for preElement in $.merge(html.filter('pre'), html.find('pre'))
     codeBlock = $(preElement.firstChild)
     fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? 'text'
 

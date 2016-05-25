@@ -1,6 +1,6 @@
 {
   "name": "asciidoc-preview",
-  "main": "./lib/asciidoc-preview",
+  "main": "./lib/main",
   "version": "1.0.1",
   "description": "Show an HTML preview for the AsciiDoc content in the current editor",
   "repository": "https://github.com/asciidoctor/atom-asciidoc-preview",
@@ -15,14 +15,15 @@
     "asciidoc-preview"
   ],
   "engines": {
-    "atom": ">0.121.0"
+    "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
     "asciidoctor.js": "1.5.5-1",
-    "atom-space-pen-views": "2.2.0",
-    "cheerio": "0.20.0",
-    "fs-plus": "2.8.2",
-    "mustache": "2.2.1",
-    "underscore-plus": "1.6.6"
+    "atom-space-pen-views": "~2.2.0",
+    "cheerio": "~0.20.0",
+    "fs-plus": "~2.8.2",
+    "highlights": "~1.3.1",
+    "mustache": "~2.2.1",
+    "underscore-plus": "~1.6.6"
   }
 }

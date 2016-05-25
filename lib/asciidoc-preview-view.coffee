@@ -1,12 +1,10 @@
-path = require 'path'
-{Emitter, Disposable, CompositeDisposable} = require 'atom'
+{Emitter, Disposable, CompositeDisposable, File} = require 'atom'
 {$, $$$, ScrollView} = require 'atom-space-pen-views'
-_ = require 'underscore-plus'
+path = require 'path'
 fs = require 'fs-plus'
+_ = require 'underscore-plus'
 mustache = require 'mustache'
 renderer = require './renderer'
-markdownDirectory = atom.packages.resolvePackagePath('markdown-preview')
-{File} = require path.join(markdownDirectory, '..', 'pathwatcher')
 
 module.exports =
 class AsciiDocPreviewView extends ScrollView
@@ -52,7 +50,7 @@ class AsciiDocPreviewView extends ScrollView
     @emitter.on 'did-change-asciidoc', callback
 
   subscribeToFilePath: (filePath) ->
-    @file = new File(filePath)
+    @file = new File filePath
     @emitter.emit 'did-change-title'
     @handleEvents()
     @renderAsciiDoc()
@@ -162,13 +160,13 @@ class AsciiDocPreviewView extends ScrollView
 
 
     html = $(html)
-    for linkElement in html.find("a")
+    for linkElement in html.find('a')
       link = $(linkElement)
       if hrefLink = link.attr('href')
         do(hrefLink) ->
           link.on 'mouseover', (e) ->
             # TODO Use constant
-            cropUrl = if (hrefLink.length > 100) then hrefLink.substr(0, 97).concat('...')  else hrefLink
+            cropUrl = if (hrefLink.length > 100) then hrefLink.substr(0, 97).concat('...') else hrefLink
             divLink.appendChild document.createTextNode(cropUrl)
           link.on 'mouseleave', (e) ->
             $(divLink).empty()
@@ -190,10 +188,10 @@ class AsciiDocPreviewView extends ScrollView
     else if @editor?
       "#{@editor.getTitle()} Preview"
     else
-      "AsciiDoc Preview"
+      'AsciiDoc Preview'
 
   getIconName: ->
-    "eye"
+    'eye'
 
   getURI: ->
     if @file?

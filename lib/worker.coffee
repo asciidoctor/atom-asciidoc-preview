@@ -13,12 +13,12 @@ module.exports = (text, attributes, filePath) ->
                     .concat(attributes.toctype)
 
   folder = path.dirname(filePath)
-  Opal.ENV['$[]=']("PWD", path.dirname(attributes.opalPwd))
+  Opal.ENV['$[]=']('PWD', path.dirname(attributes.opalPwd))
   opts = Opal.hash
-    'base_dir': folder,
-    'safe': attributes.safemode,
-    'doctype': attributes.doctype,
-    'attributes': concatAttributes
+    base_dir: folder
+    safe: attributes.safemode
+    doctype: attributes.doctype
+    attributes: concatAttributes
 
   html = Asciidoctor.$convert(text, opts)
   callback = @async()

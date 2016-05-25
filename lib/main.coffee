@@ -1,6 +1,6 @@
 url = require 'url'
-
 AsciiDocPreviewView = require './asciidoc-preview-view'
+
 renderer = null # Defer until used
 
 module.exports =
@@ -105,17 +105,18 @@ module.exports =
     return unless editor?
     uri = "asciidoc-preview://editor/#{editor.id}"
 
-    previewPane = atom.workspace.paneForURI(uri)
+    previewPane = atom.workspace.paneForURI uri
     if previewPane
-      previewPane.destroyItem(previewPane.itemForURI(uri))
+      previewPane.destroyItem previewPane.itemForURI(uri)
       @changeRenderMode()
       return
 
     previousActivePane = atom.workspace.getActivePane()
-    atom.workspace.open(uri, split: 'right', searchAllPanes: true).done (asciidocPreview) ->
-      if asciidocPreview instanceof AsciiDocPreviewView
-        asciidocPreview.renderAsciiDoc()
-        previousActivePane.activate()
+    atom.workspace.open(uri, split: 'right', searchAllPanes: true)
+      .then (asciidocPreview) ->
+        if asciidocPreview instanceof AsciiDocPreviewView
+          asciidocPreview.renderAsciiDoc()
+          previousActivePane.activate()
 
   changeRenderMode: ->
     document.querySelector('#asciidoc-changemode')?.remove()
@@ -127,17 +128,16 @@ module.exports =
     previewPane = atom.workspace.paneForURI(uri)
     return unless previewPane?
 
-
     statusBar = document.querySelector('status-bar')
 
     divChangeMode = document.createElement("div")
     divChangeMode.setAttribute 'id', 'asciidoc-changemode'
     divChangeMode.classList.add 'inline-block'
-    saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
+    saveOnly = atom.config.get 'asciidoc-preview.renderOnSaveOnly'
     if saveOnly
-      divChangeMode.appendChild document.createTextNode("Render on save")
+      divChangeMode.appendChild document.createTextNode('Render on save')
     else
-      divChangeMode.appendChild document.createTextNode("Render on change")
+      divChangeMode.appendChild document.createTextNode('Render on change')
 
     statusBar?.addLeftTile(item: divChangeMode, priority: 100)
 
@@ -149,6 +149,6 @@ module.exports =
     text = editor.getSelectedText() or editor.getText()
     renderer.toText text, editor.getPath(), (error, html) ->
       if error
-        console.warn('Copying AsciiDoc as HTML failed', error)
+        console.warn 'Copying AsciiDoc as HTML failed', error
       else
         atom.clipboard.write(html)
