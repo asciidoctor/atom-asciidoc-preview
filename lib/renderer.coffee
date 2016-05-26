@@ -3,7 +3,8 @@
 path = require 'path'
 _ = require 'underscore-plus'
 cheerio = require 'cheerio'
-Highlights = require 'highlights'
+# No direct dependence with Highlight because it requires a compilation. See #63 and #150 and atom/highlights#36.
+Highlights = require path.join atom.packages.resolvePackagePath('markdown-preview'), '..', 'highlights'
 {scopeForFenceName} = require './extension-helper'
 
 highlighter = null
