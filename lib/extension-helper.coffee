@@ -1,3 +1,4 @@
+# this list is limited by the support of Highlights
 scopesByFenceName =
   'sh': 'source.shell'
   'asciidoc': 'source.asciidoc'
