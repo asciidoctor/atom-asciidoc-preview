@@ -32,11 +32,10 @@ module.exports =
       order: 3
     safeMode:
       description: '''
-        Set safe mode level: `unsafe`, `safe`, `server` or `secure`.
-
-        Disables potentially dangerous macros in source files, such as `include::[]`.
-
-        http://asciidoctor.org/docs/user-manual/#running-asciidoctor-securely
+        Set safe mode level: `unsafe`, `safe`, `server` or `secure`.<br>
+        Disables potentially dangerous macros in source files, such as `include::[]`.<br>
+        Set safe mode level to `safe` to enable include macros, but restricts access to ancestor paths of source file.<br>
+        http://asciidoctor.org/docs/user-manual/#running-asciidoctor-securely<br>
         '''
       type: 'string'
       default: 'safe'
