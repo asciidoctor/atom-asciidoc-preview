@@ -40,14 +40,15 @@ exports.toText = (text, filePath, callback) ->
       callback(error, string)
 
 calculateTocType = ->
-  if atom.config.get('asciidoc-preview.tocType') is 'none'
+  tocType = atom.config.get 'asciidoc-preview.tocType'
+  if tocType is 'none'
     return ''
   # NOTE: 'auto' (blank option in asciidoctor) is currently not supported but
   # this section is left as a reminder of the expected behaviour
-  else if atom.config.get('asciidoc-preview.tocType') is 'auto'
+  else if tocType is 'auto'
     return 'toc! toc2!'
   else
-    return "toc=#{atom.config.get('asciidoc-preview.tocType')} toc2!"
+    return "toc=#{tocType} toc2!"
 
 sanitize = (html) ->
   o = cheerio.load(html)

@@ -43,7 +43,11 @@ module.exports =
       enum: ['unsafe', 'safe', 'server', 'secure']
       order: 4
     tocType:
-      title: 'Show Table of Contents'
+      title: 'Force show Table of Contents'
+      description: '''
+        Force to show TOC: override `:toc:` attribute defined in documents.<br>
+        Choose `none` to define manually the `:toc:` attribute in documents.
+        '''
       type: 'string'
       default: 'preamble'
       enum: ['none', 'preamble', 'macro']
@@ -92,14 +96,11 @@ module.exports =
         keyPath = 'asciidoc-preview.compatMode'
         atom.config.set(keyPath, not atom.config.get(keyPath))
       'asciidoc-preview:set-toc-none': ->
-        keyPath = 'asciidoc-preview.tocType'
-        atom.config.set(keyPath, 'none')
+        atom.config.set('asciidoc-preview.tocType', 'none')
       'asciidoc-preview:set-toc-preamble': ->
-        keyPath = 'asciidoc-preview.tocType'
-        atom.config.set(keyPath, 'preamble')
+        atom.config.set('asciidoc-preview.tocType', 'preamble')
       'asciidoc-preview:set-toc-macro': ->
-        keyPath = 'asciidoc-preview.tocType'
-        atom.config.set(keyPath, 'macro')
+        atom.config.set('asciidoc-preview.tocType', 'macro')
       'asciidoc-preview:toggle-skip-front-matter': ->
         keyPath = 'asciidoc-preview.skipFrontMatter'
         atom.config.set(keyPath, not atom.config.get(keyPath))

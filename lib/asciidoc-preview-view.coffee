@@ -104,8 +104,7 @@ class AsciiDocPreviewView extends ScrollView
     changeHandler = =>
       @renderAsciiDoc()
 
-      # TODO: Remove paneForURI call when ::paneForItem is released
-      pane = atom.workspace.paneForItem?(this) ? atom.workspace.paneForURI(@getURI())
+      pane = atom.workspace.paneForItem(this)
       if pane? and pane isnt atom.workspace.getActivePane()
         pane.activateItem(this)
 
