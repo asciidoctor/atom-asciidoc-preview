@@ -7,31 +7,70 @@ module.exports =
 
   config:
     compatMode:
+      title: 'Compatibility mode (AsciiDoc Python)'
       type: 'boolean'
-      default: true
+      default: false
+      order: 1
+    forceExperimental:
+      title: 'Force enable experimental extensions'
+      description: '''
+        The features behind this attribute are subject to change and may even be removed in a future version.
+
+        Currently enables the UI macros (`button`, `menu` and `kbd`).
+        '''
+      type: 'boolean'
+      default: false
+      order: 2
     showTitle:
+      description: '''
+        If set, displays an embedded document’s title.
+
+        Mutually exclusive with the notitle attribute.
+        '''
       type: 'boolean'
       default: true
+      order: 3
     safeMode:
+      description: '''
+        Set safe mode level: `unsafe`, `safe`, `server` or `secure`.<br>
+        Disables potentially dangerous macros in source files, such as `include::[]`.<br>
+        Set safe mode level to `safe` to enable include macros, but restricts access to ancestor paths of source file.<br>
+        http://asciidoctor.org/docs/user-manual/#running-asciidoctor-securely<br>
+        '''
       type: 'string'
       default: 'safe'
+      enum: ['unsafe', 'safe', 'server', 'secure']
+      order: 4
     tocType:
-      title: 'Show Table of Contents'
+      title: 'Force show Table of Contents'
+      description: '''
+        Force to show TOC: override `:toc:` attribute defined in documents.<br>
+        Choose `none` to define manually the `:toc:` attribute in documents.
+        '''
       type: 'string'
       default: 'preamble'
       enum: ['none', 'preamble', 'macro']
-    skipFrontMatter:
+      order: 5
+    frontMatter:
+      description: '''
+        If set, consume YAML-style front matter at the top of the document and store it in the front-matter attribute.
+        '''
       type: 'boolean'
-      default: true
+      default: false
+      order: 6
     showNumberedHeadings:
+      description: 'Auto-number section titles.'
       type: 'boolean'
       default: true
+      order: 7
     renderOnSaveOnly:
       type: 'boolean'
       default: false
+      order: 8
     defaultAttributes:
       type: 'string'
       default: 'platform=opal platform-opal env=browser env-browser source-highlighter=highlight.js data-uri!'
+      order: 9
     grammars:
       type: 'array'
       default: [
@@ -39,6 +78,7 @@ module.exports =
         'text.plain'
         'text.plain.null-grammar'
       ]
+      order: 10
 
   activate: ->
     atom.commands.add 'atom-workspace',
@@ -55,14 +95,11 @@ module.exports =
         keyPath = 'asciidoc-preview.compatMode'
         atom.config.set(keyPath, not atom.config.get(keyPath))
       'asciidoc-preview:set-toc-none': ->
-        keyPath = 'asciidoc-preview.tocType'
-        atom.config.set(keyPath, 'none')
+        atom.config.set('asciidoc-preview.tocType', 'none')
       'asciidoc-preview:set-toc-preamble': ->
-        keyPath = 'asciidoc-preview.tocType'
-        atom.config.set(keyPath, 'preamble')
+        atom.config.set('asciidoc-preview.tocType', 'preamble')
       'asciidoc-preview:set-toc-macro': ->
-        keyPath = 'asciidoc-preview.tocType'
-        atom.config.set(keyPath, 'macro')
+        atom.config.set('asciidoc-preview.tocType', 'macro')
       'asciidoc-preview:toggle-skip-front-matter': ->
         keyPath = 'asciidoc-preview.skipFrontMatter'
         atom.config.set(keyPath, not atom.config.get(keyPath))

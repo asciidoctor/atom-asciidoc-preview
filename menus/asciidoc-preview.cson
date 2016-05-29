@@ -16,7 +16,7 @@ menu: [
   ,
     label: 'Toggle Document Title', command: 'asciidoc-preview:toggle-show-title'
   ,
-    label: 'Show Table of Contents'
+    label: 'Force show Table of Contents'
     submenu: [
       label: 'none', command: 'asciidoc-preview:set-toc-none'
     ,

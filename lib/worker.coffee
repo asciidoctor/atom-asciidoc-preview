@@ -4,22 +4,28 @@ Opal = ajs.Opal
 path = require 'path'
 
 module.exports = (text, attributes, filePath) ->
+  callback = @async()
 
-  concatAttributes = attributes.defaultAttributes.concat(' icons=font@ ')
-                    .concat(attributes.numbered).concat(' ')
-                    .concat(attributes.skipfrontmatter).concat(' ')
-                    .concat(attributes.showtitle).concat(' ')
-                    .concat(attributes.compatmode).concat(' ')
-                    .concat(attributes.toctype)
+  concatAttributes = [
+    attributes.defaultAttributes
+    'icons=font@'
+    attributes.numbered
+    attributes.skipfrontmatter
+    attributes.showtitle
+    attributes.compatmode
+    attributes.toctype
+    attributes.forceExperimental
+  ].join ' '
 
   folder = path.dirname(filePath)
+
   Opal.ENV['$[]=']('PWD', path.dirname(attributes.opalPwd))
-  opts = Opal.hash
+
+  options = Opal.hash
     base_dir: folder
     safe: attributes.safemode
     doctype: attributes.doctype
-    attributes: concatAttributes
+    attributes: concatAttributes.trim()
 
-  html = Asciidoctor.$convert(text, opts)
-  callback = @async()
+  html = Asciidoctor.$convert text, options
   callback(html)

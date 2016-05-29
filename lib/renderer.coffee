@@ -14,9 +14,10 @@ exports.toHtml = (text, filePath, callback) ->
   attributes =
     defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes')
     numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!'
-    skipfrontmatter: if atom.config.get('asciidoc-preview.skipFrontMatter') then 'skip-front-matter' else ''
+    skipfrontmatter: if atom.config.get('asciidoc-preview.frontMatter') then '' else 'skip-front-matter'
     showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
     compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else ''
+    forceExperimental: if atom.config.get('asciidoc-preview.forceExperimental') then 'experimental' else ''
     toctype: calculateTocType()
     safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe'
     doctype: atom.config.get('asciidoc-preview.docType') or 'article'
@@ -39,14 +40,15 @@ exports.toText = (text, filePath, callback) ->
       callback(error, string)
 
 calculateTocType = ->
-  if atom.config.get('asciidoc-preview.tocType') is 'none'
+  tocType = atom.config.get 'asciidoc-preview.tocType'
+  if tocType is 'none'
     return ''
   # NOTE: 'auto' (blank option in asciidoctor) is currently not supported but
   # this section is left as a reminder of the expected behaviour
-  else if atom.config.get('asciidoc-preview.tocType') is 'auto'
+  else if tocType is 'auto'
     return 'toc! toc2!'
   else
-    return "toc=#{atom.config.get('asciidoc-preview.tocType')} toc2!"
+    return "toc=#{tocType} toc2!"
 
 sanitize = (html) ->
   o = cheerio.load(html)
