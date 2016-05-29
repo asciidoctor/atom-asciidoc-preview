@@ -36,10 +36,11 @@ module.exports =
 
         Disables potentially dangerous macros in source files, such as `include::[]`.
 
-        If not set, the safe mode level defaults to unsafe when Asciidoctor is invoked using this script.
+        http://asciidoctor.org/docs/user-manual/#running-asciidoctor-securely
         '''
       type: 'string'
       default: 'safe'
+      enum: ['unsafe', 'safe', 'server', 'secure']
       order: 4
     tocType:
       title: 'Show Table of Contents'

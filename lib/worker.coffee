@@ -25,7 +25,7 @@ module.exports = (text, attributes, filePath) ->
     base_dir: folder
     safe: attributes.safemode
     doctype: attributes.doctype
-    attributes: concatAttributes
+    attributes: concatAttributes.trim()
 
   html = Asciidoctor.$convert text, options
   callback(html)
