@@ -10,6 +10,7 @@ module.exports =
       title: 'Compatibility mode (AsciiDoc Python)'
       type: 'boolean'
       default: false
+      order: 1
     forceExperimental:
       title: 'Force enable experimental extensions'
       description: '''
@@ -19,6 +20,7 @@ module.exports =
         '''
       type: 'boolean'
       default: false
+      order: 2
     showTitle:
       description: '''
         If set, displays an embedded document’s title.
@@ -27,6 +29,7 @@ module.exports =
         '''
       type: 'boolean'
       default: true
+      order: 3
     safeMode:
       description: '''
         Set safe mode level: `unsafe`, `safe`, `server` or `secure`.
@@ -37,27 +40,33 @@ module.exports =
         '''
       type: 'string'
       default: 'safe'
+      order: 4
     tocType:
       title: 'Show Table of Contents'
       type: 'string'
       default: 'preamble'
       enum: ['none', 'preamble', 'macro']
+      order: 5
     frontMatter:
       description: '''
         If set, consume YAML-style front matter at the top of the document and store it in the front-matter attribute.
         '''
       type: 'boolean'
       default: false
+      order: 6
     showNumberedHeadings:
       description: 'Auto-number section titles.'
       type: 'boolean'
       default: true
+      order: 7
     renderOnSaveOnly:
       type: 'boolean'
       default: false
+      order: 8
     defaultAttributes:
       type: 'string'
       default: 'platform=opal platform-opal env=browser env-browser source-highlighter=highlight.js data-uri!'
+      order: 9
     grammars:
       type: 'array'
       default: [
@@ -65,6 +74,7 @@ module.exports =
         'text.plain'
         'text.plain.null-grammar'
       ]
+      order: 10
 
   activate: ->
     atom.commands.add 'atom-workspace',
