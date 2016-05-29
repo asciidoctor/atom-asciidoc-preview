@@ -14,9 +14,10 @@ exports.toHtml = (text, filePath, callback) ->
   attributes =
     defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes')
     numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!'
-    skipfrontmatter: if atom.config.get('asciidoc-preview.skipFrontMatter') then 'skip-front-matter' else ''
+    skipfrontmatter: if atom.config.get('asciidoc-preview.frontMatter') then '' else 'skip-front-matter'
     showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
     compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else ''
+    forceExperimental: if atom.config.get('asciidoc-preview.forceExperimental') then 'experimental' else ''
     toctype: calculateTocType()
     safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe'
     doctype: atom.config.get('asciidoc-preview.docType') or 'article'

@@ -7,12 +7,34 @@ module.exports =
 
   config:
     compatMode:
+      title: 'Compatibility mode (AsciiDoc Python)'
       type: 'boolean'
-      default: true
+      default: false
+    forceExperimental:
+      title: 'Force enable experimental extensions'
+      description: '''
+        The features behind this attribute are subject to change and may even be removed in a future version.
+
+        Currently enables the UI macros (`button`, `menu` and `kbd`).
+        '''
+      type: 'boolean'
+      default: false
     showTitle:
+      description: '''
+        If set, displays an embedded document’s title.
+
+        Mutually exclusive with the notitle attribute.
+        '''
       type: 'boolean'
       default: true
     safeMode:
+      description: '''
+        Set safe mode level: `unsafe`, `safe`, `server` or `secure`.
+
+        Disables potentially dangerous macros in source files, such as `include::[]`.
+
+        If not set, the safe mode level defaults to unsafe when Asciidoctor is invoked using this script.
+        '''
       type: 'string'
       default: 'safe'
     tocType:
@@ -20,10 +42,14 @@ module.exports =
       type: 'string'
       default: 'preamble'
       enum: ['none', 'preamble', 'macro']
-    skipFrontMatter:
+    frontMatter:
+      description: '''
+        If set, consume YAML-style front matter at the top of the document and store it in the front-matter attribute.
+        '''
       type: 'boolean'
-      default: true
+      default: false
     showNumberedHeadings:
+      description: 'Auto-number section titles.'
       type: 'boolean'
       default: true
     renderOnSaveOnly:
