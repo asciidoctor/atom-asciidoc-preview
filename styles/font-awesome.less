@@ -1,0 +1,16 @@
+@asciidoc-preview-fa-font-path: 'atom://asciidoc-preview/node_modules/font-awesome/fonts';
+
+@font-face {
+  font-family: 'AsciidocPreview-FontAwesome';
+  src: url('@{asciidoc-preview-fa-font-path}/fontawesome-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.asciidoc-preview {
+  @import '../node_modules/font-awesome/less/font-awesome.less';
+
+  .fa {
+    font-family: 'AsciidocPreview-FontAwesome';
+  }
+}
