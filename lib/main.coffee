@@ -12,7 +12,7 @@ module.exports =
       default: false
       order: 1
     forceExperimental:
-      title: 'Force enable experimental extensions'
+      title: 'Always enable experimental extensions'
       description: '''
         The features behind this attribute are subject to change and may even be removed in a future version.
 
@@ -42,9 +42,9 @@ module.exports =
       enum: ['unsafe', 'safe', 'server', 'secure']
       order: 4
     tocType:
-      title: 'Force show Table of Contents'
+      title: 'Always show Table of Contents'
       description: '''
-        Force to show TOC: override `:toc:` attribute defined in documents.<br>
+        Override `:toc:` attribute defined in documents.<br>
         Choose `none` to define manually the `:toc:` attribute in documents.
         '''
       type: 'string'
@@ -52,6 +52,7 @@ module.exports =
       enum: ['none', 'preamble', 'macro']
       order: 5
     frontMatter:
+      title: 'Allow Front Matter'
       description: '''
         If set, consume YAML-style front matter at the top of the document and store it in the front-matter attribute.
         '''
