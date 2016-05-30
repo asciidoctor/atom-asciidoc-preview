@@ -4,10 +4,14 @@
 @import "_droid-sans.less";
 @import "_noto-serif.less";
 @import "_open-sans.less";
-@font-family: "Noto Serif", "DejaVu Serif", "Serif", serif;
+@asciidoc-preview-font-family: "Noto Serif", "DejaVu Serif", "Serif", serif;
 
 .asciidoc-preview {
-  font-family: @font-family;
+  @import (less) "../node_modules/asciidoctor.js/dist/css/asciidoctor.css";
+}
+
+.asciidoc-preview {
+  font-family: @asciidoc-preview-font-family;
   font-size: 16px;
   line-height: 1.6;
   background-color: #fff;
@@ -29,10 +33,6 @@
   background-position: top center;
   padding-top: 70px;
   text-align: center;
-}
-
-.asciidoc-preview {
-  @import (inline) "node_modules/asciidoctor.js/dist/css/asciidoctor.css";
 }
 
 /* Atom style overrides */
@@ -96,10 +96,4 @@
     font-weight: 300 !important;
   }
 
-}
-
-#linkUrl {
-  font-size: 1.125em;
-  color: white;
-  margin-right: 15px;
 }
