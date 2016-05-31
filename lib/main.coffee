@@ -1,18 +1,26 @@
 url = require 'url'
-AsciiDocPreviewView = require './asciidoc-preview-view'
+fs = require 'fs-plus'
 
+AsciiDocPreviewView = null
 renderer = null # Defer until used
+
+isAsciiDocPreviewView = (object) ->
+  AsciiDocPreviewView ?= require './asciidoc-preview-view'
+  object instanceof AsciiDocPreviewView
 
 module.exports =
 
   activate: ->
+    if parseFloat(atom.getVersion()) < 1.7
+      atom.deserializers.add
+        name: 'AsciiDocPreviewView'
+        deserialize: module.exports.createAsciiDocPreviewView.bind(module.exports)
+
     atom.commands.add 'atom-workspace',
       'asciidoc-preview:toggle': =>
         @toggle()
       'asciidoc-preview:copy-html': =>
         @copyHtml()
-      'pane-container:active-pane-item-changed': =>
-        @changeRenderMode()
       'asciidoc-preview:toggle-show-title': ->
         keyPath = 'asciidoc-preview.showTitle'
         atom.config.set(keyPath, not atom.config.get(keyPath))
@@ -31,12 +39,19 @@ module.exports =
       'asciidoc-preview:toggle-show-numbered-headings': ->
         keyPath = 'asciidoc-preview.showNumberedHeadings'
         atom.config.set(keyPath, not atom.config.get(keyPath))
-      'asciidoc-preview:toggle-render-on-save-only': =>
+      'asciidoc-preview:toggle-render-on-save-only': ->
         keyPath = 'asciidoc-preview.renderOnSaveOnly'
         atom.config.set(keyPath, not atom.config.get(keyPath))
-        @changeRenderMode()
 
-    atom.workspace.addOpener (uriToOpen) ->
+    previewFile = @previewFile.bind(this)
+    atom.commands.add '.tree-view .file .name[data-name$=\\.adoc]', 'asciidoc-preview:preview-file', previewFile
+    atom.commands.add '.tree-view .file .name[data-name$=\\.asciidoc]', 'asciidoc-preview:preview-file', previewFile
+    atom.commands.add '.tree-view .file .name[data-name$=\\.ad]', 'asciidoc-preview:preview-file', previewFile
+    atom.commands.add '.tree-view .file .name[data-name$=\\.asc]', 'asciidoc-preview:preview-file', previewFile
+    atom.commands.add '.tree-view .file .name[data-name$=\\.adoc\\.txt]', 'asciidoc-preview:preview-file', previewFile
+    atom.commands.add '.tree-view .file .name[data-name$=\\.txt]', 'asciidoc-preview:preview-file', previewFile
+
+    atom.workspace.addOpener (uriToOpen) =>
       try
         {protocol, host, pathname} = url.parse(uriToOpen)
       catch error
@@ -50,58 +65,59 @@ module.exports =
         return
 
       if host is 'editor'
-        new AsciiDocPreviewView(editorId: pathname.substring(1))
+        @createAsciiDocPreviewView(editorId: pathname.substring(1))
       else
-        new AsciiDocPreviewView(filePath: pathname)
+        @createAsciiDocPreviewView(filePath: pathname)
 
-  checkFile: ->
+  createAsciiDocPreviewView: (state) ->
+    if state.editorId or fs.isFileSync(state.filePath)
+      AsciiDocPreviewView ?= require './asciidoc-preview-view'
+      new AsciiDocPreviewView(state)
+
+  toggle: ->
+    if isAsciiDocPreviewView(atom.workspace.getActivePaneItem())
+      atom.workspace.destroyActivePaneItem()
+      return
+
     editor = atom.workspace.getActiveTextEditor()
     return unless editor?
 
     grammars = atom.config.get('asciidoc-preview.grammars') ? []
     return unless editor.getGrammar().scopeName in grammars
-    editor
 
-  toggle: ->
-    editor = @checkFile()
-    return unless editor?
-    uri = "asciidoc-preview://editor/#{editor.id}"
+    @addPreviewForEditor(editor) unless @removePreviewForEditor(editor)
 
-    previewPane = atom.workspace.paneForURI uri
-    if previewPane
-      previewPane.destroyItem previewPane.itemForURI(uri)
-      @changeRenderMode()
+  uriForEditor: (editor) ->
+    "asciidoc-preview://editor/#{editor.id}"
+
+  removePreviewForEditor: (editor) ->
+    uri = @uriForEditor(editor)
+    previewPane = atom.workspace.paneForURI(uri)
+    if previewPane?
+      previewPane.destroyItem(previewPane.itemForURI(uri))
+      true
+    else
+      false
+
+  addPreviewForEditor: (editor) ->
+    uri = @uriForEditor(editor)
+    previousActivePane = atom.workspace.getActivePane()
+    options =
+      searchAllPanes: true
+      split: 'right'
+    atom.workspace.open(uri, options).then (markdownPreviewView) ->
+      if isAsciiDocPreviewView(markdownPreviewView)
+        previousActivePane.activate()
+
+  previewFile: ({target}) ->
+    filePath = target.dataset.path
+    return unless filePath
+
+    for editor in atom.workspace.getTextEditors() when editor.getPath() is filePath
+      @addPreviewForEditor(editor)
       return
 
-    previousActivePane = atom.workspace.getActivePane()
-    atom.workspace.open(uri, split: 'right', searchAllPanes: true)
-      .then (asciidocPreview) ->
-        if asciidocPreview instanceof AsciiDocPreviewView
-          asciidocPreview.renderAsciiDoc()
-          previousActivePane.activate()
-
-  changeRenderMode: ->
-    document.querySelector('#asciidoc-changemode')?.remove()
-    editor = @checkFile()
-    return unless editor?
-
-    uri = "asciidoc-preview://editor/#{editor.id}"
-
-    previewPane = atom.workspace.paneForURI(uri)
-    return unless previewPane?
-
-    statusBar = document.querySelector('status-bar')
-
-    divChangeMode = document.createElement("div")
-    divChangeMode.setAttribute 'id', 'asciidoc-changemode'
-    divChangeMode.classList.add 'inline-block'
-    saveOnly = atom.config.get 'asciidoc-preview.renderOnSaveOnly'
-    if saveOnly
-      divChangeMode.appendChild document.createTextNode('Render on save')
-    else
-      divChangeMode.appendChild document.createTextNode('Render on change')
-
-    statusBar?.addLeftTile(item: divChangeMode, priority: 100)
+    atom.workspace.open "asciidoc-preview://#{encodeURI(filePath)}", searchAllPanes: true
 
   copyHtml: ->
     editor = atom.workspace.getActiveTextEditor()
