@@ -26,12 +26,11 @@ class AsciiDocPreviewView extends ScrollView
 
     if @editorId?
       @resolveEditor(@editorId)
+    else if atom.workspace?
+      @subscribeToFilePath(@filePath)
     else
-      if atom.workspace?
+      @disposables.add atom.packages.onDidActivateInitialPackages =>
         @subscribeToFilePath(@filePath)
-      else
-        @disposables.add atom.packages.onDidActivateInitialPackages =>
-          @subscribeToFilePath(@filePath)
 
   serialize: ->
     deserializer: 'AsciiDocPreviewView'
