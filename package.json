@@ -1,7 +1,7 @@
 {
   "name": "asciidoc-preview",
   "main": "./lib/main",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Show an HTML preview for the AsciiDoc content in the current editor",
   "repository": "https://github.com/asciidoctor/atom-asciidoc-preview",
   "license": "MIT",
@@ -91,7 +91,12 @@
     "openInPane": {
       "type": "string",
       "default": "right",
-      "enum": ["left", "right", "up", "down"],
+      "enum": [
+        "left",
+        "right",
+        "up",
+        "down"
+      ],
       "order": 9
     },
     "defaultAttributes": {
