@@ -104,7 +104,8 @@ module.exports =
     previousActivePane = atom.workspace.getActivePane()
     options =
       searchAllPanes: true
-      split: 'right'
+      split: atom.config.get 'asciidoc-preview.openInPane'
+
     atom.workspace.open(uri, options).then (markdownPreviewView) ->
       if isAsciiDocPreviewView(markdownPreviewView)
         previousActivePane.activate()
