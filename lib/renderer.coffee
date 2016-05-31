@@ -1,15 +1,17 @@
 {$} = require 'atom-space-pen-views'
 {Task} = require 'atom'
 path = require 'path'
-_ = require 'underscore-plus'
+fs = require 'fs-plus'
 cheerio = require 'cheerio'
 # No direct dependence with Highlight because it requires a compilation. See #63 and #150 and atom/highlights#36.
 Highlights = require path.join atom.packages.resolvePackagePath('markdown-preview'), '..', 'highlights'
 {scopeForFenceName} = require './extension-helper'
 
 highlighter = null
+{resourcePath} = atom.getLoadSettings()
+packagePath = path.dirname(__dirname)
 
-exports.toHtml = (text, filePath, callback) ->
+exports.toHtml = (text='', filePath, callback) ->
   return unless atom.config.get('asciidoc-preview.defaultAttributes')?
   attributes =
     defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes')
@@ -31,13 +33,13 @@ exports.toHtml = (text, filePath, callback) ->
     html = tokenizeCodeBlocks(html)
     callback(html)
 
-exports.toText = (text, filePath, callback) ->
+exports.toText = (text='', filePath, callback) ->
   exports.toHtml text, filePath, (error, html) ->
     if error
       callback(error)
     else
       string = $(document.createElement('div')).append(html)[0].innerHTML
-      callback(error, string)
+      callback(null, string)
 
 calculateTocType = ->
   tocType = atom.config.get 'asciidoc-preview.tocType'
@@ -81,16 +83,26 @@ sanitize = (html) ->
   o.html()
 
 resolveImagePaths = (html, filePath) ->
-  html = $(html)
-  for imgElement in html.find('img')
-    img = $(imgElement)
+  [rootDirectory] = atom.project.relativizePath(filePath)
+  o = cheerio.load(html)
+  for imgElement in o('img')
+    img = o(imgElement)
     if src = img.attr('src')
-      continue if src.match /^(https?:\/\/)/
-      img.attr('src', path.resolve(path.dirname(filePath), src))
+      continue if src.match(/^(https?|atom):\/\//)
+      continue if src.startsWith(process.resourcesPath)
+      continue if src.startsWith(resourcePath)
+      continue if src.startsWith(packagePath)
 
-  html
+      if src[0] is '/'
+        unless fs.isFileSync(src)
+          if rootDirectory
+            img.attr('src', path.join(rootDirectory, src.substring(1)))
+      else
+        img.attr('src', path.resolve(path.dirname(filePath), src))
 
-tokenizeCodeBlocks = (html) ->
+  o.html()
+
+tokenizeCodeBlocks = (html, defaultLanguage='text') ->
   html = $(html)
 
   if fontFamily = atom.config.get('editor.fontFamily')
@@ -98,7 +110,7 @@ tokenizeCodeBlocks = (html) ->
 
   for preElement in $.merge(html.filter('pre'), html.find('pre'))
     codeBlock = $(preElement.firstChild)
-    fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? 'text'
+    fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? defaultLanguage
 
     highlighter ?= new Highlights(registry: atom.grammars)
     highlightedHtml = highlighter.highlightSync

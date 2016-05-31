@@ -8,32 +8,33 @@ renderer = require './renderer'
 
 module.exports =
 class AsciiDocPreviewView extends ScrollView
-  atom.deserializers.add(this)
+  @content: ->
+    @div class: 'asciidoc-preview native-key-bindings', tabindex: -1
 
   @deserialize: (state) ->
     new AsciiDocPreviewView(state)
 
-  @content: ->
-    @div class: 'asciidoc-preview native-key-bindings', tabindex: -1
-
-  constructor: ({@editorId, filePath}) ->
+  constructor: ({@editorId, @filePath}) ->
     super
     @emitter = new Emitter
     @disposables = new CompositeDisposable
+    @loaded = false
 
   attached: ->
+    return if @isAttached
+    @isAttached = true
+
     if @editorId?
       @resolveEditor(@editorId)
+    else if atom.workspace?
+      @subscribeToFilePath(@filePath)
     else
-      if atom.workspace?
+      @disposables.add atom.packages.onDidActivateInitialPackages =>
         @subscribeToFilePath(@filePath)
-      else
-        @disposables.add atom.packages.onDidActivateInitialPackages =>
-          @subscribeToFilePath(@filePath)
 
   serialize: ->
     deserializer: 'AsciiDocPreviewView'
-    filePath: @getPath()
+    filePath: @getPath() ? @filePath
     editorId: @editorId
 
   destroy: ->
@@ -132,11 +133,16 @@ class AsciiDocPreviewView extends ScrollView
     @disposables.add atom.config.onDidChange 'asciidoc-preview.showNumberedHeadings', changeHandler
 
   renderAsciiDoc: ->
-    @showLoading()
-    if @file?
-      @file.read().then (contents) => @renderAsciiDocText(contents)
+    @showLoading() unless @loaded
+    @getAsciiDocSource().then (source) => @renderAsciiDocText(source) if source?
+
+  getAsciiDocSource: ->
+    if @file?.getPath()
+      @file.read()
     else if @editor?
-      @renderAsciiDocText(@editor.getText())
+      Promise.resolve(@editor.getText())
+    else
+      Promise.resolve(null)
 
   renderAsciiDocText: (text) ->
     renderer.toHtml text, @getPath(), (html) =>
@@ -156,7 +162,6 @@ class AsciiDocPreviewView extends ScrollView
     divLink.classList.add 'inline-block'
 
     statusBar?.addRightTile(item: divLink, priority: 300)
-
 
     html = $(html)
     for linkElement in html.find('a')

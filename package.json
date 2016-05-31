@@ -88,10 +88,16 @@
       "default": false,
       "order": 8
     },
+    "openInPane": {
+      "type": "string",
+      "default": "right",
+      "enum": ["left", "right", "up", "down"],
+      "order": 9
+    },
     "defaultAttributes": {
       "type": "string",
       "default": "platform=opal platform-opal env=browser env-browser source-highlighter=highlight.js data-uri!",
-      "order": 9
+      "order": 10
     },
     "grammars": {
       "type": "array",
@@ -100,7 +106,7 @@
         "text.plain",
         "text.plain.null-grammar"
       ],
-      "order": 10
+      "order": 11
     }
   }
 }
