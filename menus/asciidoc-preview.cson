@@ -1,9 +1,35 @@
 menu: [
   label: 'Packages'
   submenu: [
-    label: 'AsciiDoc'
+    label: 'AsciiDoc Preview'
     submenu: [
       label: 'Toggle Preview', command: 'asciidoc-preview:toggle'
+    ,
+      label: 'Always show Table of Contents'
+      submenu: [
+        label: 'none', command: 'asciidoc-preview:set-toc-none'
+      ,
+        label: 'preamble', command: 'asciidoc-preview:set-toc-preamble'
+      ,
+        label: 'macro', command: 'asciidoc-preview:set-toc-macro'
+      ]
+    ,
+      label: 'Section Numbering'
+      submenu: [
+        label: 'Soft on', command: 'asciidoc-preview:set-section-numbering-soft-on'
+      ,
+        label: 'Always on', command: 'asciidoc-preview:set-section-numbering-always-on'
+      ,
+        label: 'Always off', command: 'asciidoc-preview:set-section-numbering-always-off'
+      ,
+        label: 'Let the document decide', command: 'asciidoc-preview:set-section-numbering-let-document-decide'
+      ]
+    ,
+      label: 'Toggle Document Title', command: 'asciidoc-preview:toggle-show-title'
+    ,
+      label: 'Toggle Front Matter', command: 'asciidoc-preview:toggle-skip-front-matter'
+    ,
+      label: 'Toggle Compat Mode', command: 'asciidoc-preview:toggle-compat-mode'
     ]
   ]
 ]
