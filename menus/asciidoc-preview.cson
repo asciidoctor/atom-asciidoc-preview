@@ -27,7 +27,16 @@ menu: [
   ,
     label: 'Toggle Front Matter', command: 'asciidoc-preview:toggle-skip-front-matter'
   ,
-    label: 'Toggle Heading Numbers', command: 'asciidoc-preview:toggle-show-numbered-headings'
+    label: 'Section Numbering'
+    submenu: [
+      label: 'Soft on', command: 'asciidoc-preview:set-section-numbering-soft-on'
+    ,
+      label: 'Always on', command: 'asciidoc-preview:set-section-numbering-always-on'
+    ,
+      label: 'Always off', command: 'asciidoc-preview:set-section-numbering-always-off'
+    ,
+      label: 'Let the document decide', command: 'asciidoc-preview:set-section-numbering-let-document-decide'
+    ]
   ,
     label: 'Toggle Compat Mode', command: 'asciidoc-preview:toggle-compat-mode'
   ]

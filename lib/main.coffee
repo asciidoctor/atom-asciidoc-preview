@@ -33,11 +33,16 @@ module.exports =
         atom.config.set('asciidoc-preview.tocType', 'preamble')
       'asciidoc-preview:set-toc-macro': ->
         atom.config.set('asciidoc-preview.tocType', 'macro')
+      'asciidoc-preview:set-section-numbering-soft-on': ->
+        atom.config.set('asciidoc-preview.sectionNumbering', 'soft-on')
+      'asciidoc-preview:set-section-numbering-always-on': ->
+        atom.config.set('asciidoc-preview.sectionNumbering', 'always-on')
+      'asciidoc-preview:set-section-numbering-always-off': ->
+        atom.config.set('asciidoc-preview.sectionNumbering', 'always-off')
+      'asciidoc-preview:set-section-numbering-let-document-decide': ->
+        atom.config.set('asciidoc-preview.sectionNumbering', 'let-document-decide')
       'asciidoc-preview:toggle-skip-front-matter': ->
         keyPath = 'asciidoc-preview.skipFrontMatter'
-        atom.config.set(keyPath, not atom.config.get(keyPath))
-      'asciidoc-preview:toggle-show-numbered-headings': ->
-        keyPath = 'asciidoc-preview.showNumberedHeadings'
         atom.config.set(keyPath, not atom.config.get(keyPath))
       'asciidoc-preview:toggle-render-on-save-only': ->
         keyPath = 'asciidoc-preview.renderOnSaveOnly'
