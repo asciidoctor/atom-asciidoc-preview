@@ -15,7 +15,7 @@ exports.toHtml = (text='', filePath, callback) ->
   return unless atom.config.get('asciidoc-preview.defaultAttributes')?
   attributes =
     defaultAttributes: atom.config.get('asciidoc-preview.defaultAttributes')
-    numbered: if atom.config.get('asciidoc-preview.showNumberedHeadings') then 'numbered' else 'numbered!'
+    numbered: sectionNumbering()
     skipfrontmatter: if atom.config.get('asciidoc-preview.frontMatter') then '' else 'skip-front-matter'
     showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
     compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else ''
@@ -51,6 +51,17 @@ calculateTocType = ->
     return 'toc! toc2!'
   else
     return "toc=#{tocType} toc2!"
+
+sectionNumbering = ->
+  numberedOption = atom.config.get('asciidoc-preview.sectionNumbering')
+  if numberedOption is 'always-on'
+    'sectnums'
+  else if numberedOption is 'always-off'
+    'sectnums!'
+  else if numberedOption is 'soft-on'
+    'sectnums=@'
+  else
+    ''
 
 sanitize = (html) ->
   o = cheerio.load(html)

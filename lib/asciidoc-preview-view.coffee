@@ -130,7 +130,7 @@ class AsciiDocPreviewView extends ScrollView
     @disposables.add atom.config.onDidChange 'asciidoc-preview.defaultAttributes', changeHandler
     @disposables.add atom.config.onDidChange 'asciidoc-preview.tocType', changeHandler
     @disposables.add atom.config.onDidChange 'asciidoc-preview.frontMatter', changeHandler
-    @disposables.add atom.config.onDidChange 'asciidoc-preview.showNumberedHeadings', changeHandler
+    @disposables.add atom.config.onDidChange 'asciidoc-preview.sectionNumbering', changeHandler
 
   renderAsciiDoc: ->
     @showLoading() unless @loaded

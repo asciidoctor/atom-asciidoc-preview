@@ -77,10 +77,16 @@
       "default": false,
       "order": 6
     },
-    "showNumberedHeadings": {
-      "description": "Auto-number section titles.",
-      "type": "boolean",
-      "default": true,
+    "sectionNumbering": {
+      "description": "Auto-number section titles.<br>http://asciidoctor.org/docs/user-manual/#numbering",
+      "type": "string",
+      "default": "soft-on",
+      "enum": [
+        "soft-on",
+        "always-on",
+        "always-off",
+        "let-document-decide"
+      ],
       "order": 7
     },
     "renderOnSaveOnly": {
