@@ -16,13 +16,13 @@ menu: [
     ,
       label: 'Section Numbering'
       submenu: [
-        label: 'Soft on', command: 'asciidoc-preview:set-section-numbering-soft-on'
+        label: 'Enabled by default', command: 'asciidoc-preview:set-section-numbering-enabled-by-default'
       ,
-        label: 'Always on', command: 'asciidoc-preview:set-section-numbering-always-on'
+        label: 'Always enabled', command: 'asciidoc-preview:set-section-numbering-always-enabled'
       ,
-        label: 'Always off', command: 'asciidoc-preview:set-section-numbering-always-off'
+        label: 'Always disabled', command: 'asciidoc-preview:set-section-numbering-always-disabled'
       ,
-        label: 'Let the document decide', command: 'asciidoc-preview:set-section-numbering-let-document-decide'
+        label: 'Not specified', command: 'asciidoc-preview:set-section-numbering-not-specified'
       ]
     ,
       label: 'Toggle Document Title', command: 'asciidoc-preview:toggle-show-title'
@@ -55,13 +55,13 @@ menu: [
   ,
     label: 'Section Numbering'
     submenu: [
-      label: 'Soft on', command: 'asciidoc-preview:set-section-numbering-soft-on'
+      label: 'Enabled by default', command: 'asciidoc-preview:set-section-numbering-enabled-by-default'
     ,
-      label: 'Always on', command: 'asciidoc-preview:set-section-numbering-always-on'
+      label: 'Always enabled', command: 'asciidoc-preview:set-section-numbering-always-enabled'
     ,
-      label: 'Always off', command: 'asciidoc-preview:set-section-numbering-always-off'
+      label: 'Always disabled', command: 'asciidoc-preview:set-section-numbering-always-disabled'
     ,
-      label: 'Let the document decide', command: 'asciidoc-preview:set-section-numbering-let-document-decide'
+      label: 'Not specified', command: 'asciidoc-preview:set-section-numbering-not-specified'
     ]
   ,
     label: 'Toggle Compat Mode', command: 'asciidoc-preview:toggle-compat-mode'

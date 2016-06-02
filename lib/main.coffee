@@ -33,14 +33,14 @@ module.exports =
         atom.config.set('asciidoc-preview.tocType', 'preamble')
       'asciidoc-preview:set-toc-macro': ->
         atom.config.set('asciidoc-preview.tocType', 'macro')
-      'asciidoc-preview:set-section-numbering-soft-on': ->
-        atom.config.set('asciidoc-preview.sectionNumbering', 'soft-on')
-      'asciidoc-preview:set-section-numbering-always-on': ->
-        atom.config.set('asciidoc-preview.sectionNumbering', 'always-on')
-      'asciidoc-preview:set-section-numbering-always-off': ->
-        atom.config.set('asciidoc-preview.sectionNumbering', 'always-off')
-      'asciidoc-preview:set-section-numbering-let-document-decide': ->
-        atom.config.set('asciidoc-preview.sectionNumbering', 'let-document-decide')
+      'asciidoc-preview:set-section-numbering-enabled-by-default': ->
+        atom.config.set('asciidoc-preview.sectionNumbering', 'enabled-by-default')
+      'asciidoc-preview:set-section-numbering-always-enabled': ->
+        atom.config.set('asciidoc-preview.sectionNumbering', 'always-enabled')
+      'asciidoc-preview:set-section-numbering-always-disabled': ->
+        atom.config.set('asciidoc-preview.sectionNumbering', 'always-disabled')
+      'asciidoc-preview:set-section-numbering-not-specified': ->
+        atom.config.set('asciidoc-preview.sectionNumbering', 'not-specified')
       'asciidoc-preview:toggle-skip-front-matter': ->
         keyPath = 'asciidoc-preview.skipFrontMatter'
         atom.config.set(keyPath, not atom.config.get(keyPath))

@@ -54,11 +54,11 @@ calculateTocType = ->
 
 sectionNumbering = ->
   numberedOption = atom.config.get('asciidoc-preview.sectionNumbering')
-  if numberedOption is 'always-on'
+  if numberedOption is 'always-enabled'
     'sectnums'
-  else if numberedOption is 'always-off'
+  else if numberedOption is 'always-disabled'
     'sectnums!'
-  else if numberedOption is 'soft-on'
+  else if numberedOption is 'enabled-by-default'
     'sectnums=@'
   else
     ''
