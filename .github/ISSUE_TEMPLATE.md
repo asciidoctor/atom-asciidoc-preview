@@ -8,4 +8,6 @@ Your screenshot.
 
 ## Syntax example
 
+```adoc
 Your syntax example.
+```
