@@ -11,9 +11,6 @@ class AsciiDocPreviewView extends ScrollView
   @content: ->
     @div class: 'asciidoc-preview native-key-bindings', tabindex: -1
 
-  @deserialize: (state) ->
-    new AsciiDocPreviewView(state)
-
   constructor: ({@editorId, @filePath}) ->
     super
     @emitter = new Emitter
