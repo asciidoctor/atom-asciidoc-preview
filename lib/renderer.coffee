@@ -121,17 +121,21 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
 
   for preElement in $.merge(html.filter('pre'), html.find('pre'))
     codeBlock = $(preElement.firstChild)
-    fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? defaultLanguage
 
-    highlighter ?= new Highlights(registry: atom.grammars)
-    highlightedHtml = highlighter.highlightSync
-      fileContents: codeBlock.text()
-      scopeName: scopeForFenceName(fenceName)
+    # Exclude text node to highlights
+    # Because this creates a rendering bug with quotes substitutions #102
+    if codeBlock[0]?.nodeType isnt Node.TEXT_NODE
+      fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? defaultLanguage
 
-    highlightedBlock = $(highlightedHtml)
-    # The `editor` class messes things up as `.editor` has absolutely positioned lines
-    highlightedBlock.removeClass('editor').addClass("lang-#{fenceName}")
-    highlightedBlock.insertAfter(preElement)
-    preElement.remove()
+      highlighter ?= new Highlights(registry: atom.grammars)
+      highlightedHtml = highlighter.highlightSync
+        fileContents: codeBlock.text()
+        scopeName: scopeForFenceName(fenceName)
+
+      highlightedBlock = $(highlightedHtml)
+      # The `editor` class messes things up as `.editor` has absolutely positioned lines
+      highlightedBlock.removeClass('editor').addClass("lang-#{fenceName}")
+      highlightedBlock.insertAfter(preElement)
+      preElement.remove()
 
   html
