@@ -78,14 +78,14 @@
       "order": 6
     },
     "sectionNumbering": {
-      "description": "Auto-number section titles.<br>http://asciidoctor.org/docs/user-manual/#numbering",
+      "description": "Auto-number section titles.<br>- Enabled by default (equivalent to `-a sectnums=@`)<br>- Always enabled (equivalent to `-a sectnums`)<br>- Always disabled (equivalent to `-a sectnums!`)<br>- Not specified<br>http://asciidoctor.org/docs/user-manual/#numbering",
       "type": "string",
-      "default": "soft-on",
+      "default": "enabled-by-default",
       "enum": [
-        "soft-on",
-        "always-on",
-        "always-off",
-        "let-document-decide"
+        "enabled-by-default",
+        "always-enabled",
+        "always-disabled",
+        "not-specified"
       ],
       "order": 7
     },
