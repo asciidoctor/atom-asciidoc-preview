@@ -26,6 +26,9 @@
     "mustache": "~2.2.1",
     "underscore-plus": "~1.6.6"
   },
+  "deserializers": {
+    "AsciiDocPreviewView": "createAsciiDocPreviewView"
+  },
   "configSchema": {
     "compatMode": {
       "title": "Compatibility mode (AsciiDoc Python)",
