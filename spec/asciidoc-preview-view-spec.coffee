@@ -82,7 +82,7 @@ describe 'AsciiDocPreviewView', ->
         preview.renderAsciiDoc()
 
     describe "when the code block's fence name has a matching grammar", ->
-      it "assigns the grammar on the atom-text-editor", ->
+      it "assigns the grammar", ->
         rubyCode = preview.find 'pre.editor-colors.lang-ruby'
         expect(rubyCode).toExist()
         expect(rubyCode.html()).toBe '<div class="line"><span class="source ruby"><span class="meta function method without-arguments ruby"><span class="keyword control def ruby"><span>def</span></span><span>&nbsp;</span><span class="entity name function ruby"><span>func</span></span></span></span></div><div class="line"><span class="source ruby"><span>&nbsp;&nbsp;x&nbsp;</span><span class="keyword operator assignment ruby"><span>=</span></span><span>&nbsp;</span><span class="constant numeric ruby"><span>1</span></span></span></div><div class="line"><span class="source ruby"><span class="keyword control ruby"><span>end</span></span></span></div>'
@@ -95,7 +95,7 @@ describe 'AsciiDocPreviewView', ->
     describe "when the image uses a relative path", ->
       it "resolves to a path relative to the file", ->
         image = preview.find 'img[alt=Image1]'
-        expect(image.attr('src')).toBe atom.project.getDirectories()[0].resolve 'samples/image1.png'
+        expect(image.attr 'src' ).toBe atom.project.getDirectories()[0].resolve 'samples/image1.png'
 
     describe "when the image uses an absolute path that does not exist", ->
       it "resolves to a path relative to the project root", ->

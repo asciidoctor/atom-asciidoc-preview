@@ -39,7 +39,7 @@ describe "Asciidoc preview package", ->
 
   describe "when a preview has not been created for the file", ->
     it "displays a Asciidoc preview in a split pane", ->
-      waitsForPromise -> atom.workspace.open("subdir/file.adoc")
+      waitsForPromise -> atom.workspace.open("samples/file.adoc")
       runs -> atom.commands.dispatch workspaceElement, 'asciidoc-preview:toggle'
       expectPreviewInSplitPane()
 
@@ -62,19 +62,19 @@ describe "Asciidoc preview package", ->
 
     describe "when the path contains a space", ->
       it "renders the preview", ->
-        waitsForPromise -> atom.workspace.open("subdir/file with space.adoc")
+        waitsForPromise -> atom.workspace.open("samples/file with space.adoc")
         runs -> atom.commands.dispatch workspaceElement, 'asciidoc-preview:toggle'
         expectPreviewInSplitPane()
 
     describe "when the path contains accented characters", ->
       it "renders the preview", ->
-        waitsForPromise -> atom.workspace.open("subdir/áccéntéd.adoc")
+        waitsForPromise -> atom.workspace.open("samples/áccéntéd.adoc")
         runs -> atom.commands.dispatch workspaceElement, 'asciidoc-preview:toggle'
         expectPreviewInSplitPane()
 
   describe "when a preview has been created for the file", ->
     beforeEach ->
-      waitsForPromise -> atom.workspace.open("subdir/file.adoc")
+      waitsForPromise -> atom.workspace.open("samples/file.adoc")
       runs -> atom.commands.dispatch workspaceElement, 'asciidoc-preview:toggle'
       expectPreviewInSplitPane()
 
@@ -144,8 +144,8 @@ describe "Asciidoc preview package", ->
             expect(editorPane.isActive()).toBe true
             expect(previewPane.getActiveItem()).toBe preview
 
-      describe "when the liveUpdate config is set to false", ->
-        it "only re-renders the markdown when the editor is saved, not when the contents are modified", ->
+      describe "when the renderOnSaveOnly config is set to false", ->
+        it "only re-renders the AsciiDoc when the editor is saved, not when the contents are modified", ->
           atom.config.set 'asciidoc-preview.renderOnSaveOnly', false
 
           didStopChangingHandler = jasmine.createSpy('didStopChangingHandler')
@@ -181,11 +181,11 @@ describe "Asciidoc preview package", ->
 
   describe "when the editor's grammar it not enabled for preview", ->
 
-    it "does not open the markdown preview", ->
+    it "does not open the AsciiDoc preview", ->
       atom.config.set 'asciidoc-preview.grammars', []
 
       waitsForPromise ->
-        atom.workspace.open "subdir/file.adoc"
+        atom.workspace.open "samples/file.adoc"
 
       runs ->
         spyOn(atom.workspace, 'open').andCallThrough()
