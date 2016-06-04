@@ -1,0 +1,31 @@
+= Hello
+
+Text
+
+== World
+
+Text
+
+[source, ruby]
+----
+def func
+  x = 1
+end
+----
+
+[source, js]
+----
+if a === 3 {
+  b = 5
+}
+----
+
+image::image1.png[Image1]
+
+image::/tmp/image2.png[Image2]
+
+image::http://github.com/image3.png[Image3]
+
+image::https://avatars3.githubusercontent.com/u/3137042?v=3&s=200[AsciiDoctor Logo]
+
+lorem
