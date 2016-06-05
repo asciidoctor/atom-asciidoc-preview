@@ -16,7 +16,7 @@ describe "Asciidoc preview package", ->
     atom.project.setPaths([tempPath])
 
     originalTimeout = jasmine.getEnv().defaultTimeoutInterval
-    jasmine.getEnv().defaultTimeoutInterval = 80000
+    jasmine.getEnv().defaultTimeoutInterval = 120000
     jasmine.useRealClock()
 
     workspaceElement = atom.views.getView(atom.workspace)

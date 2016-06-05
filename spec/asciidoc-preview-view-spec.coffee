@@ -11,7 +11,7 @@ describe 'AsciiDocPreviewView', ->
     preview = new AsciiDocPreviewView {filePath}
     jasmine.attachToDOM preview.element
     originalTimeout = jasmine.getEnv().defaultTimeoutInterval
-    jasmine.getEnv().defaultTimeoutInterval = 80000
+    jasmine.getEnv().defaultTimeoutInterval = 120000
 
     waitsForPromise ->
       Promise.all [
