@@ -63,13 +63,13 @@ resolveImagePaths = (html, filePath) ->
   for imgElement in o('img')
     img = o(imgElement)
     if src = img.attr('src')
-      continue if src.match(/^(https?|atom):\/\//)
-      continue if src.startsWith(process.resourcesPath)
-      continue if src.startsWith(resourcePath)
-      continue if src.startsWith(packagePath)
+      continue if src.match /^(https?|atom):\/\//
+      continue if src.startsWith process.resourcesPath
+      continue if src.startsWith resourcePath
+      continue if src.startsWith packagePath
 
       if src[0] is '/'
-        unless fs.isFileSync(src)
+        unless fs.isFileSync src
           if rootDirectory
             img.attr('src', path.join(rootDirectory, src.substring(1)))
       else
@@ -80,8 +80,8 @@ resolveImagePaths = (html, filePath) ->
 tokenizeCodeBlocks = (html, defaultLanguage='text') ->
   html = $(html)
 
-  if fontFamily = atom.config.get('editor.fontFamily')
-    $(html).find('code').css('font-family', fontFamily)
+  if fontFamily = atom.config.get 'editor.fontFamily'
+    html.find('code').css 'font-family', fontFamily
 
   for preElement in $.merge(html.filter('pre'), html.find('pre'))
     codeBlock = $(preElement.firstChild)
