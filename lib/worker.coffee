@@ -24,8 +24,10 @@ module.exports = (text, attributes, filePath) ->
   options = Opal.hash
     base_dir: folder
     safe: attributes.safemode
-    doctype: attributes.doctype
+    doctype: 'article'
+    # Force backend to html5
+    backend: 'html5'
     attributes: concatAttributes.trim()
 
   html = Asciidoctor.$convert text, options
-  callback(html)
+  callback html
