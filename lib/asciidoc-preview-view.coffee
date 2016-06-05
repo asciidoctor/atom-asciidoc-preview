@@ -153,14 +153,6 @@ class AsciiDocPreviewView extends ScrollView
         @originalTrigger('asciidoc-preview:asciidoc-changed')
 
   enableAnchorScroll: (html, callback) ->
-    document.querySelector('#asciidoc-linkUrl')?.remove()
-    statusBar = document.querySelector('status-bar')
-    divLink = document.createElement("div")
-    divLink.setAttribute 'id', 'asciidoc-linkUrl'
-    divLink.classList.add 'inline-block'
-
-    statusBar?.addRightTile(item: divLink, priority: 300)
-
     html = $(html)
     for linkElement in html.find('a')
       link = $(linkElement)

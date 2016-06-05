@@ -4,12 +4,12 @@ module.exports =
     attributes =
       defaultAttributes: atom.config.get 'asciidoc-preview.defaultAttributes'
       numbered: sectionNumbering()
-      skipfrontmatter: if atom.config.get('asciidoc-preview.frontMatter') then '' else 'skip-front-matter'
-      showtitle: if atom.config.get('asciidoc-preview.showTitle') then 'showtitle' else 'showtitle!'
-      compatmode: if atom.config.get('asciidoc-preview.compatMode') then 'compat-mode=@' else ''
-      forceExperimental: if atom.config.get('asciidoc-preview.forceExperimental') then 'experimental' else ''
+      skipfrontmatter: if atom.config.get 'asciidoc-preview.frontMatter' then '' else 'skip-front-matter'
+      showtitle: if atom.config.get 'asciidoc-preview.showTitle' then 'showtitle' else 'showtitle!'
+      compatmode: if atom.config.get 'asciidoc-preview.compatMode' then 'compat-mode=@' else ''
+      forceExperimental: if atom.config.get 'asciidoc-preview.forceExperimental' then 'experimental' else ''
       toctype: calculateTocType()
-      safemode: atom.config.get('asciidoc-preview.safeMode') or 'safe'
+      safemode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
       opalPwd: window.location.href
 
 calculateTocType = ->
