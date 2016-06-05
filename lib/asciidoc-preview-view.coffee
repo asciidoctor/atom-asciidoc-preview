@@ -113,13 +113,10 @@ class AsciiDocPreviewView extends ScrollView
     if @file?
       @disposables.add @file.onDidChange(changeHandler)
     else if @editor?
-      @disposables.add @editor.getBuffer().onDidStopChanging ->
-        renderOnChange()
+      @disposables.add @editor.getBuffer().onDidStopChanging -> renderOnChange()
       @disposables.add @editor.onDidChangePath => @emitter.emit 'did-change-title'
-      @disposables.add @editor.getBuffer().onDidSave ->
-        renderOnChange()
-      @disposables.add @editor.getBuffer().onDidReload ->
-        renderOnChange()
+      @disposables.add @editor.getBuffer().onDidSave -> renderOnChange()
+      @disposables.add @editor.getBuffer().onDidReload -> renderOnChange()
 
     @disposables.add atom.config.onDidChange 'asciidoc-preview.showTitle', changeHandler
     @disposables.add atom.config.onDidChange 'asciidoc-preview.compatMode', changeHandler
@@ -235,7 +232,7 @@ class AsciiDocPreviewView extends ScrollView
     else
       filePath = 'untitled.adoc.html'
       if projectPath = atom.project.getPaths()[0]
-        filePath = path.join(projectPath, filePath)
+        filePath = path.join projectPath, filePath
 
     if htmlFilePath = atom.showSaveDialogSync(filePath)
       mustacheObject =
