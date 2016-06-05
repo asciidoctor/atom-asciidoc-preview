@@ -1,5 +1,5 @@
 = Asciidoctor.js 1.5.0 released to Bower and npm!
-Guillaume Grossetie <https://github.com/Mogztter[@Mogztter]>; Anthonny QuÃ©rouil <https://github.com/anthonny[@anthonny]>
+Guillaume Grossetie <https://github.com/Mogztter[@Mogztter]>; Anthonny Quérouil <https://github.com/anthonny[@anthonny]>
 2014-08-23
 :revdate: 2014-08-23 13:20:39 -0600
 // Settings:

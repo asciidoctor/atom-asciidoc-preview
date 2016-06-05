@@ -67,20 +67,37 @@ menu: [
     label: 'Toggle Compat Mode', command: 'asciidoc-preview:toggle-compat-mode'
   ]
   '.tree-view .file .name[data-name$=\\.adoc]': [
-    label: 'AsciiDoc Preview', command: 'asciidoc-preview:preview-file'
+    label: 'AsciiDoc: Preview', command: 'asciidoc-preview:preview-file'
+  ,
+    label: 'AsciiDoc: Export as PDF', command: 'asciidoc-preview:export-pdf'
+  ,
+    type: 'separator'
   ]
   '.tree-view .file .name[data-name$=\\.asciidoc]': [
-    label: 'AsciiDoc Preview', command: 'asciidoc-preview:preview-file'
+    label: 'AsciiDoc: Preview', command: 'asciidoc-preview:preview-file'
+  ,
+    label: 'AsciiDoc: Export as PDF', command: 'asciidoc-preview:export-pdf'
+  ,
+    type: 'separator'
   ]
   '.tree-view .file .name[data-name$=\\.ad]': [
-    label: 'AsciiDoc Preview', command: 'asciidoc-preview:preview-file'
+    label: 'AsciiDoc: Preview', command: 'asciidoc-preview:preview-file'
+  ,
+    label: 'AsciiDoc: Export as PDF', command: 'asciidoc-preview:export-pdf'
+  ,
+    type: 'separator'
   ]
   '.tree-view .file .name[data-name$=\\.asc]': [
-    label: 'AsciiDoc Preview', command: 'asciidoc-preview:preview-file'
-  ]
-  '.tree-view .file .name[data-name$=\\.adoc\\.txt]': [
-    label: 'AsciiDoc Preview', command: 'asciidoc-preview:preview-file'
+    label: 'AsciiDoc: Preview', command: 'asciidoc-preview:preview-file'
+  ,
+    label: 'AsciiDoc: Export as PDF', command: 'asciidoc-preview:export-pdf'
+  ,
+    type: 'separator'
   ]
   '.tree-view .file .name[data-name$=\\.txt]': [
-    label: 'AsciiDoc Preview', command: 'asciidoc-preview:preview-file'
+    label: 'AsciiDoc: Preview', command: 'asciidoc-preview:preview-file'
+  ,
+    label: 'AsciiDoc: Export as PDF', command: 'asciidoc-preview:export-pdf'
+  ,
+    type: 'separator'
   ]
