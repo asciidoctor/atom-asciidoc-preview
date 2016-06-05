@@ -6,7 +6,7 @@ fse = require 'fs-extra'
 AsciidocPreviewView = require '../lib/asciidoc-preview-view'
 
 describe "Asciidoc preview package", ->
-  [workspaceElement, preview] = []
+  [workspaceElement, preview, originalTimeout] = []
 
   beforeEach ->
     fixturesPath = path.join(__dirname, 'fixtures')
@@ -15,6 +15,8 @@ describe "Asciidoc preview package", ->
     fse.copySync(fixturesPath, tempPath, clobber: true)
     atom.project.setPaths([tempPath])
 
+    originalTimeout = jasmine.getEnv().defaultTimeoutInterval
+    jasmine.getEnv().defaultTimeoutInterval = 80000
     jasmine.useRealClock()
 
     workspaceElement = atom.views.getView(atom.workspace)
@@ -25,6 +27,9 @@ describe "Asciidoc preview package", ->
         atom.packages.activatePackage('language-asciidoc')
         atom.packages.activatePackage('asciidoc-preview')
       ]
+
+  afterEach ->
+    jasmine.getEnv().defaultTimeoutInterval = originalTimeout
 
   expectPreviewInSplitPane = ->
     runs ->
