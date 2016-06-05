@@ -235,12 +235,21 @@ class AsciiDocPreviewView extends ScrollView
         filePath = path.join projectPath, filePath
 
     if htmlFilePath = atom.showSaveDialogSync(filePath)
-      mustacheObject =
-        title: 'test'
-        content: @[0].innerHTML
+      packPath = atom.packages.resolvePackagePath 'asciidoc-preview'
+      templatePath = path.join packPath, 'templates', 'default.html'
 
-      templatePath = path.join atom.packages.resolvePackagePath('asciidoc-preview'), 'templates', 'default.html'
-      page = fs.readFileSync(templatePath, 'utf8')
-      htmlContent = mustache.to_html page, mustacheObject
-      fs.writeFileSync(htmlFilePath, htmlContent)
-      atom.workspace.open(htmlFilePath)
+      @getAsciiDocSource()
+        .then (source) =>
+          renderer.toRawHtml source, @getPath()
+        .then (html) ->
+          model =
+            content: html
+            style: fs.readFileSync path.join(packPath, 'node_modules/asciidoctor.js/dist/css/asciidoctor.css'), 'utf8'
+            title: $(@html).find('h1').text() or path.basename htmlFilePath, '.html'
+        .then (model) ->
+          template = fs.readFileSync templatePath, 'utf8'
+          mustache.to_html template, model
+        .then (htmlContent) ->
+          fs.writeFileSync htmlFilePath, htmlContent
+        .then ->
+          atom.workspace.open htmlFilePath

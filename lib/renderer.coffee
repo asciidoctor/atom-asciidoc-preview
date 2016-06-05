@@ -14,17 +14,25 @@ highlighter = null
 packagePath = path.dirname(__dirname)
 
 exports.toHtml = (text='', filePath) ->
+  render text, filePath
+    .then (html) ->
+      sanitize html
+    .then (html) ->
+      resolveImagePaths html, filePath
+    .then (html) ->
+      tokenizeCodeBlocks html
+
+exports.toRawHtml = (text='', filePath) ->
+  render text, filePath
+
+render = (text='', filePath) ->
   return Promise.resolve() unless atom.config.get('asciidoc-preview.defaultAttributes')?
 
   new Promise (resolve, reject) ->
     attributes = makeAttributes()
 
-    taskPath = require.resolve('./worker')
-
+    taskPath = require.resolve './worker'
     Task.once taskPath, text, attributes, filePath, (html) ->
-      html = sanitize html
-      html = resolveImagePaths html, filePath
-      html = tokenizeCodeBlocks html
       resolve html
 
 sanitize = (html) ->
