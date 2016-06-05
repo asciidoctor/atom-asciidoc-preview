@@ -19,8 +19,6 @@ module.exports =
     atom.commands.add 'atom-workspace',
       'asciidoc-preview:toggle': =>
         @toggle()
-      'asciidoc-preview:copy-html': =>
-        @copyHtml()
       'asciidoc-preview:toggle-show-title': ->
         keyPath = 'asciidoc-preview.showTitle'
         atom.config.set(keyPath, not atom.config.get(keyPath))
@@ -125,14 +123,4 @@ module.exports =
 
     atom.workspace.open "asciidoc-preview://#{encodeURI(filePath)}", searchAllPanes: true
 
-  copyHtml: ->
-    editor = atom.workspace.getActiveTextEditor()
-    return unless editor?
 
-    renderer ?= require './renderer'
-    text = editor.getSelectedText() or editor.getText()
-    renderer.toText text, editor.getPath(), (error, html) ->
-      if error
-        console.warn 'Copying AsciiDoc as HTML failed', error
-      else
-        atom.clipboard.write(html)

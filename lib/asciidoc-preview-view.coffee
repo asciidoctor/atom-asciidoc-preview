@@ -142,14 +142,15 @@ class AsciiDocPreviewView extends ScrollView
       Promise.resolve(null)
 
   renderAsciiDocText: (text) ->
-    renderer.toHtml text, @getPath(), (html) =>
-      @loading = false
-      @html(html)
-      @enableAnchorScroll html, (top) =>
-        @scrollTop top
+    renderer.toHtml text, @getPath()
+      .then (html) =>
+        @loading = false
+        @html(html)
+        @enableAnchorScroll html, (top) =>
+          @scrollTop top
 
-      @emitter.emit 'did-change-asciidoc'
-      @originalTrigger('asciidoc-preview:asciidoc-changed')
+        @emitter.emit 'did-change-asciidoc'
+        @originalTrigger('asciidoc-preview:asciidoc-changed')
 
   enableAnchorScroll: (html, callback) ->
     document.querySelector('#asciidoc-linkUrl')?.remove()

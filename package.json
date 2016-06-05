@@ -26,6 +26,9 @@
     "mustache": "~2.2.1",
     "underscore-plus": "~1.6.6"
   },
+  "devDependencies": {
+    "coffeelint": "^1.15.0"
+  },
   "deserializers": {
     "AsciiDocPreviewView": "createAsciiDocPreviewView"
   },
