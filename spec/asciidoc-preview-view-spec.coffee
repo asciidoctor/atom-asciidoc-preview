@@ -4,12 +4,14 @@ temp = require 'temp'
 AsciiDocPreviewView = require '../lib/asciidoc-preview-view'
 
 describe 'AsciiDocPreviewView', ->
-  [file, preview, workspaceElement] = []
+  [file, preview, workspaceElement, originalTimeout] = []
 
   beforeEach ->
     filePath = atom.project.getDirectories()[0].resolve 'samples/file.adoc'
     preview = new AsciiDocPreviewView {filePath}
     jasmine.attachToDOM preview.element
+    originalTimeout = jasmine.getEnv().defaultTimeoutInterval
+    jasmine.getEnv().defaultTimeoutInterval = 8000
 
     waitsForPromise ->
       Promise.all [
@@ -21,6 +23,7 @@ describe 'AsciiDocPreviewView', ->
 
   afterEach ->
     preview.destroy()
+    jasmine.getEnv().defaultTimeoutInterval = originalTimeout
 
   describe "::constructor", ->
     it "shows a loading spinner and renders the AsciiDoc document", ->
