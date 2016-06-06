@@ -113,13 +113,10 @@ class AsciiDocPreviewView extends ScrollView
     if @file?
       @disposables.add @file.onDidChange(changeHandler)
     else if @editor?
-      @disposables.add @editor.getBuffer().onDidStopChanging ->
-        renderOnChange()
+      @disposables.add @editor.getBuffer().onDidStopChanging -> renderOnChange()
       @disposables.add @editor.onDidChangePath => @emitter.emit 'did-change-title'
-      @disposables.add @editor.getBuffer().onDidSave ->
-        renderOnChange()
-      @disposables.add @editor.getBuffer().onDidReload ->
-        renderOnChange()
+      @disposables.add @editor.getBuffer().onDidSave -> renderOnChange()
+      @disposables.add @editor.getBuffer().onDidReload -> renderOnChange()
 
     @disposables.add atom.config.onDidChange 'asciidoc-preview.showTitle', changeHandler
     @disposables.add atom.config.onDidChange 'asciidoc-preview.compatMode', changeHandler
@@ -153,9 +150,10 @@ class AsciiDocPreviewView extends ScrollView
         @originalTrigger('asciidoc-preview:asciidoc-changed')
 
   enableAnchorScroll: (html, callback) ->
+    # TODO refactor this part to properly use statusBar
     document.querySelector('#asciidoc-linkUrl')?.remove()
-    statusBar = document.querySelector('status-bar')
-    divLink = document.createElement("div")
+    statusBar = document.querySelector 'status-bar'
+    divLink = document.createElement 'div'
     divLink.setAttribute 'id', 'asciidoc-linkUrl'
     divLink.classList.add 'inline-block'
 
@@ -243,15 +241,24 @@ class AsciiDocPreviewView extends ScrollView
     else
       filePath = 'untitled.adoc.html'
       if projectPath = atom.project.getPaths()[0]
-        filePath = path.join(projectPath, filePath)
+        filePath = path.join projectPath, filePath
 
     if htmlFilePath = atom.showSaveDialogSync(filePath)
-      mustacheObject =
-        title: 'test'
-        content: @[0].innerHTML
+      packPath = atom.packages.resolvePackagePath 'asciidoc-preview'
+      templatePath = path.join packPath, 'templates', 'default.html'
 
-      templatePath = path.join atom.packages.resolvePackagePath('asciidoc-preview'), 'templates', 'default.html'
-      page = fs.readFileSync(templatePath, 'utf8')
-      htmlContent = mustache.to_html page, mustacheObject
-      fs.writeFileSync(htmlFilePath, htmlContent)
-      atom.workspace.open(htmlFilePath)
+      @getAsciiDocSource()
+        .then (source) =>
+          renderer.toRawHtml source, @getPath()
+        .then (html) ->
+          model =
+            content: html
+            style: fs.readFileSync path.join(packPath, 'node_modules/asciidoctor.js/dist/css/asciidoctor.css'), 'utf8'
+            title: $(@html).find('h1').text() or path.basename htmlFilePath, '.html'
+        .then (model) ->
+          template = fs.readFileSync templatePath, 'utf8'
+          mustache.to_html template, model
+        .then (htmlContent) ->
+          fs.writeFileSync htmlFilePath, htmlContent
+        .then ->
+          atom.workspace.open htmlFilePath
