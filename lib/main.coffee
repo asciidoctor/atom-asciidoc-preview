@@ -1,4 +1,5 @@
 url = require 'url'
+path = require 'path'
 fs = require 'fs-plus'
 
 AsciiDocPreviewView = null
@@ -46,13 +47,16 @@ module.exports =
         keyPath = 'asciidoc-preview.renderOnSaveOnly'
         atom.config.set(keyPath, not atom.config.get(keyPath))
 
+    fileExtensions = [
+      'adoc'
+      'asciidoc'
+      'ad'
+      'asc'
+      'txt'
+    ]
     previewFile = @previewFile.bind(this)
-    atom.commands.add '.tree-view .file .name[data-name$=\\.adoc]', 'asciidoc-preview:preview-file', previewFile
-    atom.commands.add '.tree-view .file .name[data-name$=\\.asciidoc]', 'asciidoc-preview:preview-file', previewFile
-    atom.commands.add '.tree-view .file .name[data-name$=\\.ad]', 'asciidoc-preview:preview-file', previewFile
-    atom.commands.add '.tree-view .file .name[data-name$=\\.asc]', 'asciidoc-preview:preview-file', previewFile
-    atom.commands.add '.tree-view .file .name[data-name$=\\.adoc\\.txt]', 'asciidoc-preview:preview-file', previewFile
-    atom.commands.add '.tree-view .file .name[data-name$=\\.txt]', 'asciidoc-preview:preview-file', previewFile
+    atom.commands.add ".tree-view .file .name[data-name$=\\.#{extension}]", 'asciidoc-preview:preview-file', previewFile for extension in fileExtensions
+    atom.commands.add ".tree-view .file .name[data-name$=\\.#{extension}]", 'asciidoc-preview:export-pdf', @exportAsPdf for extension in fileExtensions
 
     atom.workspace.addOpener (uriToOpen) =>
       try
@@ -123,4 +127,39 @@ module.exports =
 
     atom.workspace.open "asciidoc-preview://#{encodeURI(filePath)}", searchAllPanes: true
 
+  exportAsPdf: ({target}) ->
+    if atom.config.get 'asciidoc-preview.experimental.exportAsPdf'
+      spawn = require('child_process').spawn
 
+      sourceFilePath = target.dataset.path
+
+      if process.platform is 'win32'
+        shell = process.env['SHELL'] or 'cmd.exe'
+        cmd = spawn 'asciidoctor-pdf.bat', [sourceFilePath], shell: "#{shell} -i -l"
+      else
+        shell = process.env['SHELL'] or 'bash'
+        cmd = spawn 'asciidoctor-pdf', [sourceFilePath], shell: "#{shell} -i -l"
+
+      cmd.stdout.on 'data', (data) ->
+        atom.notifications.addInfo 'Export as PDF:', detail: data.toString() or '', dismissable: true
+
+      cmd.stderr.on 'data', (data) ->
+        console.error "stderr: #{data}"
+        atom.notifications.addError 'Error:', detail: data.toString() or '', dismissable: true
+
+      cmd.on 'close', (code) ->
+        basename = path.basename(sourceFilePath, path.extname(sourceFilePath))
+        pdfFilePath = path.join(path.dirname(sourceFilePath), basename) + '.pdf'
+
+        if code is 0
+          atom.notifications.addSuccess 'Export as PDF completed!', detail: pdfFilePath or '', dismissable: false
+        else
+          atom.notifications.addWarning 'Export as PDF completed with errors.', detail: pdfFilePath or '', dismissable: false
+
+    else
+      message = '''
+        This feature is experimental.
+        You must manually activate this feature in the package settings.
+        `asciidoctor-pdf` must be installed in you computer.
+        '''
+      atom.notifications.addWarning 'Export as PDF:', detail: message or '', dismissable: true

@@ -33,6 +33,19 @@
     "AsciiDocPreviewView": "createAsciiDocPreviewView"
   },
   "configSchema": {
+    "experimental": {
+      "title": "Experimental package features",
+      "type": "object",
+      "collapsed": true,
+      "properties": {
+        "exportAsPdf": {
+          "title": "Export as PDF",
+          "description": "Use [asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf)",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
     "compatMode": {
       "title": "Compatibility mode (AsciiDoc Python)",
       "type": "boolean",
