@@ -29,5 +29,17 @@ module.exports = (text, attributes, filePath) ->
     backend: 'html5'
     attributes: concatAttributes.trim()
 
-  html = Asciidoctor.$convert text, options
-  callback html
+  try
+    html = Asciidoctor.$convert text, options
+    emit 'asciidoctor-render:success', html: html
+  catch error
+    console.error error
+    {code, errno, syscall, stack} = error
+    console.error stack
+    emit 'asciidoctor-render:error',
+      code: code
+      errno: errno
+      syscall: syscall
+      stack: stack
+
+  callback()

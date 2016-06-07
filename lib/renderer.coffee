@@ -31,9 +31,28 @@ render = (text='', filePath) ->
   new Promise (resolve, reject) ->
     attributes = makeAttributes()
 
-    taskPath = require.resolve './worker'
-    Task.once taskPath, text, attributes, filePath, (html) ->
+    taskPath = require.resolve('./worker')
+    task = Task.once taskPath, text, attributes, filePath
+
+    task.on 'asciidoctor-render:success', ({html}) ->
       resolve html
+
+    task.on 'asciidoctor-render:error', ({code, errno, syscall, stack}) ->
+      resolve """
+        <div>
+          <h1>Asciidoctor.js error</h1>
+          <h2>Rendering error</h2>
+          <div>
+            <p>
+              Currently, an error occurs on Windows with Asciidoctor.js when syntax within a document is invalid.<br>
+              See <a src="https://github.com/asciidoctor/atom-asciidoc-preview/issues/159">https://github.com/asciidoctor/atom-asciidoc-preview/issues/159</a>.
+            </p>
+            <p><b>Please verify your syntax.</b></p>
+            <p>Details: #{stack.split('\n')[0]}</p>
+            <!-- [code: #{code}, errno: #{errno}, syscall: #{syscall}] -->
+          </div>
+        </div>
+        """
 
 sanitize = (html) ->
   o = cheerio.load(html)
