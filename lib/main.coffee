@@ -132,8 +132,10 @@ module.exports =
       spawn = require('child_process').spawn
 
       sourceFilePath = target.dataset.path
+
       if process.platform is 'win32'
-        cmd = spawn 'asciidoctor-pdf', [sourceFilePath]
+        shell = process.env['SHELL'] or 'cmd.exe'
+        cmd = spawn 'asciidoctor-pdf.bat', [sourceFilePath], shell: "#{shell} -i -l"
       else
         shell = process.env['SHELL'] or 'bash'
         cmd = spawn 'asciidoctor-pdf', [sourceFilePath], shell: "#{shell} -i -l"
