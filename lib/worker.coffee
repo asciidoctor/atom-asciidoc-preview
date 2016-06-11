@@ -2,6 +2,7 @@ ajs = require('asciidoctor.js')()
 Asciidoctor = ajs.Asciidoctor()
 Opal = ajs.Opal
 path = require 'path'
+stdStream = require './std-stream-hook'
 
 module.exports = (text, attributes, filePath) ->
   callback = @async()
@@ -30,7 +31,9 @@ module.exports = (text, attributes, filePath) ->
     attributes: concatAttributes.trim()
 
   try
+    stdStream.hook()
     html = Asciidoctor.$convert text, options
+    stdStream.restore()
     emit 'asciidoctor-render:success', html: html
   catch error
     console.error error
