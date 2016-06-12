@@ -138,6 +138,18 @@ describe "attributes-builder", ->
 
       expect(safeMode).toBe 'secure'
 
+  describe "Base directory", ->
+
+    it 'when filePath is undefined', ->
+      {baseDir} = makeAttributes()
+
+      expect(baseDir).toBeUndefined()
+
+    it 'when filePath is defined', ->
+      {baseDir} = makeAttributes('foo/bar.adoc')
+
+      expect(baseDir).toBe 'foo'
+
   describe "opalPwd", ->
 
     it 'should opalPwd be defined', ->

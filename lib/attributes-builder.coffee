@@ -1,6 +1,7 @@
+path = require 'path'
 
 module.exports =
-  makeAttributes: ->
+  makeAttributes: (filePath) ->
     attributes =
       defaultAttributes: atom.config.get 'asciidoc-preview.defaultAttributes'
       numbered: sectionNumbering()
@@ -10,15 +11,16 @@ module.exports =
       forceExperimental: if atom.config.get 'asciidoc-preview.forceExperimental' then 'experimental' else ''
       tocType: calculateTocType()
       safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
+      baseDir: path.dirname filePath if filePath
       opalPwd: window.location.href
 
 calculateTocType = ->
   tocType = atom.config.get 'asciidoc-preview.tocType'
   if tocType is 'none'
     ''
-  # NOTE: 'auto' (blank option in asciidoctor) is currently not supported but
-  # this section is left as a reminder of the expected behaviour
   else if tocType is 'auto'
+    # NOTE: 'auto' (blank option in asciidoctor) is currently not supported but
+    # this section is left as a reminder of the expected behaviour
     'toc=toc! toc2!'
   else
     "toc=#{tocType} toc2!"
