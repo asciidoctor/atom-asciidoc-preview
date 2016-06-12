@@ -11,10 +11,10 @@ module.exports = (text, attributes, filePath) ->
     attributes.defaultAttributes
     'icons=font@'
     attributes.numbered
-    attributes.skipfrontmatter
-    attributes.showtitle
-    attributes.compatmode
-    attributes.toctype
+    attributes.skipFrontMatter
+    attributes.showTitle
+    attributes.compatMode
+    attributes.tocType
     attributes.forceExperimental
   ].join ' '
 
@@ -24,7 +24,7 @@ module.exports = (text, attributes, filePath) ->
 
   options = Opal.hash
     base_dir: folder
-    safe: attributes.safemode
+    safe: attributes.safeMode
     doctype: 'article'
     # Force backend to html5
     backend: 'html5'
