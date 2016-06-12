@@ -15,13 +15,13 @@ module.exports =
 calculateTocType = ->
   tocType = atom.config.get 'asciidoc-preview.tocType'
   if tocType is 'none'
-    return ''
+    ''
   # NOTE: 'auto' (blank option in asciidoctor) is currently not supported but
   # this section is left as a reminder of the expected behaviour
   else if tocType is 'auto'
-    return 'toc=toc! toc2!'
+    'toc=toc! toc2!'
   else
-    return "toc=#{tocType} toc2!"
+    "toc=#{tocType} toc2!"
 
 sectionNumbering = ->
   numberedOption = atom.config.get 'asciidoc-preview.sectionNumbering'
