@@ -33,16 +33,21 @@
     "AsciiDocPreviewView": "createAsciiDocPreviewView"
   },
   "configSchema": {
-    "experimental": {
-      "title": "Experimental package features",
+    "exportAsPdf": {
+      "title": "Export as PDF (experimental)",
       "type": "object",
       "collapsed": true,
       "properties": {
-        "exportAsPdf": {
-          "title": "Export as PDF",
-          "description": "Use [asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf)",
+        "enabled": {
+          "title": "Use asciidoctor-pdf",
+          "description": "[asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf) must be installed in your system.",
           "type": "boolean",
           "default": false
+        },
+        "openWithExternal": {
+          "title": "Automatically open the PDF after generation with the default PDF viewer.",
+          "type": "boolean",
+          "default": true
         }
       }
     },
