@@ -24,6 +24,7 @@
     "font-awesome": "^4.6.3",
     "fs-plus": "~2.8.2",
     "mustache": "~2.2.1",
+    "opn": "^4.0.2",
     "underscore-plus": "~1.6.6"
   },
   "devDependencies": {
@@ -137,6 +138,24 @@
         "text.plain.null-grammar"
       ],
       "order": 11
+    },
+    "saveAsHtml": {
+      "title": "Save as HTML",
+      "type": "object",
+      "collapsed": true,
+      "properties": {
+        "openInEditor": {
+          "title": "Open the generated HTML source code in Atom.",
+          "type": "boolean",
+          "default": false
+        },
+        "openInBrowser": {
+          "title": "Open the generated HTML file in your default browser.",
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "order": 12
     }
   }
 }

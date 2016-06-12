@@ -4,6 +4,7 @@ path = require 'path'
 fs = require 'fs-plus'
 _ = require 'underscore-plus'
 mustache = require 'mustache'
+opn = require 'opn'
 renderer = require './renderer'
 
 module.exports =
@@ -261,4 +262,10 @@ class AsciiDocPreviewView extends ScrollView
         .then (htmlContent) ->
           fs.writeFileSync htmlFilePath, htmlContent
         .then ->
-          atom.workspace.open htmlFilePath
+          if atom.config.get 'asciidoc-preview.saveAsHtml.openInEditor'
+            atom.workspace.open htmlFilePath
+
+          if atom.config.get 'asciidoc-preview.saveAsHtml.openInBrowser'
+            opn(filePath).catch (error) ->
+              atom.notifications.addError error.toString(), detail: error?.stack or '', dismissable: true
+              console.error error
