@@ -6,21 +6,21 @@ describe "attributes-builder", ->
 
     it 'when tocType option is defined to none', ->
       atom.config.set 'asciidoc-preview.tocType', 'none'
-      {toctype} = makeAttributes()
+      {tocType} = makeAttributes()
 
-      expect(toctype).toBe ''
+      expect(tocType).toBe ''
 
     it 'when tocType option is defined to preamble', ->
       atom.config.set 'asciidoc-preview.tocType', 'preamble'
-      {toctype} = makeAttributes()
+      {tocType} = makeAttributes()
 
-      expect(toctype).toBe 'toc=preamble toc2!'
+      expect(tocType).toBe 'toc=preamble toc2!'
 
     it 'when tocType option is defined to macro', ->
       atom.config.set 'asciidoc-preview.tocType', 'macro'
-      {toctype} = makeAttributes()
+      {tocType} = makeAttributes()
 
-      expect(toctype).toBe 'toc=macro toc2!'
+      expect(tocType).toBe 'toc=macro toc2!'
 
   describe "Section numbering", ->
 
@@ -60,43 +60,43 @@ describe "attributes-builder", ->
 
     it 'when frontMatter option is defined to true', ->
       atom.config.set 'asciidoc-preview.frontMatter', true
-      {skipfrontmatter} = makeAttributes()
+      {skipFrontMatter} = makeAttributes()
 
-      expect(skipfrontmatter).toBeFalsy()
+      expect(skipFrontMatter).toBeFalsy()
 
     it 'when frontMatter option is defined to false', ->
       atom.config.set 'asciidoc-preview.frontMatter', false
-      {skipfrontmatter} = makeAttributes()
+      {skipFrontMatter} = makeAttributes()
 
-      expect(skipfrontmatter).toBeTruthy()
+      expect(skipFrontMatter).toBeTruthy()
 
   describe "Show title", ->
 
     it 'when showTitle option is defined to true', ->
       atom.config.set 'asciidoc-preview.showTitle', true
-      {showtitle} = makeAttributes()
+      {showTitle} = makeAttributes()
 
-      expect(showtitle).toBe 'showtitle'
+      expect(showTitle).toBe 'showtitle'
 
     it 'when showTitle option is defined to false', ->
       atom.config.set 'asciidoc-preview.showTitle', false
-      {showtitle} = makeAttributes()
+      {showTitle} = makeAttributes()
 
-      expect(showtitle).toBe 'showtitle!'
+      expect(showTitle).toBe 'showtitle!'
 
   describe "Compat mode", ->
 
     it 'when compatMode option is defined to true', ->
       atom.config.set 'asciidoc-preview.compatMode', true
-      {compatmode} = makeAttributes()
+      {compatMode} = makeAttributes()
 
-      expect(compatmode).toBe 'compat-mode=@'
+      expect(compatMode).toBe 'compat-mode=@'
 
     it 'when compatMode option is defined to false', ->
       atom.config.set 'asciidoc-preview.compatMode', false
-      {compatmode} = makeAttributes()
+      {compatMode} = makeAttributes()
 
-      expect(compatmode).toBe ''
+      expect(compatMode).toBe ''
 
   describe "Force experimental", ->
 
@@ -116,27 +116,27 @@ describe "attributes-builder", ->
 
     it 'when safeMode option is defined to unsafe', ->
       atom.config.set 'asciidoc-preview.safeMode', 'unsafe'
-      {safemode} = makeAttributes()
+      {safeMode} = makeAttributes()
 
-      expect(safemode).toBe 'unsafe'
+      expect(safeMode).toBe 'unsafe'
 
     it 'when safeMode option is defined to safe', ->
       atom.config.set 'asciidoc-preview.safeMode', 'safe'
-      {safemode} = makeAttributes()
+      {safeMode} = makeAttributes()
 
-      expect(safemode).toBe 'safe'
+      expect(safeMode).toBe 'safe'
 
     it 'when safeMode option is defined to server', ->
       atom.config.set 'asciidoc-preview.safeMode', 'server'
-      {safemode} = makeAttributes()
+      {safeMode} = makeAttributes()
 
-      expect(safemode).toBe 'server'
+      expect(safeMode).toBe 'server'
 
     it 'when safeMode option is defined to secure', ->
       atom.config.set 'asciidoc-preview.safeMode', 'secure'
-      {safemode} = makeAttributes()
+      {safeMode} = makeAttributes()
 
-      expect(safemode).toBe 'secure'
+      expect(safeMode).toBe 'secure'
 
   describe "opalPwd", ->
 
