@@ -29,10 +29,10 @@ render = (text='', filePath) ->
   return Promise.resolve() unless atom.config.get('asciidoc-preview.defaultAttributes')?
 
   new Promise (resolve, reject) ->
-    attributes = makeAttributes()
+    attributes = makeAttributes filePath
 
     taskPath = require.resolve('./worker')
-    task = Task.once taskPath, text, attributes, filePath
+    task = Task.once taskPath, text, attributes
 
     task.on 'asciidoctor-render:success', ({html}) ->
       resolve html
