@@ -1,9 +1,10 @@
 path = require 'path'
+opn = require 'opn'
 
 module.exports =
 
   convert: ({target}) ->
-    if atom.config.get 'asciidoc-preview.experimental.exportAsPdf'
+    if atom.config.get 'asciidoc-preview.exportAsPdf.enabled'
 
       sourceFilePath = target.dataset.path
 
@@ -22,6 +23,11 @@ module.exports =
 
         if code is 0
           atom.notifications.addSuccess 'Export as PDF completed!', detail: pdfFilePath or '', dismissable: false
+
+          if atom.config.get 'asciidoc-preview.exportAsPdf.openWithExternal'
+            opn(pdfFilePath).catch (error) ->
+              atom.notifications.addError error.toString(), detail: error?.stack or '', dismissable: true
+              console.error error
         else
           atom.notifications.addWarning 'Export as PDF completed with errors.', detail: pdfFilePath or '', dismissable: false
 
