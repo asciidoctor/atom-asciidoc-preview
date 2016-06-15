@@ -116,7 +116,7 @@ class AsciiDocPreviewView extends ScrollView
     else if @editor?
       @disposables.add @editor.getBuffer().onDidStopChanging renderOnChange
       @disposables.add @editor.onDidChangePath => @emitter.emit 'did-change-title'
-      @disposables.add @editor.getBuffer().onDidSave renderOnChange
+      @disposables.add @editor.getBuffer().onDidSave changeHandler
       @disposables.add @editor.getBuffer().onDidReload renderOnChange
 
     @disposables.add atom.config.onDidChange 'asciidoc-preview.showTitle', changeHandler
