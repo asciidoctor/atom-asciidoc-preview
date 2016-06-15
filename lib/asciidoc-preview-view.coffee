@@ -112,12 +112,12 @@ class AsciiDocPreviewView extends ScrollView
       changeHandler() if not saveOnly
 
     if @file?
-      @disposables.add @file.onDidChange(changeHandler)
+      @disposables.add @file.onDidChange changeHandler
     else if @editor?
-      @disposables.add @editor.getBuffer().onDidStopChanging -> renderOnChange()
+      @disposables.add @editor.getBuffer().onDidStopChanging renderOnChange
       @disposables.add @editor.onDidChangePath => @emitter.emit 'did-change-title'
-      @disposables.add @editor.getBuffer().onDidSave -> renderOnChange()
-      @disposables.add @editor.getBuffer().onDidReload -> renderOnChange()
+      @disposables.add @editor.getBuffer().onDidSave renderOnChange
+      @disposables.add @editor.getBuffer().onDidReload renderOnChange
 
     @disposables.add atom.config.onDidChange 'asciidoc-preview.showTitle', changeHandler
     @disposables.add atom.config.onDidChange 'asciidoc-preview.compatMode', changeHandler
