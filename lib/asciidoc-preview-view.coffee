@@ -81,7 +81,7 @@ class AsciiDocPreviewView extends ScrollView
     @disposables.add atom.grammars.onDidAddGrammar => _.debounce((=> @renderAsciiDoc()), 250)
     @disposables.add atom.grammars.onDidUpdateGrammar _.debounce((=> @renderAsciiDoc()), 250)
 
-    atom.commands.add @element,
+    @disposables.add atom.commands.add @element,
       'core:move-up': =>
         @scrollUp()
       'core:move-down': =>

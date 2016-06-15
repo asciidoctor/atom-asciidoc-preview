@@ -1,3 +1,4 @@
+{CompositeDisposable} = require 'atom'
 url = require 'url'
 path = require 'path'
 fs = require 'fs-plus'
@@ -12,13 +13,17 @@ isAsciiDocPreviewView = (object) ->
 
 module.exports =
 
+  subscriptions: null
+
   activate: ->
+    @subscriptions = new CompositeDisposable
+
     if parseFloat(atom.getVersion()) < 1.7
       atom.deserializers.add
         name: 'AsciiDocPreviewView'
         deserialize: module.exports.createAsciiDocPreviewView.bind(module.exports)
 
-    atom.commands.add 'atom-workspace',
+    @subscriptions.add atom.commands.add 'atom-workspace',
       'asciidoc-preview:toggle': =>
         @toggle()
       'asciidoc-preview:toggle-show-title': ->
@@ -48,6 +53,7 @@ module.exports =
         keyPath = 'asciidoc-preview.renderOnSaveOnly'
         atom.config.set(keyPath, not atom.config.get(keyPath))
 
+    previewFile = @previewFile.bind(this)
     fileExtensions = [
       'adoc'
       'asciidoc'
@@ -55,9 +61,9 @@ module.exports =
       'asc'
       'txt'
     ]
-    previewFile = @previewFile.bind(this)
-    atom.commands.add ".tree-view .file .name[data-name$=\\.#{extension}]", 'asciidoc-preview:preview-file', previewFile for extension in fileExtensions
-    atom.commands.add ".tree-view .file .name[data-name$=\\.#{extension}]", 'asciidoc-preview:export-pdf', pdfconverter.convert for extension in fileExtensions
+    for extension in fileExtensions
+      @subscriptions.add atom.commands.add ".tree-view .file .name[data-name$=\\.#{extension}]", 'asciidoc-preview:preview-file', previewFile
+      @subscriptions.add atom.commands.add ".tree-view .file .name[data-name$=\\.#{extension}]", 'asciidoc-preview:export-pdf', pdfconverter.convert
 
     atom.workspace.addOpener (uriToOpen) =>
       try
@@ -127,3 +133,6 @@ module.exports =
       return
 
     atom.workspace.open "asciidoc-preview://#{encodeURI(filePath)}", searchAllPanes: true
+
+  deactivate: ->
+    @subscriptions.dispose()
