@@ -35,7 +35,8 @@ render = (text='', filePath) ->
     task = Task.once taskPath, text, attributes
 
     task.on 'asciidoctor-render:success', ({html}) ->
-      resolve html
+      console.warn "Rendering is empty: #{filePath}" if not html
+      resolve html or ''
 
     task.on 'asciidoctor-render:error', ({code, errno, syscall, stack}) ->
       resolve """
@@ -52,6 +53,8 @@ render = (text='', filePath) ->
         """
 
 sanitize = (html) ->
+  return html unless html
+
   o = cheerio.load(html)
   o('script').remove()
   attributesToRemove = [
@@ -82,6 +85,8 @@ sanitize = (html) ->
   o.html()
 
 resolveImagePaths = (html, filePath) ->
+  return html unless html
+
   [rootDirectory] = atom.project.relativizePath(filePath)
   o = cheerio.load(html)
   for imgElement in o('img')
