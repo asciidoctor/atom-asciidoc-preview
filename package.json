@@ -169,7 +169,7 @@
       "collapsed": true,
       "properties": {
         "auto": {
-          "title": "Automatically relativized from document path.",
+          "title": "Automatically set base directory to match document directory.",
           "description": "More informations: http://asciidoctor.org/docs/user-manual/#ruby-api-options",
           "type": "boolean",
           "default": true,
@@ -177,7 +177,7 @@
         },
         "customPath": {
           "title": "Custom base directory",
-          "description": "Only works when _Automatically relativized from document path_ is unchecked.<br>More informations: http://asciidoctor.org/docs/user-manual/#ruby-api-options",
+          "description": "Only works when _Automatically set base directory to match document directory_ is unchecked.<br>More informations: http://asciidoctor.org/docs/user-manual/#ruby-api-options",
           "type": "string",
           "default": "",
           "order": 2
