@@ -140,15 +140,37 @@ describe "attributes-builder", ->
 
   describe "Base directory", ->
 
-    it 'when filePath is undefined', ->
+    it 'when filePath is undefined and automatically relativized from document path', ->
+      atom.config.set 'asciidoc-preview.baseDir.auto', true
       {baseDir} = makeAttributes()
 
       expect(baseDir).toBeUndefined()
 
-    it 'when filePath is defined', ->
-      {baseDir} = makeAttributes('foo/bar.adoc')
+    it 'when filePath is defined and automatically relativized from document path', ->
+      atom.config.set 'asciidoc-preview.baseDir.auto', true
+      {baseDir} = makeAttributes 'foo/bar.adoc'
 
       expect(baseDir).toBe 'foo'
+
+    it 'when filePath is defined and customPath is defined and automatically relativized from document path', ->
+      atom.config.set 'asciidoc-preview.baseDir.auto', true
+      atom.config.set 'asciidoc-preview.baseDir.customPath', 'fii'
+      {baseDir} = makeAttributes 'foo/bar.adoc'
+
+      expect(baseDir).toBe 'foo'
+
+    it 'when filePath is defined and not automatically relativized from document path', ->
+      atom.config.set 'asciidoc-preview.baseDir.auto', false
+      {baseDir} = makeAttributes 'foo/bar.adoc'
+
+      expect(baseDir).toBeUndefined()
+
+    it 'when customPath is defined and not automatically relativized from document path', ->
+      atom.config.set 'asciidoc-preview.baseDir.auto', false
+      atom.config.set 'asciidoc-preview.baseDir.customPath', 'fii'
+      {baseDir} = makeAttributes 'foo/bar.adoc'
+
+      expect(baseDir).toBe 'fii'
 
   describe "opalPwd", ->
 

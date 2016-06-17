@@ -11,7 +11,7 @@ module.exports =
       forceExperimental: if atom.config.get 'asciidoc-preview.forceExperimental' then 'experimental' else ''
       tocType: calculateTocType()
       safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
-      baseDir: path.dirname filePath if filePath
+      baseDir: makeBaseDirectory filePath if filePath
       opalPwd: window.location.href
 
 calculateTocType = ->
@@ -35,3 +35,9 @@ sectionNumbering = ->
     'sectnums=@'
   else
     ''
+
+makeBaseDirectory = (filePath) ->
+  if atom.config.get 'asciidoc-preview.baseDir.auto'
+    path.dirname filePath
+  else if atom.config.get 'asciidoc-preview.baseDir.customPath'
+    atom.config.get 'asciidoc-preview.baseDir.customPath'
