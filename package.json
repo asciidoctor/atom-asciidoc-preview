@@ -1,7 +1,7 @@
 {
   "name": "asciidoc-preview",
   "main": "./lib/main",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "description": "Show an HTML preview for the AsciiDoc content in the current editor",
   "repository": "https://github.com/asciidoctor/atom-asciidoc-preview",
   "license": "MIT",
@@ -116,7 +116,7 @@
     "baseDir": {
       "title": "Base directory",
       "description": "Use the value `{docdir}` to make the base directory match the document directory.<br>Use the value `-` to use absolute path.<br>More informations: http://asciidoctor.org/docs/user-manual/#ruby-api-options",
-      "type" : "string",
+      "type": "string",
       "default": "{docdir}",
       "order": 10
     },
