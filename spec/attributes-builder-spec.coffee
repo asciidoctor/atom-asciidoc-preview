@@ -140,34 +140,26 @@ describe "attributes-builder", ->
 
   describe "Base directory", ->
 
-    it 'when filePath is undefined and automatically relativized from document path', ->
-      atom.config.set 'asciidoc-preview.baseDir.auto', true
+    it 'when filePath is undefined and document path as base_dir', ->
+      atom.config.set 'asciidoc-preview.baseDir', '{docdir}'
       {baseDir} = makeAttributes()
 
       expect(baseDir).toBeUndefined()
 
-    it 'when filePath is defined and automatically relativized from document path', ->
-      atom.config.set 'asciidoc-preview.baseDir.auto', true
+    it 'when filePath is defined and document path as base_dir', ->
+      atom.config.set 'asciidoc-preview.baseDir', '{docdir}'
       {baseDir} = makeAttributes 'foo/bar.adoc'
 
       expect(baseDir).toBe 'foo'
 
-    it 'when filePath is defined and customPath is defined and automatically relativized from document path', ->
-      atom.config.set 'asciidoc-preview.baseDir.auto', true
-      atom.config.set 'asciidoc-preview.baseDir.customPath', 'fii'
-      {baseDir} = makeAttributes 'foo/bar.adoc'
-
-      expect(baseDir).toBe 'foo'
-
-    it 'when filePath is defined and not automatically relativized from document path', ->
-      atom.config.set 'asciidoc-preview.baseDir.auto', false
+    it 'when filePath is defined and use absolute path', ->
+      atom.config.set 'asciidoc-preview.baseDir', '-'
       {baseDir} = makeAttributes 'foo/bar.adoc'
 
       expect(baseDir).toBeUndefined()
 
-    it 'when customPath is defined and not automatically relativized from document path', ->
-      atom.config.set 'asciidoc-preview.baseDir.auto', false
-      atom.config.set 'asciidoc-preview.baseDir.customPath', 'fii'
+    it 'when use a custom base_dir', ->
+      atom.config.set 'asciidoc-preview.baseDir', 'fii'
       {baseDir} = makeAttributes 'foo/bar.adoc'
 
       expect(baseDir).toBe 'fii'
