@@ -140,15 +140,29 @@ describe "attributes-builder", ->
 
   describe "Base directory", ->
 
-    it 'when filePath is undefined', ->
+    it 'when filePath is undefined and document path as base_dir', ->
+      atom.config.set 'asciidoc-preview.baseDir', '{docdir}'
       {baseDir} = makeAttributes()
 
       expect(baseDir).toBeUndefined()
 
-    it 'when filePath is defined', ->
-      {baseDir} = makeAttributes('foo/bar.adoc')
+    it 'when filePath is defined and document path as base_dir', ->
+      atom.config.set 'asciidoc-preview.baseDir', '{docdir}'
+      {baseDir} = makeAttributes 'foo/bar.adoc'
 
       expect(baseDir).toBe 'foo'
+
+    it 'when filePath is defined and use absolute path', ->
+      atom.config.set 'asciidoc-preview.baseDir', '-'
+      {baseDir} = makeAttributes 'foo/bar.adoc'
+
+      expect(baseDir).toBeUndefined()
+
+    it 'when use a custom base_dir', ->
+      atom.config.set 'asciidoc-preview.baseDir', 'fii'
+      {baseDir} = makeAttributes 'foo/bar.adoc'
+
+      expect(baseDir).toBe 'fii'
 
   describe "opalPwd", ->
 

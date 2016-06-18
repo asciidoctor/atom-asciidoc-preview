@@ -34,35 +34,21 @@
     "AsciiDocPreviewView": "createAsciiDocPreviewView"
   },
   "configSchema": {
-    "exportAsPdf": {
-      "title": "Export as PDF (experimental)",
-      "type": "object",
-      "collapsed": true,
-      "properties": {
-        "enabled": {
-          "title": "Use asciidoctor-pdf",
-          "description": "[asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf) must be installed in your system.",
-          "type": "boolean",
-          "default": false
-        },
-        "openWithExternal": {
-          "title": "Automatically open the PDF after generation with the default PDF viewer.",
-          "type": "boolean",
-          "default": true
-        }
-      }
-    },
-    "compatMode": {
-      "title": "Compatibility mode (AsciiDoc Python)",
+    "renderOnSaveOnly": {
+      "title": "Render on save only",
       "type": "boolean",
       "default": false,
       "order": 1
     },
-    "forceExperimental": {
-      "title": "Always enable experimental extensions",
-      "description": "The features behind this attribute are subject to change and may even be removed in a future version.<br>Currently enables the UI macros (`button`, `menu` and `kbd`).",
-      "type": "boolean",
-      "default": false,
+    "openInPane": {
+      "type": "string",
+      "default": "right",
+      "enum": [
+        "left",
+        "right",
+        "up",
+        "down"
+      ],
       "order": 2
     },
     "showTitle": {
@@ -71,15 +57,15 @@
       "default": true,
       "order": 3
     },
-    "safeMode": {
-      "description": "Set safe mode 'level': `unsafe`, `safe`, `server` or `secure`.<br>Disables potentially dangerous macros in source files, such as `include::[]`.<br>Set safe mode level to `safe` to enable include macros, but restricts access to ancestor paths of source file.<br>http://asciidoctor.org/docs/user-manual/#running-asciidoctor-securely<br>",
+    "sectionNumbering": {
+      "description": "Auto-number section titles.<br>- Enabled by default (equivalent to `-a sectnums=@`)<br>- Always enabled (equivalent to `-a sectnums`)<br>- Always disabled (equivalent to `-a sectnums!`)<br>- Not specified<br>http://asciidoctor.org/docs/user-manual/#numbering",
       "type": "string",
-      "default": "safe",
+      "default": "enabled-by-default",
       "enum": [
-        "unsafe",
-        "safe",
-        "server",
-        "secure"
+        "enabled-by-default",
+        "always-enabled",
+        "always-disabled",
+        "not-specified"
       ],
       "order": 4
     },
@@ -102,38 +88,42 @@
       "default": false,
       "order": 6
     },
-    "sectionNumbering": {
-      "description": "Auto-number section titles.<br>- Enabled by default (equivalent to `-a sectnums=@`)<br>- Always enabled (equivalent to `-a sectnums`)<br>- Always disabled (equivalent to `-a sectnums!`)<br>- Not specified<br>http://asciidoctor.org/docs/user-manual/#numbering",
-      "type": "string",
-      "default": "enabled-by-default",
-      "enum": [
-        "enabled-by-default",
-        "always-enabled",
-        "always-disabled",
-        "not-specified"
-      ],
+    "forceExperimental": {
+      "title": "Always enable AsciiDoctor experimental extensions",
+      "description": "The features behind this attribute are subject to change and may even be removed in a future version of AsciiDoctor.<br>Currently enables the UI macros (`button`, `menu` and `kbd`).",
+      "type": "boolean",
+      "default": false,
       "order": 7
     },
-    "renderOnSaveOnly": {
+    "compatMode": {
+      "title": "Always enable compatibility mode (AsciiDoc Python)",
       "type": "boolean",
       "default": false,
       "order": 8
     },
-    "openInPane": {
+    "safeMode": {
+      "description": "Set safe mode 'level': `unsafe`, `safe`, `server` or `secure`.<br>Disables potentially dangerous macros in source files, such as `include::[]`.<br>Set safe mode level to `safe` to enable include macros, but restricts access to ancestor paths of source file.<br>http://asciidoctor.org/docs/user-manual/#running-asciidoctor-securely<br>",
       "type": "string",
-      "default": "right",
+      "default": "safe",
       "enum": [
-        "left",
-        "right",
-        "up",
-        "down"
+        "unsafe",
+        "safe",
+        "server",
+        "secure"
       ],
       "order": 9
+    },
+    "baseDir": {
+      "title": "Base directory",
+      "description": "Use the value `{docdir}` to make the base directory match the document directory.<br>Use the value `-` to use absolute path.<br>More informations: http://asciidoctor.org/docs/user-manual/#ruby-api-options",
+      "type" : "string",
+      "default": "{docdir}",
+      "order": 10
     },
     "defaultAttributes": {
       "type": "string",
       "default": "platform=opal platform-opal env=browser env-browser source-highlighter=highlight.js data-uri!",
-      "order": 10
+      "order": 11
     },
     "grammars": {
       "type": "array",
@@ -142,7 +132,7 @@
         "text.plain",
         "text.plain.null-grammar"
       ],
-      "order": 11
+      "order": 12
     },
     "saveAsHtml": {
       "title": "Save as HTML",
@@ -160,7 +150,26 @@
           "default": true
         }
       },
-      "order": 12
+      "order": 13
+    },
+    "exportAsPdf": {
+      "title": "Export as PDF [experimental]",
+      "type": "object",
+      "collapsed": true,
+      "properties": {
+        "enabled": {
+          "title": "Use asciidoctor-pdf",
+          "description": "[asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf) must be installed in your system.",
+          "type": "boolean",
+          "default": false
+        },
+        "openWithExternal": {
+          "title": "Automatically open the PDF after generation with the default PDF viewer.",
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "order": 14
     }
   }
 }
