@@ -115,7 +115,7 @@
     },
     "baseDir": {
       "title": "Base directory",
-      "description": "Use the value `{docdir}` to make the base directory match the document directory.<br>Use the value `-` to use absolute path.<br>More informations: http://asciidoctor.org/docs/user-manual/#ruby-api-options",
+      "description": "The default value `{docdir}` make the base directory match the document directory.<br>Use the value `-` to use absolute path.<br>More informations: http://asciidoctor.org/docs/user-manual/#ruby-api-options",
       "type": "string",
       "default": "{docdir}",
       "order": 10
