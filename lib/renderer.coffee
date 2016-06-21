@@ -7,7 +7,7 @@ cheerio = require 'cheerio'
 Highlights = require path.join atom.packages.resolvePackagePath('markdown-preview'), '..', 'highlights'
 {scopeForFenceName} = require './highlights-helper'
 
-{makeAttributes} = require './attributes-builder'
+{makeAttributes, makeOptions} = require './configuration-builder'
 
 highlighter = null
 {resourcePath} = atom.getLoadSettings()
@@ -29,10 +29,11 @@ render = (text='', filePath) ->
   return Promise.resolve() unless atom.config.get('asciidoc-preview.defaultAttributes')?
 
   new Promise (resolve, reject) ->
-    attributes = makeAttributes filePath
+    attributes = makeAttributes()
+    options = makeOptions filePath
 
     taskPath = require.resolve('./worker')
-    task = Task.once taskPath, text, attributes
+    task = Task.once taskPath, text, attributes, options
 
     task.on 'asciidoctor-render:success', ({html}) ->
       console.warn "Rendering is empty: #{filePath}" if not html

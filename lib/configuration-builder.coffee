@@ -1,7 +1,7 @@
 path = require 'path'
 
 module.exports =
-  makeAttributes: (filePath) ->
+  makeAttributes: ->
     attributes =
       defaultAttributes: atom.config.get 'asciidoc-preview.defaultAttributes'
       numbered: sectionNumbering()
@@ -10,9 +10,12 @@ module.exports =
       compatMode: if atom.config.get 'asciidoc-preview.compatMode' then 'compat-mode=@' else ''
       forceExperimental: if atom.config.get 'asciidoc-preview.forceExperimental' then 'experimental' else ''
       tocType: calculateTocType()
-      safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
-      baseDir: makeBaseDirectory filePath if filePath
       opalPwd: window.location.href
+
+  makeOptions: (filePath) ->
+    options =
+      baseDir: (makeBaseDirectory filePath if filePath)
+      safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
 
 calculateTocType = ->
   tocType = atom.config.get 'asciidoc-preview.tocType'

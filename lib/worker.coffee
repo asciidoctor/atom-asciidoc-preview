@@ -4,7 +4,7 @@ Opal = ajs.Opal
 path = require 'path'
 stdStream = require './std-stream-hook'
 
-module.exports = (text, attributes) ->
+module.exports = (text, attributes, options) ->
   callback = @async()
 
   concatAttributes = [
@@ -21,8 +21,8 @@ module.exports = (text, attributes) ->
   Opal.ENV['$[]=']('PWD', path.dirname(attributes.opalPwd))
 
   options = Opal.hash
-    base_dir: attributes.baseDir
-    safe: attributes.safeMode
+    base_dir: options.baseDir
+    safe: options.safeMode
     doctype: 'article'
     # Force backend to html5
     backend: 'html5'

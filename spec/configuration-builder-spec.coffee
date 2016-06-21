@@ -1,4 +1,4 @@
-{makeAttributes} = require '../lib/attributes-builder'
+{makeAttributes, makeOptions} = require '../lib/configuration-builder'
 
 describe "attributes-builder", ->
 
@@ -116,25 +116,25 @@ describe "attributes-builder", ->
 
     it 'when safeMode option is defined to unsafe', ->
       atom.config.set 'asciidoc-preview.safeMode', 'unsafe'
-      {safeMode} = makeAttributes()
+      {safeMode} = makeOptions()
 
       expect(safeMode).toBe 'unsafe'
 
     it 'when safeMode option is defined to safe', ->
       atom.config.set 'asciidoc-preview.safeMode', 'safe'
-      {safeMode} = makeAttributes()
+      {safeMode} = makeOptions()
 
       expect(safeMode).toBe 'safe'
 
     it 'when safeMode option is defined to server', ->
       atom.config.set 'asciidoc-preview.safeMode', 'server'
-      {safeMode} = makeAttributes()
+      {safeMode} = makeOptions()
 
       expect(safeMode).toBe 'server'
 
     it 'when safeMode option is defined to secure', ->
       atom.config.set 'asciidoc-preview.safeMode', 'secure'
-      {safeMode} = makeAttributes()
+      {safeMode} = makeOptions()
 
       expect(safeMode).toBe 'secure'
 
@@ -142,25 +142,25 @@ describe "attributes-builder", ->
 
     it 'when filePath is undefined and document path as base_dir', ->
       atom.config.set 'asciidoc-preview.baseDir', '{docdir}'
-      {baseDir} = makeAttributes()
+      {baseDir} = makeOptions()
 
       expect(baseDir).toBeUndefined()
 
     it 'when filePath is defined and document path as base_dir', ->
       atom.config.set 'asciidoc-preview.baseDir', '{docdir}'
-      {baseDir} = makeAttributes 'foo/bar.adoc'
+      {baseDir} = makeOptions 'foo/bar.adoc'
 
       expect(baseDir).toBe 'foo'
 
     it 'when filePath is defined and use absolute path', ->
       atom.config.set 'asciidoc-preview.baseDir', '-'
-      {baseDir} = makeAttributes 'foo/bar.adoc'
+      {baseDir} = makeOptions 'foo/bar.adoc'
 
       expect(baseDir).toBeUndefined()
 
     it 'when use a custom base_dir', ->
       atom.config.set 'asciidoc-preview.baseDir', 'fii'
-      {baseDir} = makeAttributes 'foo/bar.adoc'
+      {baseDir} = makeOptions 'foo/bar.adoc'
 
       expect(baseDir).toBe 'fii'
 
