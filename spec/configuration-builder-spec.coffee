@@ -167,6 +167,6 @@ describe "attributes-builder", ->
   describe "opalPwd", ->
 
     it 'should opalPwd be defined', ->
-      {opalPwd} = makeAttributes()
+      {opalPwd} = makeOptions()
 
       expect(opalPwd).toBeDefined()

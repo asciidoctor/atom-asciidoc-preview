@@ -18,7 +18,7 @@ module.exports = (text, attributes, options) ->
     attributes.forceExperimental
   ].join(' ').trim()
 
-  Opal.ENV['$[]=']('PWD', path.dirname(attributes.opalPwd))
+  Opal.ENV['$[]=']('PWD', path.dirname(options.opalPwd))
 
   options = Opal.hash
     base_dir: options.baseDir

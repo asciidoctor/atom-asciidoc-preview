@@ -10,10 +10,10 @@ module.exports =
       compatMode: if atom.config.get 'asciidoc-preview.compatMode' then 'compat-mode=@' else ''
       forceExperimental: if atom.config.get 'asciidoc-preview.forceExperimental' then 'experimental' else ''
       tocType: calculateTocType()
-      opalPwd: window.location.href
 
   makeOptions: (filePath) ->
     options =
+      opalPwd: window.location.href
       baseDir: (makeBaseDirectory filePath if filePath)
       safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
 
