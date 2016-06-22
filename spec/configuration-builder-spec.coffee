@@ -26,27 +26,27 @@ describe "attributes-builder", ->
 
     it 'when sectionNumbering option is defined to enabled-by-default', ->
       atom.config.set 'asciidoc-preview.sectionNumbering', 'enabled-by-default'
-      {numbered} = makeAttributes()
+      {sectnums} = makeAttributes()
 
-      expect(numbered).toBe 'sectnums=@'
+      expect(sectnums).toBe 'sectnums=@'
 
     it 'when sectionNumbering option is defined to always-enabled', ->
       atom.config.set 'asciidoc-preview.sectionNumbering', 'always-enabled'
-      {numbered} = makeAttributes()
+      {sectnums} = makeAttributes()
 
-      expect(numbered).toBe 'sectnums'
+      expect(sectnums).toBe 'sectnums'
 
     it 'when sectionNumbering option is defined to always-disabled', ->
       atom.config.set 'asciidoc-preview.sectionNumbering', 'always-disabled'
-      {numbered} = makeAttributes()
+      {sectnums} = makeAttributes()
 
-      expect(numbered).toBe 'sectnums!'
+      expect(sectnums).toBe 'sectnums!'
 
     it 'when sectionNumbering option is defined to not-specified', ->
       atom.config.set 'asciidoc-preview.sectionNumbering', 'not-specified'
-      {numbered} = makeAttributes()
+      {sectnums} = makeAttributes()
 
-      expect(numbered).toBe ''
+      expect(sectnums).toBe ''
 
   describe "Default attributes", ->
 
