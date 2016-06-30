@@ -1,18 +1,21 @@
 path = require 'path'
 
 module.exports =
-  makeAttributes: (filePath) ->
+  makeAttributes: ->
     attributes =
       defaultAttributes: atom.config.get 'asciidoc-preview.defaultAttributes'
-      numbered: sectionNumbering()
+      sectnums: sectionNumbering()
       skipFrontMatter: if atom.config.get 'asciidoc-preview.frontMatter' then '' else 'skip-front-matter'
       showTitle: if atom.config.get 'asciidoc-preview.showTitle' then 'showtitle' else 'showtitle!'
       compatMode: if atom.config.get 'asciidoc-preview.compatMode' then 'compat-mode=@' else ''
       forceExperimental: if atom.config.get 'asciidoc-preview.forceExperimental' then 'experimental' else ''
       tocType: calculateTocType()
-      safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
-      baseDir: makeBaseDirectory filePath if filePath
+
+  makeOptions: (filePath) ->
+    options =
       opalPwd: window.location.href
+      baseDir: (makeBaseDirectory filePath if filePath)
+      safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
 
 calculateTocType = ->
   tocType = atom.config.get 'asciidoc-preview.tocType'
@@ -26,12 +29,12 @@ calculateTocType = ->
     "toc=#{tocType} toc2!"
 
 sectionNumbering = ->
-  numberedOption = atom.config.get 'asciidoc-preview.sectionNumbering'
-  if numberedOption is 'always-enabled'
+  sectnumsOption = atom.config.get 'asciidoc-preview.sectionNumbering'
+  if sectnumsOption is 'always-enabled'
     'sectnums'
-  else if numberedOption is 'always-disabled'
+  else if sectnumsOption is 'always-disabled'
     'sectnums!'
-  else if numberedOption is 'enabled-by-default'
+  else if sectnumsOption is 'enabled-by-default'
     'sectnums=@'
   else
     ''
