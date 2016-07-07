@@ -98,12 +98,13 @@ resolveImagePaths = (html, filePath) ->
       continue if src.startsWith resourcePath
       continue if src.startsWith packagePath
 
+      invalidateCache = Date.now()
       if src[0] is '/'
         unless fs.isFileSync src
           if rootDirectory
-            img.attr('src', path.join(rootDirectory, src.substring(1)))
+            img.attr('src', path.join(rootDirectory, src.substring(1) + "?time=#{invalidateCache}"))
       else
-        img.attr('src', path.resolve(path.dirname(filePath), src))
+        img.attr('src', path.resolve(path.dirname(filePath), "#{src}?time=#{invalidateCache}"))
 
   o.html()
 
