@@ -99,12 +99,13 @@ resolveImagePaths = (html, filePath) ->
       continue if src.startsWith packagePath
 
       invalidateCache = Date.now()
+      appenderChar = if src.indexOf('?') is -1 then "?" else "&"
       if src[0] is '/'
         unless fs.isFileSync src
           if rootDirectory
-            img.attr('src', path.join(rootDirectory, src.substring(1) + "?time=#{invalidateCache}"))
+            img.attr 'src', path.join(rootDirectory, src.substring(1) + "#{appenderChar}atomcache=#{invalidateCache}")
       else
-        img.attr('src', path.resolve(path.dirname(filePath), "#{src}?time=#{invalidateCache}"))
+        img.attr 'src', path.resolve(path.dirname(filePath), "#{src}#{appenderChar}atomcache=#{invalidateCache}")
 
   o.html()
 
