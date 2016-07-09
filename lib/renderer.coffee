@@ -93,19 +93,20 @@ resolveImagePaths = (html, filePath) ->
   for imgElement in o('img')
     img = o(imgElement)
     if src = img.attr('src')
-      continue if src.match /^(https?|atom):\/\//
-      continue if src.startsWith process.resourcesPath
-      continue if src.startsWith resourcePath
-      continue if src.startsWith packagePath
-
-      invalidateCache = Date.now()
       appenderChar = if src.indexOf('?') is -1 then "?" else "&"
-      if src[0] is '/'
+      invalidateCache = "#{appenderChar}atomcache=#{Date.now()}"
+
+      if src.match /^(https?|atom):\/\// or
+          src.startsWith process.resourcesPath or
+          src.startsWith resourcePath or
+          src.startsWith packagePath
+        img.attr 'src', src + invalidateCache
+      else if src[0] is '/'
         unless fs.isFileSync src
           if rootDirectory
-            img.attr 'src', path.join(rootDirectory, src.substring(1) + "#{appenderChar}atomcache=#{invalidateCache}")
+            img.attr 'src', path.join(rootDirectory, src.substring(1) + invalidateCache)
       else
-        img.attr 'src', path.resolve(path.dirname(filePath), "#{src}#{appenderChar}atomcache=#{invalidateCache}")
+        img.attr 'src', path.resolve(path.dirname(filePath), "#{src}#{invalidateCache}")
 
   o.html()
 
