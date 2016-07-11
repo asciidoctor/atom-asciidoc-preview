@@ -40,7 +40,7 @@ sectionNumbering = ->
     ''
 
 makeBaseDirectory = (filePath) ->
-  baseBir = atom.config.get('asciidoc-preview.baseDir')
+  baseBir = atom.config.get 'asciidoc-preview.baseDir'
   if baseBir is '{docdir}'
     path.dirname filePath
   else if baseBir isnt '-'
