@@ -124,9 +124,9 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
     if codeBlock[0]?.nodeType isnt Node.TEXT_NODE
       fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? defaultLanguage
 
-      # Exclude text block that contains HTML to highlights
+      # Exclude text block to highlights
       # Because this creates a rendering bug with quotes substitutions #193
-      if fenceName is defaultLanguage and codeBlock.length
+      if fenceName is defaultLanguage
         preElement.className = ''
       else
         highlighter ?= new Highlights(registry: atom.grammars)
