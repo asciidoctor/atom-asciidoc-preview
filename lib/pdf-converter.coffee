@@ -44,7 +44,7 @@ executeAsciiDoctorPdf = (sourceFilePath) ->
 
   if process.platform is 'win32'
     shell = process.env['SHELL'] or 'cmd.exe'
-    spawn 'asciidoctor-pdf.bat', [sourceFilePath], shell: "#{shell} -i -l"
+    spawn 'asciidoctor-pdf.bat', [sourceFilePath], shell: "#{shell}"
   else
     shell = process.env['SHELL'] or 'bash'
-    spawn 'asciidoctor-pdf', [sourceFilePath], shell: "#{shell} -i -l"
+    spawn 'asciidoctor-pdf', [sourceFilePath], shell: "#{shell}"
