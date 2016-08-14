@@ -124,15 +124,20 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
     if codeBlock[0]?.nodeType isnt Node.TEXT_NODE
       fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? defaultLanguage
 
-      highlighter ?= new Highlights(registry: atom.grammars)
-      highlightedHtml = highlighter.highlightSync
-        fileContents: codeBlock.text()
-        scopeName: scopeForFenceName(fenceName)
+      # Exclude text block to highlights
+      # Because this creates a rendering bug with quotes substitutions #193
+      if fenceName is defaultLanguage
+        preElement.className = ''
+      else
+        highlighter ?= new Highlights(registry: atom.grammars)
+        highlightedHtml = highlighter.highlightSync
+          fileContents: codeBlock.text()
+          scopeName: scopeForFenceName(fenceName)
 
-      highlightedBlock = $(highlightedHtml)
-      # The `editor` class messes things up as `.editor` has absolutely positioned lines
-      highlightedBlock.removeClass('editor').addClass("lang-#{fenceName}")
-      highlightedBlock.insertAfter(preElement)
-      preElement.remove()
+        highlightedBlock = $(highlightedHtml)
+        # The `editor` class messes things up as `.editor` has absolutely positioned lines
+        highlightedBlock.removeClass('editor').addClass("lang-#{fenceName}")
+        highlightedBlock.insertAfter(preElement)
+        preElement.remove()
 
   html
