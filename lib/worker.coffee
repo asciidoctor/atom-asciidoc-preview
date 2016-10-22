@@ -20,7 +20,7 @@ module.exports = (text, attributes, options) ->
 
   Opal.ENV['$[]=']('PWD', path.dirname(options.opalPwd))
 
-  options = Opal.hash
+  options =
     base_dir: options.baseDir
     safe: options.safeMode
     doctype: 'article'
@@ -30,7 +30,7 @@ module.exports = (text, attributes, options) ->
 
   try
     stdStream.hook()
-    html = Asciidoctor.$convert text, options
+    html = Asciidoctor.convert text, options
     stdStream.restore()
     emit 'asciidoctor-render:success', html: html
   catch error
