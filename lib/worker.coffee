@@ -1,6 +1,9 @@
-ajs = require('asciidoctor.js')()
-Asciidoctor = ajs.Asciidoctor()
-Opal = ajs.Opal
+asciidoctorRuntimeConfig =
+  runtime:
+    platform: 'node'
+    engine: 'v8'
+    framework: 'electron'
+Asciidoctor = require('asciidoctor.js')(asciidoctorRuntimeConfig)
 path = require 'path'
 stdStream = require './std-stream-hook'
 
@@ -17,8 +20,6 @@ module.exports = (text, attributes, options) ->
     attributes.tocType
     attributes.forceExperimental
   ].join(' ').trim()
-
-  Opal.ENV['$[]=']('PWD', path.dirname(options.opalPwd))
 
   options =
     base_dir: options.baseDir

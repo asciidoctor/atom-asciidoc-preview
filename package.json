@@ -18,7 +18,7 @@
     "atom": ">=1.9.0 <2.0.0"
   },
   "dependencies": {
-    "asciidoctor.js": "1.5.5-3",
+    "asciidoctor.js": "1.5.5-4",
     "atom-space-pen-views": "~2.2.0",
     "cheerio": "~0.20.0",
     "font-awesome": "^4.6.3",
