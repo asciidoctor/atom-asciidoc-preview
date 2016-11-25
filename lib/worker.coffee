@@ -1,6 +1,9 @@
-ajs = require('asciidoctor.js')()
-Asciidoctor = ajs.Asciidoctor()
-Opal = ajs.Opal
+asciidoctorRuntimeConfig =
+  runtime:
+    platform: 'node'
+    engine: 'v8'
+    framework: 'electron'
+Asciidoctor = require('asciidoctor.js')(asciidoctorRuntimeConfig)
 path = require 'path'
 stdStream = require './std-stream-hook'
 
@@ -18,9 +21,7 @@ module.exports = (text, attributes, options) ->
     attributes.forceExperimental
   ].join(' ').trim()
 
-  Opal.ENV['$[]=']('PWD', path.dirname(options.opalPwd))
-
-  options = Opal.hash
+  options =
     base_dir: options.baseDir
     safe: options.safeMode
     doctype: 'article'
@@ -30,7 +31,7 @@ module.exports = (text, attributes, options) ->
 
   try
     stdStream.hook()
-    html = Asciidoctor.$convert text, options
+    html = Asciidoctor.convert text, options
     stdStream.restore()
     emit 'asciidoctor-render:success', html: html
   catch error
