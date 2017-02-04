@@ -25,15 +25,21 @@ exports.toHtml = (text='', filePath) ->
 exports.toRawHtml = (text='', filePath) ->
   render text, filePath
 
-render = (text='', filePath) ->
+exports.getBlockId = (bufferRowPosition) =>
+  @blocksPositions[bufferRowPosition + 1] if @blocksPositions
+
+render = (text='', filePath) =>
   return Promise.resolve() unless atom.config.get('asciidoc-preview.defaultAttributes')?
 
-  new Promise (resolve, reject) ->
+  new Promise (resolve, reject) =>
     attributes = makeAttributes()
     options = makeOptions filePath
 
     taskPath = require.resolve('./worker')
     task = Task.once taskPath, text, attributes, options
+
+    task.on 'asciidoctor-load:success', ({blocksPositions}) =>
+      @blocksPositions = blocksPositions
 
     task.on 'asciidoctor-render:success', ({html}) ->
       console.warn "Rendering is empty: #{filePath}" if not html
