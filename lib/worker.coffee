@@ -27,10 +27,14 @@ module.exports = (text, attributes, options) ->
     # Force backend to html5
     backend: 'html5'
     attributes: concatAttributes
+    sourcemap: true
 
   try
     stdStream.hook()
-    html = Asciidoctor.$convert text, options
+    doc = Asciidoctor.$load text, options
+    blocksPositions = registerBlocksPositions doc.blocks, {}, 1
+    emit 'asciidoctor-load:success', blocksPositions: blocksPositions
+    html = doc.$convert()
     stdStream.restore()
     emit 'asciidoctor-render:success', html: html
   catch error
@@ -44,3 +48,21 @@ module.exports = (text, attributes, options) ->
       stack: stack
 
   callback()
+
+registerBlocksPositions = (blocks, result, @index) ->
+  for block in blocks
+    lineno = block.$lineno()
+    if typeof lineno is 'number'
+      if typeof block.id is 'string'
+        id = block.id
+      else
+        # Set a unique id
+        id = "#{block.node_name}_#{index}"
+        @index += 1
+        block.id = id
+
+      result[lineno] = id
+
+    registerBlocksPositions block.blocks, result, @index
+
+  result

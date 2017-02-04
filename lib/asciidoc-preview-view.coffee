@@ -111,9 +111,19 @@ class AsciiDocPreviewView extends ScrollView
       saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
       changeHandler() if not saveOnly
 
+    scrollPreview = (event, callback) ->
+      blockId = renderer.getBlockId event.newBufferPosition.row
+      if blockId?
+        if target = $('#' + blockId)[0]
+          callback target.offsetTop
+      else
+        # TODO Find the nearest block
+
     if @file?
       @disposables.add @file.onDidChange changeHandler
     else if @editor?
+      @disposables.add @editor.onDidChangeCursorPosition (event) => scrollPreview event, (top) =>
+        @scrollTop top
       @disposables.add @editor.onDidChangePath => @emitter.emit 'did-change-title'
       buffer = @editor.getBuffer()
       @disposables.add buffer.onDidStopChanging renderOnChange
@@ -162,9 +172,9 @@ class AsciiDocPreviewView extends ScrollView
         # Because jQuery uses CSS syntax for selecting elements, some characters are interpreted as CSS notation.
         # In order to tell jQuery to treat these characters literally rather than as CSS notation, they must be "escaped" by placing two backslashes in front of them.
         if target = $(hrefLink.replace(/(\/|:|\.|\[|\]|,|\)|\()/g, '\\$1'))
-          continue if not target.offset()
+          continue if not target[0]
           # TODO Use tab height variable instead of 43
-          top = target.offset().top - 43
+          top = target[0].offsetTop
           do (top) ->
             link.on 'click', (e) ->
               top = top
