@@ -20,10 +20,10 @@
   "dependencies": {
     "asciidoctor.js": "1.5.5-1",
     "atom-space-pen-views": "~2.2.0",
-    "cheerio": "~0.20.0",
-    "font-awesome": "^4.6.3",
-    "fs-plus": "~2.8.2",
-    "mustache": "~2.2.1",
+    "cheerio": "~0.22.0",
+    "font-awesome": "^4.7.0",
+    "fs-plus": "~2.9.3",
+    "mustache": "~2.3.0",
     "opn": "^4.0.2",
     "underscore-plus": "~1.6.6"
   },
