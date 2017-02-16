@@ -16,6 +16,7 @@ module.exports =
       opalPwd: window.location.href
       baseDir: (makeBaseDirectory filePath if filePath)
       safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
+      scrollMode: atom.config.get 'asciidoc-preview.scrollMode'
 
 calculateTocType = ->
   tocType = atom.config.get 'asciidoc-preview.tocType'

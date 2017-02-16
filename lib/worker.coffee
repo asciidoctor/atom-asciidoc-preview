@@ -20,20 +20,23 @@ module.exports = (text, attributes, options) ->
 
   Opal.ENV['$[]=']('PWD', path.dirname(options.opalPwd))
 
-  options = Opal.hash
+  asciidoctorOptions = Opal.hash
     base_dir: options.baseDir
     safe: options.safeMode
     doctype: 'article'
     # Force backend to html5
     backend: 'html5'
     attributes: concatAttributes
-    sourcemap: true
+    sourcemap: options.scrollMode
 
   try
     stdStream.hook()
-    doc = Asciidoctor.$load text, options
-    blocksPositions = registerBlocksPositions doc.blocks, {}, 1
-    emit 'asciidoctor-load:success', blocksPositions: blocksPositions
+    doc = Asciidoctor.$load text, asciidoctorOptions
+
+    if options.scrollMode
+      blocksPositions = registerBlocksPositions doc.blocks, {}, 1
+      emit 'asciidoctor-load:success', blocksPositions: blocksPositions
+
     html = doc.$convert()
     stdStream.restore()
     emit 'asciidoctor-render:success', html: html
