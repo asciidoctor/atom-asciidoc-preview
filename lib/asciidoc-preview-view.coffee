@@ -108,22 +108,22 @@ class AsciiDocPreviewView extends ScrollView
         pane.activateItem(this)
 
     renderOnChange = ->
-      saveOnly = atom.config.get('asciidoc-preview.renderOnSaveOnly')
+      saveOnly = atom.config.get 'asciidoc-preview.renderOnSaveOnly'
       changeHandler() if not saveOnly
 
     scrollPreview = (event, callback) ->
-      blockId = renderer.getBlockId event.newBufferPosition.row
-      if blockId?
-        if target = $('#' + blockId)[0]
-          callback target.offsetTop
-      else
-        # TODO Find the nearest block
+      if atom.config.get 'asciidoc-preview.scrollMode'
+        blockId = renderer.getBlockId event.newBufferPosition.row
+        if blockId?
+          if target = $('#' + blockId)[0]
+            callback target.offsetTop
+        # else
+          # TODO Find the nearest block
 
     if @file?
       @disposables.add @file.onDidChange changeHandler
     else if @editor?
-      @disposables.add @editor.onDidChangeCursorPosition (event) => scrollPreview event, (top) =>
-        @scrollTop top
+      @disposables.add @editor.onDidChangeCursorPosition (event) => scrollPreview event, (top) => @scrollTop top
       @disposables.add @editor.onDidChangePath => @emitter.emit 'did-change-title'
       buffer = @editor.getBuffer()
       @disposables.add buffer.onDidStopChanging renderOnChange
