@@ -168,12 +168,21 @@
           "title": "Use asciidoctor-pdf",
           "description": "[asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf) must be installed in your system.",
           "type": "boolean",
-          "default": false
+          "default": false,
+          "order": 1
         },
         "openWithExternal": {
           "title": "Automatically open the PDF after generation with the default PDF viewer.",
           "type": "boolean",
-          "default": true
+          "default": true,
+          "order": 2
+        },
+        "arguments": {
+          "title": "Command line additional arguments",
+          "description": "ex: `-a pdf-stylesdir=~/resources/themes -a pdf-style=basic`",
+          "type": "string",
+          "default": "",
+          "order": 3
         }
       },
       "order": 14

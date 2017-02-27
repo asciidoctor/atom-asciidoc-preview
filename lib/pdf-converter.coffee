@@ -42,9 +42,11 @@ module.exports =
 executeAsciiDoctorPdf = (sourceFilePath) ->
   {spawn} = require 'child_process'
 
+  asciidoctorPdfArguments = atom.config.get 'asciidoc-preview.exportAsPdf.arguments'
+
   if process.platform is 'win32'
     shell = process.env['SHELL'] or 'cmd.exe'
-    spawn 'asciidoctor-pdf.bat', ["\"#{sourceFilePath}\""], shell: "#{shell}"
+    spawn 'asciidoctor-pdf.bat', [asciidoctorPdfArguments, "\"#{sourceFilePath}\""], shell: "#{shell}"
   else
     shell = process.env['SHELL'] or 'bash'
-    spawn 'asciidoctor-pdf', ["\"#{sourceFilePath}\""], shell: "#{shell}"
+    spawn 'asciidoctor-pdf', [asciidoctorPdfArguments, "\"#{sourceFilePath}\""], shell: "#{shell}"
