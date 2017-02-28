@@ -34,6 +34,13 @@
     "AsciiDocPreviewView": "createAsciiDocPreviewView"
   },
   "configSchema": {
+    "scrollMode": {
+      "title": "Synchronize the preview pane",
+      "description": "If set, synchronize the preview pane with the AsciiDoc source pane.<br>WARNING: The scroll position on the preview pane does not automatically scroll the AsciiDoc source pane.",
+      "type": "boolean",
+      "default": true,
+      "order": 0
+    },
     "renderOnSaveOnly": {
       "title": "Render on save only",
       "type": "boolean",

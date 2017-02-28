@@ -1,6 +1,6 @@
 {Task} = require 'atom'
 
-describe "worker", ->
+describe 'worker', ->
 
   it 'should generate blocks positions', ->
     options =
