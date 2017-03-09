@@ -3,8 +3,10 @@
 describe 'worker', ->
 
   it 'should generate blocks positions', ->
+    atom.config.set 'asciidoc-preview.scrollMode', true
     options =
       opalPwd: window.location.href
+      scrollMode: true
 
     content = """= Hello world
 
@@ -18,7 +20,8 @@ describe 'worker', ->
     Third paragraph.
     Fourth paragraph."""
 
-    task = Task.once require.resolve('../lib/worker'), content, {}, options
+    taskPath = require.resolve('../lib/worker')
+    task = Task.once taskPath, content, {}, options
 
     task.on 'asciidoctor-load:success', ({blocksPositions}) =>
       @blocksPositions = blocksPositions
