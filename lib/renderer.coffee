@@ -54,7 +54,7 @@ render = (text='', filePath) =>
             <p><b>Please verify your document syntax.</b></p>
             <p>Details: #{stack.split('\n')[0]}</p>
             <p>[code: #{code}, errno: #{errno}, syscall: #{syscall}]<p>
-            <div>#{stack}</div>
+            <div><pre>#{stack}</pre></div>
           </div>
         </div>
         """
