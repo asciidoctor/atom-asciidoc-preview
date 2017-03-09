@@ -42,7 +42,7 @@ module.exports =
 executeAsciiDoctorPdf = (sourceFilePath) ->
   {spawn} = require 'child_process'
 
-  asciidoctorPdfArguments = atom.config.get 'asciidoc-preview.exportAsPdf.arguments'
+  asciidoctorPdfArguments = makeAsciiDoctorPdfArguments()
 
   if process.platform is 'win32'
     shell = process.env['SHELL'] or 'cmd.exe'
@@ -50,3 +50,24 @@ executeAsciiDoctorPdf = (sourceFilePath) ->
   else
     shell = process.env['SHELL'] or 'bash'
     spawn 'asciidoctor-pdf', [asciidoctorPdfArguments, "\"#{sourceFilePath}\""], shell: "#{shell}"
+
+makeAsciiDoctorPdfArguments = ->
+  asciidoctorPdfArguments = []
+
+  asciidoctorPdfStyle = atom.config.get 'asciidoc-preview.exportAsPdf.pdfStyle'
+  if asciidoctorPdfStyle isnt ""
+    asciidoctorPdfArguments.push "-a pdf-style=\"#{asciidoctorPdfStyle}\""
+
+  asciidoctorPdfStylesDir = atom.config.get 'asciidoc-preview.exportAsPdf.pdfStylesDir'
+  if asciidoctorPdfStylesDir isnt ""
+    asciidoctorPdfArguments.push "-a pdf-stylesdir=\"#{asciidoctorPdfStylesDir}\""
+
+  asciidoctorPdfFontsDir = atom.config.get 'asciidoc-preview.exportAsPdf.pdfFontsDir'
+  if asciidoctorPdfFontsDir isnt ""
+    asciidoctorPdfArguments.push "-a pdf-fontsdir=\"#{asciidoctorPdfFontsDir}\""
+
+  asciidoctorPdfAdditionalArguments = atom.config.get 'asciidoc-preview.exportAsPdf.arguments'
+  if asciidoctorPdfAdditionalArguments isnt ""
+    asciidoctorPdfArguments.push asciidoctorPdfAdditionalArguments
+
+  asciidoctorPdfArguments.join(' ').trim()
