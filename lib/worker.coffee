@@ -54,18 +54,22 @@ module.exports = (text, attributes, options) ->
 
 registerBlocksPositions = (blocks, result, @index) ->
   for block in blocks
-    lineno = block.$lineno()
-    if typeof lineno is 'number'
-      if typeof block.id is 'string'
-        id = block.id
-      else
-        # Set a unique id
-        id = "#{block.node_name}_#{index}"
-        @index += 1
-        block.id = id
+    if Array.isArray block
+      registerBlocksPositions block, result, @index
+    else
+      lineno = block.$lineno()
 
-      result[lineno] = id
+      if typeof lineno is 'number'
+        if typeof block.id is 'string'
+          id = block.id
+        else
+          # Set a unique id
+          id = "#{block.node_name}_#{index}"
+          @index += 1
+          block.id = id
 
-    registerBlocksPositions block.blocks, result, @index
+        result[lineno] = id
+
+      registerBlocksPositions block.blocks, result, @index
 
   result
