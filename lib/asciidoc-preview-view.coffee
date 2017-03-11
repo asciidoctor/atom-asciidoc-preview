@@ -173,7 +173,6 @@ class AsciiDocPreviewView extends ScrollView
         # In order to tell jQuery to treat these characters literally rather than as CSS notation, they must be "escaped" by placing two backslashes in front of them.
         if target = $(hrefLink.replace(/(\/|:|\.|\[|\]|,|\)|\()/g, '\\$1'))
           continue if not target[0]
-          # TODO Use tab height variable instead of 43
           top = target[0].offsetTop
           do (top) ->
             link.on 'click', (e) ->
