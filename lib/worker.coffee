@@ -34,7 +34,7 @@ module.exports = (text, attributes, options) ->
     doc = Asciidoctor.$load text, asciidoctorOptions
 
     if options.scrollMode
-      blocksPositions = registerBlocksPositions doc.blocks, {}, 1
+      blocksPositions = registerBlocksPositions doc.$query(), {}, 1
       emit 'asciidoctor-load:success', blocksPositions: blocksPositions
 
     html = doc.$convert()
@@ -54,22 +54,17 @@ module.exports = (text, attributes, options) ->
 
 registerBlocksPositions = (blocks, result, @index) ->
   for block in blocks
-    if Array.isArray block
-      registerBlocksPositions block, result, @index
-    else
-      lineno = block.$lineno()
+    lineno = block.$lineno()
 
-      if typeof lineno is 'number'
-        if typeof block.id is 'string'
-          id = block.id
-        else
-          # Set a unique id
-          id = "#{block.node_name}_#{index}"
-          @index += 1
-          block.id = id
+    if typeof lineno is 'number'
+      if typeof block.id is 'string'
+        id = block.id
+      else
+        # Set a unique id
+        id = "#{block.node_name}_#{index}"
+        @index += 1
+        block.id = id
 
-        result[lineno] = id
-
-      registerBlocksPositions block.blocks, result, @index
+      result[lineno] = id
 
   result
