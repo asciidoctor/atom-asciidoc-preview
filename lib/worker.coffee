@@ -34,7 +34,7 @@ module.exports = (text, attributes, options) ->
     doc = Asciidoctor.$load text, asciidoctorOptions
 
     if options.scrollMode
-      blocksPositions = registerBlocksPositions doc.$query(), {}, 1
+      blocksPositions = registerBlocksPositions doc
       emit 'asciidoctor-load:success', blocksPositions: blocksPositions
 
     html = doc.$convert()
@@ -52,8 +52,11 @@ module.exports = (text, attributes, options) ->
 
   callback()
 
-registerBlocksPositions = (blocks, result, @index) ->
-  for block in blocks
+registerBlocksPositions = (doc) ->
+  blocks = doc.$query()
+
+  linesMapping = {}
+  for block, index in blocks
     lineno = block.$lineno()
 
     if typeof lineno is 'number'
@@ -62,9 +65,8 @@ registerBlocksPositions = (blocks, result, @index) ->
       else
         # Set a unique id
         id = "#{block.node_name}_#{index}"
-        @index += 1
         block.id = id
 
-      result[lineno] = id
+      linesMapping[lineno] = id
 
-  result
+  linesMapping

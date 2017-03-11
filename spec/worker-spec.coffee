@@ -30,6 +30,6 @@ describe 'worker', ->
 
     runs =>
       expect(@blocksPositions[3]).toBe '_first_section'
-      expect(@blocksPositions[5]).toBe 'paragraph_1'
+      expect(@blocksPositions[5]).toBe 'paragraph_3'
       expect(@blocksPositions[8]).toBe '_second_section'
-      expect(@blocksPositions[10]).toBe 'paragraph_2'
+      expect(@blocksPositions[10]).toBe 'paragraph_5'
