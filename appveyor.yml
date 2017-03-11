@@ -1,27 +1,27 @@
-version: '{build}'
+### Project specific config ###
+environment:
+  APM_TEST_PACKAGES: language-asciidoc
+  ATOM_LINT_WITH_BUNDLED_NODE: "true"
 
-skip_tags: true
+  matrix:
+  - ATOM_CHANNEL: stable
+  - ATOM_CHANNEL: beta
 
 # NOTE: AppVeyor automatically skips the build if the commit contains [ci skip] or [skip ci] or [skip appveyor]
 skip_commits:
   author: asciidoctor-docbot
 
-clone_depth: 10
-
-platform: x64
-
-environment:
-  APM_TEST_PACKAGES: language-asciidoc
-  matrix:
-    - ATOM_CHANNEL: stable
-    - ATOM_CHANNEL: beta
-
-install:
-  - ps: Install-Product node 5
-
+### Generic setup follows ###
 build_script:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/atom/ci/master/build-package.ps1'))
 
-test: off
+branches:
+  only:
+    - master
 
+version: "{build}"
+platform: x64
+clone_depth: 10
+skip_tags: true
+test: off
 deploy: off
