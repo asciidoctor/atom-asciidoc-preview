@@ -53,7 +53,10 @@ module.exports = (text, attributes, options) ->
   callback()
 
 registerBlocksPositions = (doc) ->
-  blocks = doc.$query()
+  # Use Ruby API:
+  # because `doc.$find_by()` doesn't accept a filter function as parameter.
+  # https://github.com/asciidoctor/asciidoctor.js/issues/282
+  blocks = Opal.block_send doc, 'find_by', (b) -> b.$lineno() isnt Opal.nil
 
   linesMapping = {}
   for block, index in blocks
