@@ -35,7 +35,7 @@ module.exports = (text, attributes, options) ->
 
     if options.scrollMode
       blockPositions = registerBlockPositions doc
-      emit 'asciidoctor-load:success', blocksPositions: blockPositions
+      emit 'asciidoctor-load:success', blockPositions: blockPositions
 
     html = doc.$convert()
     stdStream.restore()
