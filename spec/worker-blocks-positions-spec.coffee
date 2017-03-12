@@ -35,11 +35,11 @@ describe 'worker when the scroll mode is activated', ->
 
     runs =>
       expect(Object.keys @blocksPositions).toHaveLength 5
-      expect(@blocksPositions[1]).toBe 'section_0'
+      expect(@blocksPositions[1]).toBe '__asciidoctor-preview-420__'
       expect(@blocksPositions[3]).toBe '_first_section'
-      expect(@blocksPositions[5]).toBe 'paragraph_2'
+      expect(@blocksPositions[5]).toBe '__asciidoctor-preview-464__'
       expect(@blocksPositions[8]).toBe '_second_section'
-      expect(@blocksPositions[10]).toBe 'paragraph_4'
+      expect(@blocksPositions[10]).toBe '__asciidoctor-preview-480__'
 
   it 'should generate blocks positions when document contains item list.', ->
     content = '''
@@ -64,11 +64,11 @@ describe 'worker when the scroll mode is activated', ->
 
     runs =>
       expect(Object.keys @blocksPositions).toHaveLength 5
-      expect(@blocksPositions[1]).toBe 'section_0'
+      expect(@blocksPositions[1]).toBe '__asciidoctor-preview-420__'
       expect(@blocksPositions[3]).toBe '_first_section'
-      expect(@blocksPositions[6]).toBe 'ulist_2'
-      expect(@blocksPositions[7]).toBe 'ulist_3'
-      expect(@blocksPositions[8]).toBe 'ulist_4'
+      expect(@blocksPositions[6]).toBe '__asciidoctor-preview-468__'
+      expect(@blocksPositions[7]).toBe '__asciidoctor-preview-492__'
+      expect(@blocksPositions[8]).toBe '__asciidoctor-preview-512__'
 
   it 'should generate blocks positions when document contains definition list.', ->
     content = '''
@@ -93,7 +93,8 @@ describe 'worker when the scroll mode is activated', ->
     waitsFor (done) -> task.start(done)
 
     runs =>
+      # { 1 : '__asciidoctor-preview-420__', 3 : '_first_section', 5 : '__asciidoctor-preview-466__' }
       expect(Object.keys @blocksPositions).toHaveLength 3
-      expect(@blocksPositions[1]).toBe 'section_0'
+      expect(@blocksPositions[1]).toBe '__asciidoctor-preview-420__'
       expect(@blocksPositions[3]).toBe '_first_section'
-      expect(@blocksPositions[5]).toBe 'dlist_2'
+      expect(@blocksPositions[5]).toBe '__asciidoctor-preview-466__'

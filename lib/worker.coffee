@@ -34,8 +34,8 @@ module.exports = (text, attributes, options) ->
     doc = Asciidoctor.$load text, asciidoctorOptions
 
     if options.scrollMode
-      blocksPositions = registerBlocksPositions doc
-      emit 'asciidoctor-load:success', blocksPositions: blocksPositions
+      blockPositions = registerBlockPositions doc
+      emit 'asciidoctor-load:success', blocksPositions: blockPositions
 
     html = doc.$convert()
     stdStream.restore()
@@ -52,23 +52,26 @@ module.exports = (text, attributes, options) ->
 
   callback()
 
-registerBlocksPositions = (doc) ->
+registerBlockPositions = (doc) ->
+  if doc.header?
+    # Make sure the document header node and the document node share the same ID.
+    if typeof doc.id isnt 'string'
+      doc.id = "__asciidoctor-preview-#{doc.$object_id()}__"
+    doc.header.id = doc.id
+
   # Use Ruby API:
   # because `doc.findBy()` doesn't yet accept a filter function as parameter.
   # https://github.com/asciidoctor/asciidoctor.js/issues/282
   blocks = Opal.block_send doc, 'find_by', (b) -> b.$lineno() isnt Opal.nil
 
   linesMapping = {}
-  for block, index in blocks
-    lineno = block.$lineno()
-
-    if typeof block.id is 'string'
-      id = block.id
-    else
-      # Set a unique id
-      id = "#{block.node_name}_#{index}"
+  for block in blocks
+    id = block.id
+    if typeof id isnt 'string'
+      id = "__asciidoctor-preview-#{block.$object_id()}__"
       block.id = id
 
+    lineno = block.$lineno()
     linesMapping[lineno] = id
 
   linesMapping
