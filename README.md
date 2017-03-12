@@ -6,11 +6,11 @@
 [![Build Status (Windows)](https://ci.appveyor.com/api/projects/status/a7240elaip2dkd16?svg=true)](https://ci.appveyor.com/project/asciidoctor/atom-asciidoc-preview)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/asciidoctor/atom-asciidoc-preview/blob/master/LICENSE.md)
 
-Shows the rendered HTML of the AsciiDoc content in current editor using <kbd>ctrl-shift-a</kbd> or <kbd>cmd-shift-a</kbd>.
+Shows the rendered HTML of the AsciiDoc content in current editor.
+
+Toggle the preview pane, which appears to the right of the editor, by using the key combination <kbd>ctrl-shift-a</kbd> or <kbd>cmd-shift-a</kbd>.
 
 It is currently enabled for `.adoc`, `.asciidoc`, `.ad`, `.asc`, `.adoc.txt`, `.txt` files.
-
-You can toggle the preview pane, which appears to the right of the editor, using the key combination <kbd>ctrl-shift-a</kbd> or <kbd>cmd-shift-a</kbd>.
 
 **Note:** since 1.0.0, the auto-completions have been migrated to a dedicate package: [autocomplete-asciidoc](https://atom.io/packages/autocomplete-asciidoc).
 
