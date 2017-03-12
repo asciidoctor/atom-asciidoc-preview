@@ -186,14 +186,14 @@
         },
         "pdfStylesDir": {
           "title": "Styles directory (-a pdf-stylesdir=)",
-          "description": "The directory where the theme file is located. _Specifying an absolute path is recommended._ <br> https://github.com/asciidoctor/asciidoctor-pdf/blob/master/docs/theming-guide.adoc#applying-your-theme",
+          "description": "The directory where the theme file is located. _Specifying an absolute path is recommended._",
           "type": "string",
           "default": "",
           "order": 4
         },
         "pdfFontsDir": {
           "title": "Fonts directory (-a pdf-fontsdir=)",
-          "description": "The directory where the fonts used by your theme, if any, are located. _Specifying an absolute path is recommended._ <br> https://github.com/asciidoctor/asciidoctor-pdf/blob/master/docs/theming-guide.adoc#applying-your-theme",
+          "description": "The directory where the fonts used by your theme, if any, are located. _Specifying an absolute path is recommended._",
           "type": "string",
           "default": "",
           "order": 5
