@@ -62,14 +62,13 @@ registerBlocksPositions = (doc) ->
   for block, index in blocks
     lineno = block.$lineno()
 
-    if typeof lineno is 'number'
-      if typeof block.id is 'string'
-        id = block.id
-      else
-        # Set a unique id
-        id = "#{block.node_name}_#{index}"
-        block.id = id
+    if typeof block.id is 'string'
+      id = block.id
+    else
+      # Set a unique id
+      id = "#{block.node_name}_#{index}"
+      block.id = id
 
-      linesMapping[lineno] = id
+    linesMapping[lineno] = id
 
   linesMapping
