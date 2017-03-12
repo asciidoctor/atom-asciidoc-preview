@@ -8,16 +8,39 @@
 
 Shows the rendered HTML of the AsciiDoc content in current editor using <kbd>ctrl-shift-a</kbd> or <kbd>cmd-shift-a</kbd>.
 
-It can be activated from the editor using the <kbd>ctrl-shift-a</kbd> or <kbd>cmd-shift-a</kbd> key-binding and is currently enabled for `.adoc`, `.asciidoc`, `.ad`, `.asc`, `.adoc.txt`, `.txt` files.
-
-**Note:** since 1.0.0, the autocompletions have been migrated to a new package: [autocomplete-asciidoc](https://atom.io/packages/autocomplete-asciidoc)
-
-You can install this module from the command-line by typing `apm install asciidoc-preview`.
+It is currently enabled for `.adoc`, `.asciidoc`, `.ad`, `.asc`, `.adoc.txt`, `.txt` files.
 
 You can toggle the preview pane, which appears to the right of the editor, using the key combination <kbd>ctrl-shift-a</kbd> or <kbd>cmd-shift-a</kbd>.
 
-More options are accessible by right-clicking on the preview.
+**Note:** since 1.0.0, the auto-completions have been migrated to a dedicate package: [autocomplete-asciidoc](https://atom.io/packages/autocomplete-asciidoc).
+
+This package use [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js).
+
+![capture du 2017-03-12 12-56-57](https://cloud.githubusercontent.com/assets/5674651/23831539/c914762a-0723-11e7-85f6-f7a16dcfa1e9.png)
+
+
+## Options
+
+* Live preview or preview only on save.
+* Choose the position of the preview pane: "left", "right", "up", "down" (default: "right")
+* Save as HTML: save the document to an HTML file.
+* Export as PDF: create a PDF file and open with your default PDF viewer.
+  * [asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf) command must be available on your `PATH`.
+  * more styling options are available in the package settings.
+* Synchronize the preview pane: synchronize the preview pane with the AsciiDoc source pane.
+  * **WARNING:** The scroll position on the preview pane does not automatically scroll the AsciiDoc source pane.
+
+More options are accessible :
+* in the package settings
+* in the global menu
+* by right-clicking on the preview
+* by right-clicking on an AsciiDoc file.
+
+
+## More
+
+You can install this module from the command-line by typing `apm install asciidoc-preview`.
 
 ![AsciiDoc Preview demo](https://cloud.githubusercontent.com/assets/5674651/15512720/96199b06-21e1-11e6-9eab-56826356a4e9.gif)
 
-Thanks to @kevinsawicki! I just adapted [markdown-preview](https://github.com/atom/markdown-preview) and used [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js).
+Thanks to [@kevinsawicki](https://github.com/kevinsawicki) for inspiration [markdown-preview](https://github.com/atom/markdown-preview).
