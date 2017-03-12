@@ -36,6 +36,13 @@ More options are accessible :
 * by right-clicking on the preview
 * by right-clicking on an AsciiDoc file.
 
+## Others Atom packages for AsciiDoc
+
+* [language-asciidoc](https://atom.io/packages/language-asciidoc): Syntax highlighting and snippets for AsciiDoc (with Asciidoctor flavor).
+* [asciidoc-preview](https://atom.io/packages/asciidoc-preview): Show an preview for the AsciiDoc content in the current editor.
+* [autocomplete-asciidoc](https://atom.io/packages/autocomplete-asciidoc): AsciiDoc language autocompletions.
+* [asciidoc-image-helper](https://atom.io/packages/asciidoc-image-helper): When pasting an image into an Asciidoc document, this package will paste clipboard image data as a file into a folder specified by the user.
+* [asciidoc-assistant](https://atom.io/packages/asciidoc-assistant): install Atom AsciiDoc basic packages with one package.
 
 ## More
 
