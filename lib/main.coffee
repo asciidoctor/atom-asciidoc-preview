@@ -26,6 +26,9 @@ module.exports =
     @subscriptions.add atom.commands.add 'atom-workspace',
       'asciidoc-preview:toggle': =>
         @toggle()
+      'asciidoc-preview:sync': ->
+        keyPath = 'asciidoc-preview.scrollMode'
+        atom.config.set(keyPath, not atom.config.get(keyPath))
       'asciidoc-preview:toggle-show-title': ->
         keyPath = 'asciidoc-preview.showTitle'
         atom.config.set(keyPath, not atom.config.get(keyPath))

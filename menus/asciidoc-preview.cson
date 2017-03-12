@@ -5,6 +5,8 @@ menu: [
     submenu: [
       label: 'Toggle Preview', command: 'asciidoc-preview:toggle'
     ,
+      label: 'Toggle Sync', command: 'asciidoc-preview:sync'
+    ,
       label: 'Always show Table of Contents'
       submenu: [
         label: 'none', command: 'asciidoc-preview:set-toc-none'
