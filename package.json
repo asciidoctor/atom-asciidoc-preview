@@ -165,8 +165,8 @@
       "collapsed": true,
       "properties": {
         "enabled": {
-          "title": "Use asciidoctor-pdf",
-          "description": "[asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf) must be installed in your system.",
+          "title": "Enable PDF export using Asciidoctor PDF.",
+          "description": "The [asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf) command must be available on your `PATH`.",
           "type": "boolean",
           "default": false,
           "order": 1
@@ -185,7 +185,7 @@
           "order": 3
         },
         "pdfStylesDir": {
-          "title": "Fonts directory (-a pdf-stylesdir=)",
+          "title": "Styles directory (-a pdf-stylesdir=)",
           "description": "The directory where the theme file is located. _Specifying an absolute path is recommended._ <br> https://github.com/asciidoctor/asciidoctor-pdf/blob/master/docs/theming-guide.adoc#applying-your-theme",
           "type": "string",
           "default": "",
@@ -200,7 +200,7 @@
         },
         "arguments": {
           "title": "Command line additional arguments",
-          "description": "ex: `-a pdf-stylesdir=~/resources/themes -a pdf-style=basic`",
+          "description": "ex: `-a pdf-page-size=Letter`",
           "type": "string",
           "default": "",
           "order": 6
