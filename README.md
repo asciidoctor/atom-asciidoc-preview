@@ -16,7 +16,7 @@ It is currently enabled for `.adoc`, `.asciidoc`, `.ad`, `.asc`, `.adoc.txt`, `.
 
 This package use [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js).
 
-![capture du 2017-03-12 12-56-57](https://cloud.githubusercontent.com/assets/5674651/23831539/c914762a-0723-11e7-85f6-f7a16dcfa1e9.png)
+![asciidoc-preview](https://cloud.githubusercontent.com/assets/5674651/23831539/c914762a-0723-11e7-85f6-f7a16dcfa1e9.png)
 
 
 ## Options
