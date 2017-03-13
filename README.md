@@ -30,7 +30,7 @@ This package use [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js)
 * Synchronize the preview pane: synchronize the preview pane with the AsciiDoc source pane.
   * **WARNING:** The scroll position on the preview pane does not automatically scroll the AsciiDoc source pane.
 
-More options are accessible :
+More options are available :
 * in the package settings
 * in the global menu
 * by right-clicking on the preview
