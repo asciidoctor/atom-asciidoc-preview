@@ -4,7 +4,7 @@ path = require 'path'
 fs = require 'fs-plus'
 cheerio = require 'cheerio'
 # No direct dependence with Highlight because it requires a compilation. See #63 and #150 and atom/highlights#36.
-Highlights = require path.join atom.packages.resolvePackagePath('markdown-preview'), '..', 'highlights'
+Highlights = require path.join atom.packages.resolvePackagePath('markdown-preview'), '..', 'highlight.js'
 {scopeForFenceName} = require './highlights-helper'
 
 {makeAttributes, makeOptions} = require './configuration-builder'
