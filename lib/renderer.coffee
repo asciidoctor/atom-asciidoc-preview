@@ -3,8 +3,16 @@
 path = require 'path'
 fs = require 'fs-plus'
 cheerio = require 'cheerio'
+
 # No direct dependence with Highlight because it requires a compilation. See #63 and #150 and atom/highlights#36.
-Highlights = require path.join atom.packages.resolvePackagePath('markdown-preview'), '..', 'highlights'
+markdownPreviewPath = atom.packages.resolvePackagePath 'markdown-preview'
+commonHighlightsPath = path.join markdownPreviewPath, '..', 'highlights'
+if fs.isDirectorySync commonHighlightsPath
+  Highlights = require commonHighlightsPath
+else
+  # Fix specific problem with RPM made for Fedora by the Fedora community. See #226.
+  Highlights = require path.join markdownPreviewPath, 'node_modules', 'highlights'
+
 {scopeForFenceName} = require './highlights-helper'
 
 {makeAttributes, makeOptions} = require './configuration-builder'
