@@ -10,7 +10,7 @@ commonHighlightsPath = path.join markdownPreviewPath, '..', 'highlights'
 if fs.isDirectorySync commonHighlightsPath
   Highlights = require commonHighlightsPath
 else
-  # Fix Fedora specific problem #226
+  # Fix specific problem with RPM made for Fedora by the Fedora community. See #226.
   Highlights = require path.join markdownPreviewPath, 'node_modules', 'highlights'
 
 {scopeForFenceName} = require './highlights-helper'
