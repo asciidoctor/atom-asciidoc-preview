@@ -25,7 +25,8 @@
     "fs-plus": "~2.9.3",
     "mustache": "~2.3.0",
     "opn": "^4.0.2",
-    "underscore-plus": "~1.6.6"
+    "underscore-plus": "~1.6.6",
+    "atom-highlight": "^0.3.0"
   },
   "devDependencies": {
     "coffeelint": "^1.15.0"
