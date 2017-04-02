@@ -3,7 +3,7 @@
 path = require 'path'
 fs = require 'fs-plus'
 cheerio = require 'cheerio'
-highlight = require 'atom-highlight'
+highlights = require './highlights'
 
 {scopeForFenceName} = require './highlights-helper'
 
@@ -135,10 +135,9 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
       if fenceName is defaultLanguage
         preElement.className = ''
       else
-        highlightedHtml = highlight
+        highlightedHtml = highlights
           fileContents: codeBlock.text()
           scopeName: scopeForFenceName(fenceName)
-          nbsp: true
           lineDivs: true
           editorDiv: true
           editorDivTag: 'pre'
