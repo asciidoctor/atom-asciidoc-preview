@@ -142,7 +142,7 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
           editorDiv: true
           editorDivTag: 'pre'
           # The `editor` class messes things up as `.editor` has absolutely positioned lines
-          editorDivClass: 'editor-colors'
+          editorDivClass: 'highlights editor-colors'
 
         highlightedBlock = $(highlightedHtml)
 
