@@ -85,9 +85,14 @@
     font-size: 1.0625em;
   }
 
-  pre.atom-text-editor {
-    background: @syntax-background-color !important;
-    border: 1px solid darken(@syntax-background-color, 10%) !important;
+  .listingblock pre.highlights {
+    background: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 4%));
+  }
+
+  pre.highlights {
+    // background: contrast(@syntax-background-color, lighten(@syntax-background-color, 4%), darken(@syntax-background-color, 4%)) !important;
+    color: @syntax-text-color;
+    word-break: break-word;
   }
 
   .verseblock,

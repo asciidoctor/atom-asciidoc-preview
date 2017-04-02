@@ -3,15 +3,7 @@
 path = require 'path'
 fs = require 'fs-plus'
 cheerio = require 'cheerio'
-
-# No direct dependence with Highlight because it requires a compilation. See #63 and #150 and atom/highlights#36.
-markdownPreviewPath = atom.packages.resolvePackagePath 'markdown-preview'
-commonHighlightsPath = path.join markdownPreviewPath, '..', 'highlights'
-if fs.isDirectorySync commonHighlightsPath
-  Highlights = require commonHighlightsPath
-else
-  # Fix specific problem with RPM made for Fedora by the Fedora community. See #226.
-  Highlights = require path.join markdownPreviewPath, 'node_modules', 'highlights'
+highlights = require './highlights'
 
 {scopeForFenceName} = require './highlights-helper'
 
@@ -143,14 +135,18 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
       if fenceName is defaultLanguage
         preElement.className = ''
       else
-        highlighter ?= new Highlights(registry: atom.grammars)
-        highlightedHtml = highlighter.highlightSync
+        highlightedHtml = highlights
           fileContents: codeBlock.text()
           scopeName: scopeForFenceName(fenceName)
+          lineDivs: true
+          editorDiv: true
+          editorDivTag: 'pre'
+          # The `editor` class messes things up as `.editor` has absolutely positioned lines
+          editorDivClass: 'highlights editor-colors'
 
         highlightedBlock = $(highlightedHtml)
-        # The `editor` class messes things up as `.editor` has absolutely positioned lines
-        highlightedBlock.removeClass('editor').addClass("lang-#{fenceName}")
+
+        highlightedBlock.addClass("lang-#{fenceName}")
         highlightedBlock.insertAfter(preElement)
         preElement.remove()
 
