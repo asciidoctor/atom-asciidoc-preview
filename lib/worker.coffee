@@ -1,6 +1,9 @@
-ajs = require('asciidoctor.js')()
-Asciidoctor = ajs.Asciidoctor()
-Opal = ajs.Opal
+asciidoctorRuntimeConfig =
+  runtime:
+    platform: 'node'
+    engine: 'v8'
+    framework: 'electron'
+Asciidoctor = require('asciidoctor.js')(asciidoctorRuntimeConfig)
 path = require 'path'
 stdStream = require './std-stream-hook'
 
@@ -18,9 +21,7 @@ module.exports = (text, attributes, options) ->
     attributes.forceExperimental
   ].join(' ').trim()
 
-  Opal.ENV['$[]=']('PWD', path.dirname(options.opalPwd))
-
-  asciidoctorOptions = Opal.hash
+  asciidoctorOptions =
     base_dir: options.baseDir
     safe: options.safeMode
     doctype: 'article'
@@ -31,13 +32,13 @@ module.exports = (text, attributes, options) ->
 
   try
     stdStream.hook()
-    doc = Asciidoctor.$load text, asciidoctorOptions
+    doc = Asciidoctor.load text, asciidoctorOptions
 
     if options.scrollMode
       blockPositions = registerBlockPositions doc
       emit 'asciidoctor-load:success', blockPositions: blockPositions
 
-    html = doc.$convert()
+    html = doc.convert()
     stdStream.restore()
     emit 'asciidoctor-render:success', html: html
   catch error
@@ -59,10 +60,7 @@ registerBlockPositions = (doc) ->
       doc.id = "__asciidoctor-preview-#{doc.$object_id()}__"
     doc.header.id = doc.id
 
-  # Use Ruby API:
-  # because `doc.findBy()` doesn't yet accept a filter function as parameter.
-  # https://github.com/asciidoctor/asciidoctor.js/issues/282
-  blocks = Opal.block_send doc, 'find_by', (b) -> b.$lineno() isnt Opal.nil
+  blocks = doc.findBy((b) -> b.getLineNumber()?)
 
   linesMapping = {}
   for block in blocks
@@ -71,7 +69,7 @@ registerBlockPositions = (doc) ->
       id = "__asciidoctor-preview-#{block.$object_id()}__"
       block.id = id
 
-    lineno = block.$lineno()
+    lineno = block.getLineNumber()
     linesMapping[lineno] = id
 
   linesMapping
