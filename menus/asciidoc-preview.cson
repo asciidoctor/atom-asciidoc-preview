@@ -42,6 +42,8 @@ menu: [
   ,
     label: 'Save As HTML\u2026', command: 'core:save-as'
   ,
+    label: 'Export as PDF', command: 'asciidoc-preview:export-pdf'
+  ,
     label: 'Toggle Document Title', command: 'asciidoc-preview:toggle-show-title'
   ,
     label: 'Always show Table of Contents'
