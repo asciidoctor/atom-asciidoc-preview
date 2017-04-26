@@ -6,6 +6,7 @@ _ = require 'underscore-plus'
 mustache = require 'mustache'
 opn = require 'opn'
 renderer = require './renderer'
+pdfconverter = require './pdf-converter'
 
 module.exports =
 class AsciiDocPreviewView extends ScrollView
@@ -89,6 +90,8 @@ class AsciiDocPreviewView extends ScrollView
       'core:save-as': (event) =>
         event.stopPropagation()
         @saveAs()
+      'asciidoc-preview:export-pdf': =>
+        pdfconverter.convertFromPath(@filePath ? @getPath())
       'core:copy': (event) =>
         event.stopPropagation() if @copyToClipboard()
       'asciidoc-preview:zoom-in': =>
