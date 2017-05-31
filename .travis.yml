@@ -1,6 +1,8 @@
 ### Project specific config ###
 language: generic
 
+dist: trusty
+
 env:
   global:
     - APM_TEST_PACKAGES="language-asciidoc"
@@ -39,5 +41,6 @@ addons:
     packages:
     - build-essential
     - git
+    - libsecret-1-dev
     - libgnome-keyring-dev
     - fakeroot
