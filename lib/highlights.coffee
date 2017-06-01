@@ -60,6 +60,7 @@ module.exports =
         value = ' ' unless value
         scopes = scopes.map (scope) -> "syntax--#{scope.replace(/\./g, '.syntax--')}"
         html = updateScopeStack scopeStack, scopes, html
+        value = value.replace(/&/, '&amp;').replace(/</, '&lt;')
         html += "<span>#{value}</span>"
       html = popScope(scopeStack, html) while scopeStack.length > 0
       html += '\n'
