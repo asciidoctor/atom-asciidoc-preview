@@ -243,7 +243,7 @@ class AsciiDocPreviewView extends ScrollView
       @getAsciiDocSource()
         .then (source) =>
           renderer.toRawHtml source, @getPath()
-        .then (html) ->
+        .then (html) =>
           model =
             content: html
             style: fs.readFileSync path.join(packPath, 'node_modules/asciidoctor.js/dist/css/asciidoctor.css'), 'utf8'
