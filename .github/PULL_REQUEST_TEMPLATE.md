@@ -1,3 +1,5 @@
+<!--
+
 ## How to write a good PR
 
 - Read the [contributing guide](https://github.com/asciidoctor/atom-language-asciidoc/blob/master/CONTRIBUTING.adoc) .
@@ -5,9 +7,11 @@
 - Run *all* tests.
 - Add an explanation.
 - Add screenshot(s).
-- Add AsciiDoctor syntax example (related to scrennshots).
+- Add AsciiDoctor syntax example (related to screenshots).
 
-*Remove the previous section upon you have read it.*
+Remove the previous section upon you have read it.
+
+-->
 
 ## Description
 
