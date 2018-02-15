@@ -87,9 +87,6 @@ class AsciiDocPreviewView extends ScrollView
         @scrollUp()
       'core:move-down': =>
         @scrollDown()
-      'core:save-as': (event) =>
-        event.stopPropagation()
-        @saveAs()
       'asciidoc-preview:export-pdf': =>
         pdfconverter.convertFromPath(@filePath ? @getPath())
       'core:copy': (event) =>
@@ -225,39 +222,43 @@ class AsciiDocPreviewView extends ScrollView
     atom.clipboard.write @[0].innerHTML
     true
 
-  saveAs: ->
-    return if @loading
-
-    filePath = @getPath()
-    if filePath
-      filePath += '.html'
+  getSaveDialogOptions: ->
+    defaultPath = @getPath()
+    if defaultPath
+      defaultPath += '.html'
     else
-      filePath = 'untitled.adoc.html'
+      defaultPath = 'untitled.adoc.html'
       if projectPath = atom.project.getPaths()[0]
-        filePath = path.join projectPath, filePath
+        defaultPath = path.join(projectPath, defaultPath)
 
-    if htmlFilePath = atom.showSaveDialogSync(filePath)
-      packPath = atom.packages.resolvePackagePath 'asciidoc-preview'
-      templatePath = path.join packPath, 'templates', 'default.html'
+    return {defaultPath}
 
-      @getAsciiDocSource()
-        .then (source) =>
-          renderer.toRawHtml source, @getPath()
-        .then (html) =>
-          model =
-            content: html
-            style: fs.readFileSync path.join(packPath, 'node_modules/asciidoctor.js/dist/css/asciidoctor.css'), 'utf8'
-            title: $(@html).find('h1').text() or path.basename htmlFilePath, '.html'
-        .then (model) ->
-          template = fs.readFileSync templatePath, 'utf8'
-          mustache.to_html template, model
-        .then (htmlContent) ->
-          fs.writeFileSync htmlFilePath, htmlContent
-        .then ->
-          if atom.config.get 'asciidoc-preview.saveAsHtml.openInEditor'
-            atom.workspace.open htmlFilePath
+  saveAs: (htmlFilePath) ->
+    if @loading
+      atom.notifications.addWarning('Please wait until the Asciidoctor Preview has finished loading before saving')
+      return
 
-          if atom.config.get 'asciidoc-preview.saveAsHtml.openInBrowser'
-            opn(htmlFilePath).catch (error) ->
-              atom.notifications.addError error.toString(), detail: error?.stack or '', dismissable: true
-              console.error error
+    packPath = atom.packages.resolvePackagePath 'asciidoc-preview'
+    templatePath = path.join packPath, 'templates', 'default.html'
+
+    @getAsciiDocSource()
+      .then (source) =>
+        renderer.toRawHtml source, @getPath()
+      .then (html) =>
+        model =
+          content: html
+          style: fs.readFileSync path.join(packPath, 'node_modules/asciidoctor.js/dist/css/asciidoctor.css'), 'utf8'
+          title: $(@html).find('h1').text() or path.basename htmlFilePath, '.html'
+      .then (model) ->
+        template = fs.readFileSync templatePath, 'utf8'
+        mustache.to_html template, model
+      .then (htmlContent) ->
+        fs.writeFileSync htmlFilePath, htmlContent
+      .then ->
+        if atom.config.get 'asciidoc-preview.saveAsHtml.openInEditor'
+          atom.workspace.open htmlFilePath
+
+        if atom.config.get 'asciidoc-preview.saveAsHtml.openInBrowser'
+          opn(htmlFilePath).catch (error) ->
+            atom.notifications.addError error.toString(), detail: error?.stack or '', dismissable: true
+            console.error error
