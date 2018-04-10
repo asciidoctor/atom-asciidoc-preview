@@ -152,7 +152,7 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
           editorDivClass: 'highlights editor-colors'
 
         if added_php_starter is true
-          highlightedBlock = $(highlightedHtml);
+          highlightedBlock = $(highlightedHtml)
           # remove temporarily added <?php
           highlightedBlock.find('div.line:first').remove()
         else
