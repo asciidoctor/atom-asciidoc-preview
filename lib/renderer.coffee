@@ -138,7 +138,7 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
         # highlight php even without <?php by adding a temporary one
         code = codeBlock.text()
         added_php_starter = false
-        if fenceName == 'php' && ! /<\?(php|=)/.test(code)
+        if fenceName is 'php' and not /<\?(php|=)/.test(code)
           code = "<?php\n" + code
           added_php_starter = true
 
@@ -151,7 +151,7 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
           # The `editor` class messes things up as `.editor` has absolutely positioned lines
           editorDivClass: 'highlights editor-colors'
 
-        if added_php_starter == true
+        if added_php_starter is true
           highlightedBlock = $(highlightedHtml);
           # remove temporarily added <?php
           highlightedBlock.find('div.line:first').remove()
