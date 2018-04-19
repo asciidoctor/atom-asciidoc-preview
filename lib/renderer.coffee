@@ -135,28 +135,21 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
       if fenceName is defaultLanguage
         preElement.className = ''
       else
-        # highlight php even without <?php by adding a temporary one
         code = codeBlock.text()
-        added_php_starter = false
+        useSource = false
         if fenceName is 'php' and not /<\?(php|=)/.test(code)
-          code = "<?php\n" + code
-          added_php_starter = true
+          useSource = true
 
         highlightedHtml = highlights
           fileContents: code
-          scopeName: scopeForFenceName(fenceName)
+          scopeName: scopeForFenceName(fenceName, useSource)
           lineDivs: true
           editorDiv: true
           editorDivTag: 'pre'
           # The `editor` class messes things up as `.editor` has absolutely positioned lines
           editorDivClass: 'highlights editor-colors'
 
-        if added_php_starter is true
-          highlightedBlock = $(highlightedHtml)
-          # remove temporarily added <?php
-          highlightedBlock.find('div.line:first').remove()
-        else
-          highlightedBlock = $(highlightedHtml)
+        highlightedBlock = $(highlightedHtml)
 
         highlightedBlock.addClass("lang-#{fenceName}")
         highlightedBlock.insertAfter(preElement)

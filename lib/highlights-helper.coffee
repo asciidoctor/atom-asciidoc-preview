@@ -70,6 +70,9 @@ scopesByFenceName =
   'ts': 'source.ts'
 
 module.exports =
-  scopeForFenceName: (fenceName) ->
+  scopeForFenceName: (fenceName, useSource = false) ->
     fenceName = fenceName.toLowerCase()
-    scopesByFenceName[fenceName] ? "source.#{fenceName}"
+    if useSource
+        "source.#{fenceName}"
+    else
+        scopesByFenceName[fenceName] ? "source.#{fenceName}"
