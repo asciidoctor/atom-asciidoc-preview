@@ -73,6 +73,6 @@ module.exports =
   scopeForFenceName: (fenceName, useSource = false) ->
     fenceName = fenceName.toLowerCase()
     if useSource
-        "source.#{fenceName}"
+      "source.#{fenceName}"
     else
-        scopesByFenceName[fenceName] ? "source.#{fenceName}"
+      scopesByFenceName[fenceName] ? "source.#{fenceName}"
