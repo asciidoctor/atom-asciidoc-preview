@@ -70,9 +70,9 @@ scopesByFenceName =
   'ts': 'source.ts'
 
 module.exports =
-  scopeForFenceName: (fenceName, useSource = false) ->
+  scopeForFenceName: (fenceName, blockText) ->
     fenceName = fenceName.toLowerCase()
-    if useSource
+    if fenceName is 'php' and not blockText.startsWith '<?php'
       "source.#{fenceName}"
     else
       scopesByFenceName[fenceName] ? "source.#{fenceName}"

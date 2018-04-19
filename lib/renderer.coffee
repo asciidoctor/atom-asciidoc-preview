@@ -135,14 +135,10 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
       if fenceName is defaultLanguage
         preElement.className = ''
       else
-        code = codeBlock.text()
-        useSource = false
-        if fenceName is 'php' and not /<\?(php|=)/.test(code)
-          useSource = true
-
+        blockText = codeBlock.text()
         highlightedHtml = highlights
-          fileContents: code
-          scopeName: scopeForFenceName(fenceName, useSource)
+          fileContents: blockText
+          scopeName: scopeForFenceName(fenceName, blockText)
           lineDivs: true
           editorDiv: true
           editorDivTag: 'pre'
