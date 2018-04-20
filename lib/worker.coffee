@@ -54,10 +54,12 @@ module.exports = (text, attributes, options) ->
   callback()
 
 registerBlockPositions = (doc) ->
+  blockId = 0
   if doc.header?
     # Make sure the document header node and the document node share the same ID.
     if typeof doc.id isnt 'string'
-      doc.id = "__asciidoctor-preview-#{doc.$object_id()}__"
+      doc.id = "__asciidoctor-preview-#{blockId}__"
+      blockId += 1
     doc.header.id = doc.id
 
   blocks = doc.findBy((b) -> b.getLineNumber()?)
@@ -66,7 +68,8 @@ registerBlockPositions = (doc) ->
   for block in blocks
     id = block.id
     if typeof id isnt 'string'
-      id = "__asciidoctor-preview-#{block.$object_id()}__"
+      id = "__asciidoctor-preview-#{blockId}__"
+      blockId += 1
       block.id = id
 
     lineno = block.getLineNumber()

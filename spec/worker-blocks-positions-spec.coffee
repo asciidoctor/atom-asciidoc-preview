@@ -35,11 +35,11 @@ describe 'worker when the scroll mode is activated', ->
 
     runs =>
       expect(Object.keys @blockPositions).toHaveLength 5
-      expect(@blockPositions[1]).toBe '__asciidoctor-preview-1554__'
+      expect(@blockPositions[1]).toBe '__asciidoctor-preview-0__'
       expect(@blockPositions[3]).toBe '_first_section'
-      expect(@blockPositions[5]).toBe '__asciidoctor-preview-1602__'
+      expect(@blockPositions[5]).toBe '__asciidoctor-preview-1__'
       expect(@blockPositions[8]).toBe '_second_section'
-      expect(@blockPositions[10]).toBe '__asciidoctor-preview-1618__'
+      expect(@blockPositions[10]).toBe '__asciidoctor-preview-2__'
 
   it 'should generate blocks positions when document contains item list.', ->
     content = '''
@@ -64,13 +64,13 @@ describe 'worker when the scroll mode is activated', ->
 
     runs =>
       expect(Object.keys @blockPositions).toHaveLength 5
-      expect(@blockPositions[1]).toBe '__asciidoctor-preview-1554__'
+      expect(@blockPositions[1]).toBe '__asciidoctor-preview-0__'
       expect(@blockPositions[3]).toBe '_first_section'
       # line number on nested list is wrong
       # maybe related to https://github.com/asciidoctor/asciidoctor/pull/2547
-      expect(@blockPositions[6]).toBe '__asciidoctor-preview-1604__'
-      expect(@blockPositions[10]).toBe '__asciidoctor-preview-1626__'
-      expect(@blockPositions[13]).toBe '__asciidoctor-preview-1644__'
+      expect(@blockPositions[6]).toBe '__asciidoctor-preview-1__'
+      expect(@blockPositions[10]).toBe '__asciidoctor-preview-2__'
+      expect(@blockPositions[13]).toBe '__asciidoctor-preview-3__'
 
   it 'should generate blocks positions when document contains definition list.', ->
     content = '''
@@ -95,8 +95,8 @@ describe 'worker when the scroll mode is activated', ->
     waitsFor (done) -> task.start(done)
 
     runs =>
-      # { 1 : '__asciidoctor-preview-1554__', 3 : '_first_section', 5 : '__asciidoctor-preview-1604__' }
+      # { 1 : '__asciidoctor-preview-0__', 3 : '_first_section', 5 : '__asciidoctor-preview-1__' }
       expect(Object.keys @blockPositions).toHaveLength 3
-      expect(@blockPositions[1]).toBe '__asciidoctor-preview-1554__'
+      expect(@blockPositions[1]).toBe '__asciidoctor-preview-0__'
       expect(@blockPositions[3]).toBe '_first_section'
-      expect(@blockPositions[5]).toBe '__asciidoctor-preview-1604__'
+      expect(@blockPositions[5]).toBe '__asciidoctor-preview-1__'
