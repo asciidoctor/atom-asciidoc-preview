@@ -135,9 +135,10 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
       if fenceName is defaultLanguage
         preElement.className = ''
       else
+        blockText = codeBlock.text()
         highlightedHtml = highlights
-          fileContents: codeBlock.text()
-          scopeName: scopeForFenceName(fenceName)
+          fileContents: blockText
+          scopeName: scopeForFenceName(fenceName, blockText)
           lineDivs: true
           editorDiv: true
           editorDivTag: 'pre'
