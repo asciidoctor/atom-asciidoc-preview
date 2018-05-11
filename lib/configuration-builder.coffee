@@ -13,7 +13,6 @@ module.exports =
 
   makeOptions: (filePath) ->
     options =
-      opalPwd: window.location.href
       baseDir: (makeBaseDirectory filePath if filePath)
       safeMode: atom.config.get 'asciidoc-preview.safeMode' or 'safe'
       scrollMode: atom.config.get 'asciidoc-preview.scrollMode'

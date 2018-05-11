@@ -163,10 +163,3 @@ describe "attributes-builder", ->
       {baseDir} = makeOptions 'foo/bar.adoc'
 
       expect(baseDir).toBe 'fii'
-
-  describe "opalPwd", ->
-
-    it 'should opalPwd be defined', ->
-      {opalPwd} = makeOptions()
-
-      expect(opalPwd).toBeDefined()
