@@ -128,7 +128,13 @@ tokenizeCodeBlocks = (html, defaultLanguage='text') ->
     # Exclude text node to highlights
     # Because this creates a rendering bug with quotes substitutions #102
     if codeBlock[0]?.nodeType isnt Node.TEXT_NODE
-      fenceName = codeBlock.attr('class')?.replace(/^language-/, '') ? defaultLanguage
+      langExp = /language-([^ ]+)/g
+      group = langExp.exec codeBlock.attr('class')
+
+      if group and group.length
+        fenceName = group[1]
+      else
+        fenceName = defaultLanguage
 
       # Exclude text block to highlights
       # Because this creates a rendering bug with quotes substitutions #193
