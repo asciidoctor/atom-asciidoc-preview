@@ -115,7 +115,7 @@ class AsciiDocPreviewView extends ScrollView
       if atom.config.get 'asciidoc-preview.scrollMode'
         blockId = renderer.getBlockId event.newBufferPosition.row
         if blockId?
-          if target = $('#' + blockId)[0]
+          if target = document.getElementById(blockId)
             callback target.offsetTop
         # else
           # TODO Find the nearest block
