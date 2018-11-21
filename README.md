@@ -23,6 +23,10 @@ This package use [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js)
 
 * Live preview or preview only on save.
 * Choose the position of the preview pane: "left", "right", "up", "down" (default: "right")
+* Enable or disable table of contents (TOC) in preview pane.
+  * Supported TOC positions: default (center), preamble, or macro.
+  * Choose none in settings to allow document to control position.
+  * If toc attribute is set to left or right, the TOC will appear in the center.
 * Save as HTML: save the document to an HTML file.
 * Export as PDF: create a PDF file and open with your default PDF viewer.
   * [asciidoctor-pdf](https://github.com/asciidoctor/asciidoctor-pdf) command must be available on your `PATH`.
