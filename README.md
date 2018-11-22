@@ -40,6 +40,9 @@ More options are available :
 * by right-clicking on the preview
 * by right-clicking on an AsciiDoc file.
 
+#### Notes
+* Attributes that has no direct influence on the contents (for example: `:toc: left`) are not respected. This is by design. The preview window is not meant to emulate the webpage that the end user sees, it's meant to offer a preview of the content.
+
 ## Others Atom packages for AsciiDoc
 
 * [language-asciidoc](https://atom.io/packages/language-asciidoc): Syntax highlighting and snippets for AsciiDoc (with Asciidoctor flavor).
