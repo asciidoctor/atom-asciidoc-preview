@@ -40,8 +40,9 @@ More options are available :
 * by right-clicking on the preview
 * by right-clicking on an AsciiDoc file.
 
-#### Disclaimer
-* The preview window is not meant to emulate the final HTML that the end user sees, it's meant to offer only a preview of the content. This is by design (one of the reasons is due to a limited screen space).
+## Disclaimer About Styles
+
+The preview window is not meant to emulate the published styles. Rather, it's intended to present a preview of the content to assist with editing. This is by design. It also aims to make the best use of limited screen space. So, for example, you won't see functionality such as a sidebar TOC. The colors may also differ to better integrate with the Atom theme.
 
 ## Others Atom packages for AsciiDoc
 
