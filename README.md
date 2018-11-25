@@ -40,6 +40,16 @@ More options are available :
 * by right-clicking on the preview
 * by right-clicking on an AsciiDoc file.
 
+## Disclaimer About Styles
+
+The preview window is not meant to emulate the published styles.
+Rather, it's intended to present a preview of the content to assist with editing.
+This is by design.
+It also aims to make the best use of limited screen space.
+So, for example, you won't see functionality such as a sidebar TOC.
+The colors may also differ to better integrate with the Atom theme.
+If you want to customize the apparance of the preview, you can specify your own stylesheet in the settings.
+
 ## Others Atom packages for AsciiDoc
 
 * [language-asciidoc](https://atom.io/packages/language-asciidoc): Syntax highlighting and snippets for AsciiDoc (with Asciidoctor flavor).
