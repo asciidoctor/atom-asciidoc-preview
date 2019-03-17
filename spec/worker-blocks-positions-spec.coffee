@@ -95,7 +95,6 @@ describe 'worker when the scroll mode is activated', ->
     waitsFor (done) -> task.start(done)
 
     runs =>
-      # { 1 : '__asciidoctor-preview-0__', 3 : '_first_section', 5 : '__asciidoctor-preview-1__' }
       expect(Object.keys @blockPositions).toHaveLength 7
       expect(@blockPositions[1]).toBe '__asciidoctor-preview-0__'
       expect(@blockPositions[3]).toBe '_first_section'
