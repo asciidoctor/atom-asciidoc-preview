@@ -63,14 +63,14 @@ describe 'worker when the scroll mode is activated', ->
     waitsFor (done) -> task.start(done)
 
     runs =>
-      expect(Object.keys @blockPositions).toHaveLength 5
+      expect(Object.keys @blockPositions).toHaveLength 7
       expect(@blockPositions[1]).toBe '__asciidoctor-preview-0__'
       expect(@blockPositions[3]).toBe '_first_section'
-      # line number on nested list is wrong
-      # maybe related to https://github.com/asciidoctor/asciidoctor/pull/2547
-      expect(@blockPositions[6]).toBe '__asciidoctor-preview-1__'
-      expect(@blockPositions[10]).toBe '__asciidoctor-preview-2__'
-      expect(@blockPositions[13]).toBe '__asciidoctor-preview-3__'
+      expect(@blockPositions[6]).toBe '__asciidoctor-preview-2__'
+      expect(@blockPositions[7]).toBe '__asciidoctor-preview-4__'
+      expect(@blockPositions[8]).toBe '__asciidoctor-preview-6__'
+      expect(@blockPositions[9]).toBe '__asciidoctor-preview-7__'
+      expect(@blockPositions[10]).toBe '__asciidoctor-preview-8__'
 
   it 'should generate blocks positions when document contains definition list.', ->
     content = '''
@@ -95,8 +95,11 @@ describe 'worker when the scroll mode is activated', ->
     waitsFor (done) -> task.start(done)
 
     runs =>
-      # { 1 : '__asciidoctor-preview-0__', 3 : '_first_section', 5 : '__asciidoctor-preview-1__' }
-      expect(Object.keys @blockPositions).toHaveLength 3
+      expect(Object.keys @blockPositions).toHaveLength 7
       expect(@blockPositions[1]).toBe '__asciidoctor-preview-0__'
       expect(@blockPositions[3]).toBe '_first_section'
-      expect(@blockPositions[5]).toBe '__asciidoctor-preview-1__'
+      expect(@blockPositions[5]).toBe '__asciidoctor-preview-2__'
+      expect(@blockPositions[6]).toBe '__asciidoctor-preview-3__'
+      expect(@blockPositions[8]).toBe '__asciidoctor-preview-4__'
+      expect(@blockPositions[9]).toBe '__asciidoctor-preview-5__'
+      expect(@blockPositions[11]).toBe '__asciidoctor-preview-7__'
