@@ -3,7 +3,7 @@ asciidoctorRuntimeConfig =
     platform: 'node'
     engine: 'v8'
     framework: 'electron'
-Asciidoctor = require('asciidoctor.js')(asciidoctorRuntimeConfig)
+Asciidoctor = require('@asciidoctor/core')(asciidoctorRuntimeConfig)
 path = require 'path'
 stdStream = require './std-stream-hook'
 
