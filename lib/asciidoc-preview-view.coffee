@@ -247,7 +247,7 @@ class AsciiDocPreviewView extends ScrollView
       .then (html) =>
         model =
           content: html
-          style: fs.readFileSync path.join(packPath, 'node_modules/asciidoctor.js/dist/css/asciidoctor.css'), 'utf8'
+          style: fs.readFileSync path.join(packPath, 'node_modules/@asciidoctor/core/dist/css/asciidoctor.css'), 'utf8'
           title: $(@html).find('h1').text() or path.basename htmlFilePath, '.html'
       .then (model) ->
         template = fs.readFileSync templatePath, 'utf8'
