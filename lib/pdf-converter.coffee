@@ -39,7 +39,7 @@ convertToPdf = (sourceFilePath) ->
     message = '''
       This feature is experimental.
       You must manually activate this feature in the package settings.
-      `asciidoctor-pdf` must be installed in you computer.
+      `asciidoctor-pdf` must be installed on your computer.
       '''
     atom.notifications.addWarning 'Export as PDF:', detail: message or '', dismissable: true
 
