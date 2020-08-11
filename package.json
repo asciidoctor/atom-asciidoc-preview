@@ -65,7 +65,7 @@
       "order": 3
     },
     "sectionNumbering": {
-      "description": "Auto-number section titles.<br>- Enabled by default (equivalent to `-a sectnums=@`)<br>- Always enabled (equivalent to `-a sectnums`)<br>- Always disabled (equivalent to `-a sectnums!`)<br>- Not specified<br>http://asciidoctor.org/docs/user-manual/#numbering",
+      "description": "Auto-number section titles.<br>- Enabled by default (equivalent to `-a sectnums=@`)<br>- Always enabled (equivalent to `-a sectnums`)<br>- Always disabled (equivalent to `-a sectnums!`)<br>- Not specified<br>https://asciidoctor.org/docs/user-manual/#numbering",
       "type": "string",
       "default": "enabled-by-default",
       "enum": [
@@ -109,7 +109,7 @@
       "order": 8
     },
     "safeMode": {
-      "description": "Set safe mode 'level': `unsafe`, `safe`, `server` or `secure`.<br>Disables potentially dangerous macros in source files, such as `include::[]`.<br>Set safe mode level to `safe` to enable include macros, but restricts access to ancestor paths of source file.<br>http://asciidoctor.org/docs/user-manual/#running-asciidoctor-securely<br>",
+      "description": "Set safe mode 'level': `unsafe`, `safe`, `server` or `secure`.<br>Disables potentially dangerous macros in source files, such as `include::[]`.<br>Set safe mode level to `safe` to enable include macros, but restrict access to ancestor paths of source file.<br>https://asciidoctor.org/docs/user-manual/#running-asciidoctor-securely<br>",
       "type": "string",
       "default": "safe",
       "enum": [
@@ -122,7 +122,7 @@
     },
     "baseDir": {
       "title": "Base directory",
-      "description": "The default value `{docdir}` make the base directory match the document directory.<br>Use the value `-` to use absolute path.<br>More informations: http://asciidoctor.org/docs/user-manual/#ruby-api-options",
+      "description": "The default value `{docdir}` makes the base directory match the document directory.<br>Use the value `-` to use absolute path.<br>More information: https://asciidoctor.org/docs/user-manual/#ruby-api-options",
       "type": "string",
       "default": "{docdir}",
       "order": 10
